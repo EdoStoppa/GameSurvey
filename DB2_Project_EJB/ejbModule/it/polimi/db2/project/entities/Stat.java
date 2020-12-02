@@ -14,9 +14,9 @@ import javax.persistence.*;
 
 public class Stat implements Serializable {
 
-  // Enums
+  /*// Enums
   public enum Sex { MALE, FEMALE, OTHER }
-  public enum Expertise { LOW, MEDIUM, HIGH }
+  public enum Expertise { LOW, MEDIUM, HIGH }*/
 
   // Serializable
   private static final long serialVersionUID = 1L;
@@ -29,9 +29,9 @@ public class Stat implements Serializable {
   @OneToOne
   private AnswerLog answerLog;
 
-  private Sex sex;
+  private String sex;
   private int age;
-  private Expertise expertise;
+  private String expertise;
 
 
   // Getters and Setters
@@ -40,19 +40,19 @@ public class Stat implements Serializable {
   public AnswerLog getAnswerLog() { return this.answerLog; }
   public void setAnswerLog(AnswerLog answerLog) { this.answerLog = answerLog; }
 
-  public Sex getSex() { return this.sex; }
-  public void setSex(Sex sex) { this.sex = sex; }
+  public String getSex() { return this.sex; }
+  public void setSex(String sex) { this.sex = sex; }
 
   public int getAge() { return this.age; }
   public void setAge(int age) { this.age = age; }
 
-  public Expertise getExpertise() { return this.expertise; }
-  public void setExpertise(Expertise expertise) { this.expertise = expertise; }
+  public String getExpertise() { return this.expertise; }
+  public void setExpertise(String expertise) { this.expertise = expertise; }
 
   // Inits
   public Stat() { }
   
-  public Stat(AnswerLog answerLog, Sex sex, int age, Expertise expertise) {
+  public Stat(AnswerLog answerLog, String sex, int age, String expertise) {
     this.answerLog = answerLog;
     this.sex = sex;
     this.age = age;
