@@ -4,42 +4,44 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.ejb.EJB;
-import javax.persistence.NonUniqueResultException;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import it.polimi.db2.project.entities.User;
-import it.polimi.db2.project.services.*;
+import it.polimi.db2.project.services.UserService;
 
 /**
- * Servlet implementation class LoginPage
+ * Servlet implementation class RegisterPage
  */
-@WebServlet("/LoginPage")
-public class LoginPage extends HttpServlet {
+@WebServlet("/RegisterPage")
+public class RegisterPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB(name = "it.polimi.db2.project.services/UserService")
 	private UserService usrService;
 	
-	private final String TITLE = "Login Page";
-	private final String DESCRIPTION = "Please, login to use the application";
-	private final String USRPWERROR = "Sorry, your username or password is incorrect. Please try again";
+	private final String TITLE = "Register Page";
+	private final String DESCRIPTION = "Please, register to use the application";
+	
+	private final String USERTAKEN = "Sorry, your username is already taken. Please, choose another one";
+	private final String INFOMISSING = "Please, input every info";
+	private final String PWDNOTMATCH = "Sorry, your passwords don't match. Please, try again";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginPage() {
+    public RegisterPage() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         printHtmlHeader(out);
@@ -50,48 +52,55 @@ public class LoginPage extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String usrn = null;
+		String mail = null;
+		String usrn = null;
 		String pwd = null;
+		String confirmedPwd = null;
+		
 		try {
+			mail = StringEscapeUtils.escapeJava(request.getParameter("email"));
 			usrn = StringEscapeUtils.escapeJava(request.getParameter("username"));
 			pwd = StringEscapeUtils.escapeJava(request.getParameter("password"));
-			if (usrn == null || pwd == null || usrn.isEmpty() || pwd.isEmpty()) {
+			confirmedPwd = StringEscapeUtils.escapeJava(request.getParameter("confirmedPassword"));
+			Boolean nullCheck = (mail == null || usrn == null || pwd == null || confirmedPwd == null);
+			Boolean emptyCheck = (mail.isEmpty() ||  usrn.isEmpty() || pwd.isEmpty() || confirmedPwd.isEmpty());
+			if (nullCheck || emptyCheck) {
 				throw new Exception("Missing or empty credential value");
 			}
-
 		} catch (Exception e) {
 			// for debugging only e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
-			return;
-		}
-		
-		User user;
-		try {
-			// query db to authenticate for user
-			user = usrService.checkCredentials(usrn, pwd);
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
-			return;
-		}
-		
-		if (user == null) {			
 			response.setContentType("text/html");
 	        PrintWriter out = response.getWriter();
 	        printHtmlHeader(out);
-	        printHtmlUserPasswError(out);
+	        printHtmlError(out, INFOMISSING);
+	        printHtmlFooter(out);
+			return;
+		}
+		
+		Boolean userTaken = false;
+		try {
+			// query db to authenticate for user
+			userTaken = usrService.checkUsrnTaken(usrn);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not register user");
+			return;
+		}
+		
+		if(userTaken || pwd.equals(confirmedPwd)) {
+			response.setContentType("text/html");
+	        PrintWriter out = response.getWriter();
+	        String msg = (userTaken ? USERTAKEN : PWDNOTMATCH);
+	        
+	        printHtmlHeader(out);
+	        printHtmlError(out, msg);
 	        printHtmlFooter(out);
 		} else {
-			request.getSession().setAttribute("user", user);
-			String path = getServletContext().getContextPath() + "/GoToHomePage";
-			//response.sendRedirect(path);
+			// TODO: We have to persist the new user that we create using userService
+			// usrService.registerUser(mail, usrn, pwd);
 			
-			// TEMPORARY
-			PrintWriter out = response.getWriter();
-			printHtmlHeader(out);
-			out.println("<p>" + "SUCCESS!!!!!!1111111!1!!!111" + "</p>");
-	        printHtmlFooter(out);
-			
+			String path = getServletContext().getContextPath() + "/LoginPage";
+			response.sendRedirect(path);
 		}
 	}
 	
@@ -102,18 +111,20 @@ public class LoginPage extends HttpServlet {
         out.println("<center><h1>" + TITLE + "</h1></center>");
         out.println("<p>" + DESCRIPTION + "</p>");
         out.println("</hr>");
-        out.println("<form action=\"LoginPage\" method=\"POST\">");
+        out.println("<form action=\"RegisterPage\" method=\"POST\">");
         out.println("<table><tbody>");
+        out.println("<tr><td>Email:</td><td><input type=\"text\" name=\"email\"/></td></tr>");
         out.println("<tr><td>Username:</td><td><input type=\"text\" name=\"username\"/></td></tr>");
         out.println("<tr><td>Password:</td><td><input type=\"password\" name=\"password\"/></td></tr>");
+        out.println("<tr><td>Confirm pw:</td><td><input type=\"password\" name=\"confirmedPassword\"/></td></tr>");
         out.println("</tbody></table>");
         out.println("<input name=\"action\" type=\"submit\" value=\"Go\"/>");
         out.println("</form>");
         out.println("<hr/>");
     }
 	
-	private void printHtmlUserPasswError(PrintWriter out) throws IOException {
-        out.println("<p>" + USRPWERROR + "</p>");
+	private void printHtmlError(PrintWriter out, String msg) throws IOException {
+        out.println("<p>" + msg + "</p>");
 
 	}
 	
@@ -122,5 +133,5 @@ public class LoginPage extends HttpServlet {
         out.println("</body>");
         out.close();
     }
-}
 
+}

@@ -32,5 +32,21 @@ public class UserService {
 		throw new NonUniqueResultException("More than one user registered with same credentials");
 
 	}
+	
+	public Boolean checkUsrnTaken(String usrn) throws Exception{
+		List<User> uList = null;
+		try {
+			uList = em.createNamedQuery("User.checkUserTaken", User.class).setParameter(1,usrn)
+					.getResultList();
+		} catch (PersistenceException e) {
+			throw new Exception("Could not verify credentals");
+		}
+		
+		if (uList.isEmpty())
+			return false;
+		else if (uList.size() == 1)
+			return true;
+		throw new NonUniqueResultException("More than one user registered with same username");
+	}
 
 }
