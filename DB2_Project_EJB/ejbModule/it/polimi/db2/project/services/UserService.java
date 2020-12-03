@@ -11,12 +11,15 @@ import java.util.List;
 
 @Stateless
 public class UserService {
+	
 	@PersistenceContext(unitName = "DB2_Project_EJB")
 	private EntityManager em;
 
-	public UserService() {
-	}
+	public UserService() { }
 
+	
+	// Checks the provided user's credentials
+	// Returned: matched user, null if no match found
 	public User checkCredentials(String usrn, String pwd) throws Exception{//CredentialsException, NonUniqueResultException {
 		List<User> uList = null;
 		try {
@@ -33,6 +36,7 @@ public class UserService {
 
 	}
 	
+	// Checks if the provided username is available
 	public Boolean checkUsrnTaken(String usrn) throws Exception{
 		List<User> uList = null;
 		try {
@@ -47,6 +51,14 @@ public class UserService {
 		else if (uList.size() == 1)
 			return true;
 		throw new NonUniqueResultException("More than one user registered with same username");
+	}
+	
+	// Registers a new user
+	public void registerUser(String mail, String usrn, String pwd) {
+		
+		User newUser = new User(mail, usrn, pwd);
+		em.persist(newUser);
+		
 	}
 
 }

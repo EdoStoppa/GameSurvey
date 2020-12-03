@@ -50,47 +50,79 @@ public class LoginPage extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String usrn = null;
-		String pwd = null;
+       
+		String pressedButton = null;
+		
 		try {
-			usrn = StringEscapeUtils.escapeJava(request.getParameter("username"));
-			pwd = StringEscapeUtils.escapeJava(request.getParameter("password"));
-			if (usrn == null || pwd == null || usrn.isEmpty() || pwd.isEmpty()) {
-				throw new Exception("Missing or empty credential value");
-			}
 
+			pressedButton = request.getParameter("action");
+			
+			if (pressedButton == null) {
+				throw new Exception("Missing parameter in request");
+			}
+			
 		} catch (Exception e) {
-			// for debugging only e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
 			return;
 		}
 		
-		User user;
-		try {
-			// query db to authenticate for user
-			user = usrService.checkCredentials(usrn, pwd);
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
-			return;
-		}
+		// Performs a different action based on the pressed button
 		
-		if (user == null) {			
-			response.setContentType("text/html");
-	        PrintWriter out = response.getWriter();
-	        printHtmlHeader(out);
-	        printHtmlUserPasswError(out);
-	        printHtmlFooter(out);
-		} else {
-			request.getSession().setAttribute("user", user);
-			String path = getServletContext().getContextPath() + "/GoToHomePage";
-			//response.sendRedirect(path);
+		// Login action
+		if (pressedButton.equals("Go")) {
 			
-			// TEMPORARY
-			PrintWriter out = response.getWriter();
-			printHtmlHeader(out);
-			out.println("<p>" + "SUCCESS!!!!!!1111111!1!!!111" + "</p>");
-	        printHtmlFooter(out);
+			String usrn = null;
+			String pwd = null;
+			
+			try {
+				usrn = StringEscapeUtils.escapeJava(request.getParameter("username"));
+				pwd = StringEscapeUtils.escapeJava(request.getParameter("password"));
+				
+				if (usrn == null || pwd == null || pressedButton == null || usrn.isEmpty() || pwd.isEmpty()) {
+					throw new Exception("Missing or empty credential value");
+				}
+	
+			} catch (Exception e) {
+				// for debugging only e.printStackTrace();
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
+				return;
+			}
+		
+		
+			User user;
+			try {
+				// query db to authenticate for user
+				user = usrService.checkCredentials(usrn, pwd);
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
+				return;
+			}
+			
+			if (user == null) {			
+				response.setContentType("text/html");
+		        PrintWriter out = response.getWriter();
+		        printHtmlHeader(out);
+		        printHtmlUserPasswError(out);
+		        printHtmlFooter(out);
+			} else {
+				request.getSession().setAttribute("user", user);
+				//String path = getServletContext().getContextPath() + "/GoToHomePage";
+				//response.sendRedirect(path);
+				
+				// TEMPORARY
+				PrintWriter out = response.getWriter();
+				printHtmlHeader(out);
+				out.println("<p>" + "SUCCESS!!!!!!1111111!1!!!111" + "</p>");
+		        printHtmlFooter(out);
+				
+			}
+			
+		} else if (pressedButton.equals("Registrati")) {
+		// Register action
+			
+			String path = getServletContext().getContextPath() + "/RegisterPage";
+			response.sendRedirect(path);
 			
 		}
 	}
@@ -108,6 +140,7 @@ public class LoginPage extends HttpServlet {
         out.println("<tr><td>Password:</td><td><input type=\"password\" name=\"password\"/></td></tr>");
         out.println("</tbody></table>");
         out.println("<input name=\"action\" type=\"submit\" value=\"Go\"/>");
+        out.println("<input name=\"action\" type=\"submit\" value=\"Registrati\"/>");
         out.println("</form>");
         out.println("<hr/>");
     }

@@ -31,11 +31,10 @@ public class AnswerLog implements Serializable {
   @JoinColumn(name = "prodOfDayId")
   private ProdOfDay prodOfDay;
 
-	@Temporal(TemporalType.DATE)
+  @Temporal(TemporalType.DATE)
   private Date logTime;
 
   private Boolean confirmed;
-
 
   // Getters and Setters
   public int getId() { return this.logId; }

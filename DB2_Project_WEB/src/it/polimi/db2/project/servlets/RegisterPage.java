@@ -87,7 +87,7 @@ public class RegisterPage extends HttpServlet {
 			return;
 		}
 		
-		if(userTaken || pwd.equals(confirmedPwd)) {
+		if(userTaken || !pwd.equals(confirmedPwd)) {
 			response.setContentType("text/html");
 	        PrintWriter out = response.getWriter();
 	        String msg = (userTaken ? USERTAKEN : PWDNOTMATCH);
@@ -97,7 +97,7 @@ public class RegisterPage extends HttpServlet {
 	        printHtmlFooter(out);
 		} else {
 			// TODO: We have to persist the new user that we create using userService
-			// usrService.registerUser(mail, usrn, pwd);
+			usrService.registerUser(mail, usrn, pwd);
 			
 			String path = getServletContext().getContextPath() + "/LoginPage";
 			response.sendRedirect(path);
