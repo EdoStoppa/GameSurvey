@@ -77,30 +77,36 @@ public class RegisterPage extends HttpServlet {
 			return;
 		}
 		
-		Boolean userTaken = false;
-		try {
-			// query db to authenticate for user
-			userTaken = usrService.checkUsrnTaken(usrn);
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not register user");
-			return;
-		}
-		
-		if(userTaken || !pwd.equals(confirmedPwd)) {
+		if(!pwd.equals(confirmedPwd)) {
+			
 			response.setContentType("text/html");
 	        PrintWriter out = response.getWriter();
-	        String msg = (userTaken ? USERTAKEN : PWDNOTMATCH);
+	        String msg = PWDNOTMATCH;
 	        
 	        printHtmlHeader(out);
 	        printHtmlError(out, msg);
 	        printHtmlFooter(out);
+	        
 		} else {
-			// TODO: We have to persist the new user that we create using userService
-			usrService.registerUser(mail, usrn, pwd);
-			
-			String path = getServletContext().getContextPath() + "/LoginPage";
-			response.sendRedirect(path);
+
+			try {
+
+				usrService.registerUser(mail, usrn, pwd);
+				String path = getServletContext().getContextPath() + "/LoginPage";
+				response.sendRedirect(path);
+				
+			} catch (Exception e) {
+				
+				response.setContentType("text/html");
+		        PrintWriter out = response.getWriter();
+		        String msg = USERTAKEN;
+		        
+		        printHtmlHeader(out);
+		        printHtmlError(out, msg);
+		        printHtmlFooter(out);
+		        
+				return;
+			}		
 		}
 	}
 	

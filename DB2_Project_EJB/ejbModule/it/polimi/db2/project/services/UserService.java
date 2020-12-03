@@ -6,6 +6,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.NonUniqueResultException;
 import it.polimi.db2.project.entities.User;
+import it.polimi.db2.project.exceptions.UserTakenException;
+
 //import it.polimi.db2.album.exceptions.*;
 import java.util.List;
 
@@ -36,8 +38,9 @@ public class UserService {
 
 	}
 	
-	// Checks if the provided username is available
-	public Boolean checkUsrnTaken(String usrn) throws Exception{
+	// Registers a new user
+	public void registerUser(String mail, String usrn, String pwd) throws Exception {
+		
 		List<User> uList = null;
 		try {
 			uList = em.createNamedQuery("User.checkUserTaken", User.class).setParameter(1,usrn)
@@ -46,18 +49,12 @@ public class UserService {
 			throw new Exception("Could not verify credentals");
 		}
 		
-		if (uList.isEmpty())
-			return false;
-		else if (uList.size() == 1)
-			return true;
-		throw new NonUniqueResultException("More than one user registered with same username");
-	}
-	
-	// Registers a new user
-	public void registerUser(String mail, String usrn, String pwd) {
-		
-		User newUser = new User(mail, usrn, pwd);
-		em.persist(newUser);
+		if (uList.isEmpty()) {
+			User newUser = new User(mail, usrn, pwd);
+			em.persist(newUser);
+		} else {
+			throw new UserTakenException("User's credentials already taken");
+		}
 		
 	}
 
