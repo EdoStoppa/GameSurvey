@@ -26,7 +26,7 @@ public class RegisterPage extends HttpServlet {
 	private final String TITLE = "Register Page";
 	private final String DESCRIPTION = "Please, register to use the application";
 	
-	private final String USERTAKEN = "Sorry, your username is already taken. Please, choose another one";
+	private final String USERTAKEN = "Sorry, one or more of your info is used by another user. Please, try again";
 	private final String INFOMISSING = "Please, input every info";
 	private final String PWDNOTMATCH = "Sorry, your passwords don't match. Please, try again";
        

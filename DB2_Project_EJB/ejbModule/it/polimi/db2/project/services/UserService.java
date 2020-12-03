@@ -43,14 +43,14 @@ public class UserService {
 		
 		List<User> uList = null;
 		try {
-			uList = em.createNamedQuery("User.checkUserTaken", User.class).setParameter(1,usrn)
+			uList = em.createNamedQuery("User.checkUserTaken", User.class).setParameter(1, usrn).setParameter(2, mail)
 					.getResultList();
 		} catch (PersistenceException e) {
 			throw new Exception("Could not verify credentals");
 		}
 		
 		if (uList.isEmpty()) {
-			User newUser = new User(mail, usrn, pwd);
+			User newUser = new User(usrn, pwd, mail);
 			em.persist(newUser);
 		} else {
 			throw new UserTakenException("User's credentials already taken");
