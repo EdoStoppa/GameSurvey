@@ -107,14 +107,8 @@ public class LoginPage extends HttpServlet {
 		        printHtmlFooter(out);
 			} else {
 				request.getSession().setAttribute("user", user);
-				//String path = getServletContext().getContextPath() + "/GoToHomePage";
-				//response.sendRedirect(path);
-				
-				// TEMPORARY
-				PrintWriter out = response.getWriter();
-				printHtmlHeader(out);
-				out.println("<p>" + "SUCCESS!!!!!!1111111!1!!!111" + "</p>");
-		        printHtmlFooter(out);
+				String path = getServletContext().getContextPath() + "/Homepage";
+				response.sendRedirect(path);
 				
 			}
 			

@@ -14,5 +14,14 @@ public class ProductService {
 	private EntityManager em;
 
 	public ProductService() { }
+	
+	public Product getProdById(int id) throws Exception{
+		Product prod = em.find(Product.class, id);
+		
+		if(prod != null)
+			return prod;
+		
+		throw new Exception("Product not found :(");
+	}
 
 }

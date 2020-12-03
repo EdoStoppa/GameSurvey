@@ -11,7 +11,8 @@ import javax.persistence.*;
 */
 
 @Entity
-@Table(name = "ProdOfDay", schema = "DB2Project")
+@Table(name = "ProdOfDay", schema = "db2Project")
+@NamedQuery(name = "ProdOfDay.getPOfDayByDate", query = "SELECT r FROM ProdOfDay r  WHERE r.chosenDate = ?1")
 
 public class ProdOfDay implements Serializable {
 
@@ -28,7 +29,7 @@ public class ProdOfDay implements Serializable {
   private Product product;
 
   @Temporal(TemporalType.DATE)
-  private Date choosenDate;
+  private Date chosenDate;
 
 
   // Getters and Setters
@@ -37,16 +38,16 @@ public class ProdOfDay implements Serializable {
   public Product getProduct() { return this.product; }
   public void setProduct(Product product) { this.product = product; }
 
-  public Date getChoosenDate() { return this.choosenDate; }
-  public void setChoosenDate(Date choosenDate) { this.choosenDate = choosenDate; }
+  public Date getChoosenDate() { return this.chosenDate; }
+  public void setChoosenDate(Date choosenDate) { this.chosenDate = choosenDate; }
 
 
   // Inits
   public ProdOfDay() { }
   
-  public ProdOfDay(Product product, Date choosenDate) {
+  public ProdOfDay(Product product, Date chosenDate) {
     this.product = product;
-    this.choosenDate = choosenDate;
+    this.chosenDate = chosenDate;
   }
 
 }
