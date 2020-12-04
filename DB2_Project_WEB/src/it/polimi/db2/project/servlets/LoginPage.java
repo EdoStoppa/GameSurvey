@@ -2,6 +2,8 @@ package it.polimi.db2.project.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.persistence.NonUniqueResultException;
@@ -71,7 +73,7 @@ public class LoginPage extends HttpServlet {
 		// Login action
 		if (pressedButton.equals("Go")) {
 			
-			String usrn = null;
+			String usrn =null;
 			String pwd = null;
 			
 			try {
@@ -108,8 +110,7 @@ public class LoginPage extends HttpServlet {
 			} else {
 				request.getSession().setAttribute("user", user);
 				String path = getServletContext().getContextPath() + "/Homepage";
-				response.sendRedirect(path);
-				
+				response.sendRedirect(path);	
 			}
 			
 		} else if (pressedButton.equals("Registrati")) {

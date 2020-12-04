@@ -12,6 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "AnswerLog", schema = "db2Project")
+@NamedQuery(name = "AnswerLog.getAnswersLogByProductId", query = "SELECT r FROM ProdOfDay r  WHERE r.prodOfDayId = ?1")
 
 public class AnswerLog implements Serializable {
 

@@ -26,6 +26,7 @@ public class ProdOfDayService {
 	public ProdOfDay getCurrenProdOfDay() throws Exception{
 		List<ProdOfDay> prodList;
 		Date currentDate = Calendar.getInstance().getTime();
+		
 		//currentDate
 		try {
 			prodList = em.createNamedQuery("ProdOfDay.getPOfDayByDate", ProdOfDay.class).setParameter(1, currentDate)
