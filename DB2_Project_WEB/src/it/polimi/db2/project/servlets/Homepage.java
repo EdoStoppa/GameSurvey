@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.Base64;
+
 import it.polimi.db2.project.entities.*;
 import it.polimi.db2.project.services.*;
 
@@ -60,6 +62,8 @@ public class Homepage extends HttpServlet {
             return;
         }
         
+        System.out.println("Product of the day retrieved ...");
+        
         printHtmlHeader(out, prod);
         printHtmlFooter(out);
 	}
@@ -72,19 +76,16 @@ public class Homepage extends HttpServlet {
 	}
 	
 	private void printHtmlHeader(PrintWriter out, Product prod) throws IOException {
-		String TITLE = (prod != null ? "Product of today (" + java.time.LocalDate.now() + "): " + prod.getProdName() : "No product today :(");
-				
+		String TITLE = (prod != null ? "Product of the day: " + prod.getProdName() : "No product today :(");
+		String PHOTO = (prod != null ? "<img src=\"data:image/png;base64, " + prod.getPhotoData() + "\"></img>" : "");
+		
         out.println("<body>");
         out.println("<html>");
         out.println("<head><title>" + TITLE + "</title></head>");
         out.println("<center><h1>" + TITLE + "</h1></center>");
+        out.println("<div><center>" + PHOTO + "</center></div>");
         // Now I should insert all the reviews, but that's easy, so another day :)
     }
-	
-	private void printHtmlError(PrintWriter out, String msg) throws IOException {
-        out.println("<p>" + msg + "</p>");
-
-	}
 	
 	private void printHtmlFooter(PrintWriter out) throws IOException {
         out.println("</html>");

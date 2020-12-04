@@ -1,6 +1,8 @@
 package it.polimi.db2.project.entities;
 
 import java.io.Serializable;
+import java.util.Base64;
+
 import javax.persistence.*;
 
 
@@ -46,5 +48,9 @@ public class Product implements Serializable {
     this.prodName = prodName;
     this.prodPhoto = prodPhoto;
   }
+  
+  public String getPhotoData() {
+		return Base64.getMimeEncoder().encodeToString(prodPhoto);
+	}
 
 }
