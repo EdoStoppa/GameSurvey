@@ -11,5 +11,6 @@
   <filter-mapping> 
     <filter-name>Checker</filter-name> 
     <url-pattern>/Homepage</url-pattern>
+    <url-pattern>/LeaderBoard</url-pattern>
   </filter-mapping> 
 </web-app>

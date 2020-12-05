@@ -51,10 +51,7 @@ public class User implements Serializable {
 
 
   // Inits
-  public User() {
-    blocked = false;
-    totPoints = 0;
-  }
+  public User() { }
 
   public User(String username, String passw, String email) {
     this.username = username;

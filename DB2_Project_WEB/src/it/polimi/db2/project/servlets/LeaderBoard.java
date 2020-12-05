@@ -55,9 +55,9 @@ public class LeaderBoard extends HttpServlet {
         
         try {
         	
-        	currentProductOfDay = prodOfDayService.getCurrenProdOfDay();
-        	todayAnswersLog = answerLogService.getAnswersForProduct(currentProductOfDay.getId());
-        	
+        	//currentProductOfDay = prodOfDayService.getCurrenProdOfDay();
+        	todayAnswersLog = answerLogService.getAnswersForProduct(1);
+    		
         	// Gets all the users from the todayAnswerLog list
         	todayActiveUsers = new ArrayList<User>();
         	for (AnswerLog answerLog : todayAnswersLog) {
@@ -66,12 +66,15 @@ public class LeaderBoard extends HttpServlet {
         	
         } catch (Exception e) {
         	printHtmlHeader(out);
+        	printHtmlError(out, e.getMessage());
             printHtmlFooter(out);
+            
             return;
         }
-        
+		
         // Create the page from the users' list ...
         printHtmlHeader(out);
+        printHtml(out, createTableFromUsers(todayActiveUsers));
         printHtmlFooter(out);
 	}
 
@@ -86,12 +89,60 @@ public class LeaderBoard extends HttpServlet {
 				
         out.println("<body>");
         out.println("<html>");
+        out.println("<head><title> LeaderBoard </title></head>");
+        out.println("<center><h1> LeaderBoard </h1></center>");
         
     }
 	
+	private String createTableFromUsers(List<User> usersList) {
+		
+		StringBuilder stringBuilder = new StringBuilder();
+
+		stringBuilder.append("<center> <table style = 'width:75%'>");
+		
+		// Title's section
+		stringBuilder.append("<tr>");
+		stringBuilder.append("<th> Username </th>");
+		stringBuilder.append("<th> Mail </th>");
+		stringBuilder.append("<th> Total points </th>");
+		stringBuilder.append("</tr>");
+		
+		// Users' section
+		for(User user : usersList) {
+
+			stringBuilder.append("<tr>");
+			
+			// Username
+			stringBuilder.append("<td>");
+			stringBuilder.append(user.getUsername());
+			stringBuilder.append("</td>");
+			
+			// Mail
+			stringBuilder.append("<td>");
+			stringBuilder.append(user.getEmail());
+			stringBuilder.append("</td>");
+			
+			// Points
+			stringBuilder.append("<td>");
+			stringBuilder.append(user.getTotPoints());
+			stringBuilder.append("</td>");
+			
+			stringBuilder.append("</tr>");
+			
+		}
+
+		stringBuilder.append("</table> </center>");
+		
+		return stringBuilder.toString();
+		
+	}
+	
+	private void printHtml(PrintWriter out, String htmlCode) throws IOException {
+        out.println("<div>" + htmlCode + "</div>");
+	}
+	
 	private void printHtmlError(PrintWriter out, String msg) throws IOException {
         out.println("<p>" + msg + "</p>");
-
 	}
 	
 	private void printHtmlFooter(PrintWriter out) throws IOException {
