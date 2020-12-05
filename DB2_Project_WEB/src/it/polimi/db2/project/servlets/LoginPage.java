@@ -26,6 +26,8 @@ public class LoginPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB(name = "it.polimi.db2.project.services/UserService")
 	private UserService usrService;
+	@EJB(name = "it.polimi.db2.project.services/AdminService")
+	private AdminService admService;
 	
 	private final String TITLE = "Login Page";
 	private final String DESCRIPTION = "Please, login to use the application";
@@ -108,8 +110,19 @@ public class LoginPage extends HttpServlet {
 		        printHtmlUserPasswError(out);
 		        printHtmlFooter(out);
 			} else {
+				String landingPage = null;
+				try {
+					// when implemented this should be changed to the admin page if true
+					landingPage = (admService.isAdmin(user.getId()) ? "/Homepage" : "/Homepage");
+				} catch (Exception e) {
+					e.printStackTrace();
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
+					return;
+				}
+				
 				request.getSession().setAttribute("user", user);
-				String path = getServletContext().getContextPath() + "/Homepage";
+
+				String path = getServletContext().getContextPath() + landingPage;
 				response.sendRedirect(path);	
 			}
 			
