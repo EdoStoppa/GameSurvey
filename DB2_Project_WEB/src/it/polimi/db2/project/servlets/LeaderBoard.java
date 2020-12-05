@@ -3,6 +3,8 @@ package it.polimi.db2.project.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -63,6 +65,18 @@ public class LeaderBoard extends HttpServlet {
         	for (AnswerLog answerLog : todayAnswersLog) {
         		todayActiveUsers.add(answerLog.getUser());
         	}
+        	
+        	// Sorts the user by their totalPoints field
+        	Collections.sort(todayActiveUsers, new Comparator<User>() {
+        		
+        		@Override
+        	    public int compare(User lhs, User rhs) {
+        	        if (lhs.getTotPoints() < rhs.getTotPoints()) { return 1; }
+        	        if (lhs.getTotPoints() > rhs.getTotPoints()) { return -1; }
+        	        return 0;
+        	    }
+        		
+        	});
         	
         } catch (Exception e) {
         	printHtmlHeader(out);

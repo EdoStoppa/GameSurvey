@@ -12,7 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "AnswerLog", schema = "db2Project")
-@NamedQuery(name = "AnswerLog.getAnswersLogByProductId", query = "SELECT r FROM AnswerLog r  WHERE r.prodOfDay.prodOfDayId = ?1 ORDER BY r.user.totPoints")
+@NamedQuery(name = "AnswerLog.getAnswersLogByProductId", query = "SELECT r FROM AnswerLog r  WHERE r.prodOfDay.prodOfDayId = ?1")
 
 public class AnswerLog implements Serializable {
 
