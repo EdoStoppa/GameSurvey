@@ -75,7 +75,7 @@ public class LoginPage extends HttpServlet {
 		// Login action
 		if (pressedButton.equals("Go")) {
 			
-			String usrn =null;
+			String usrn = null;
 			String pwd = null;
 			
 			try {
@@ -113,7 +113,7 @@ public class LoginPage extends HttpServlet {
 				String landingPage = null;
 				try {
 					// when implemented this should be changed to the admin page if true
-					landingPage = (admService.isAdmin(user.getId()) ? "/Homepage" : "/Homepage");
+					landingPage = (admService.isAdmin(user.getId()) ? "/Admin/Homepage" : "/Homepage");
 				} catch (Exception e) {
 					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");

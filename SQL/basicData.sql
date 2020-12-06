@@ -16,4 +16,4 @@ INSERT INTO AdminTable (userId) VALUES (1);
 # Product Data
 # Every image has to be in the path written in the secure_file_priv system variable, if there's none chose. every image has to be a png
 # The standard value for the secure_file_priv is '/var/lib/mysql-files/'
-INSERT INTO Product(prodName, prodPhoto) VALUES('<-- Product name -->', LOAD_FILE('<-- images path -->'));
+# INSERT INTO Product(prodName, prodPhoto) VALUES('<-- Product name -->', LOAD_FILE('<-- images path -->'));
