@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
-  <display-name>DB2_Project_WEB</display-name>
-  <welcome-file-list>
+	<display-name>DB2_Project_WEB</display-name>
+	<welcome-file-list>
 		<welcome-file>LoginPage</welcome-file>
-  </welcome-file-list>
-  <filter>
-  <filter-name>Checker</filter-name> 
-      <filter-class>it.polimi.db2.project.filters.LoginFilter</filter-class> 
-  </filter> 
-  <filter-mapping> 
-    <filter-name>Checker</filter-name> 
-    <url-pattern>/Homepage</url-pattern>
-    <url-pattern>/LeaderBoard</url-pattern>
-    <url-pattern>/Admin/*</url-pattern>
-  </filter-mapping> 
+	</welcome-file-list>
+	
+	<!--Filter block-->
+	<filter>
+		<filter-name>AdminChecker</filter-name>
+		<filter-class>it.polimi.db2.project.filters.AdminFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AdminChecker</filter-name>
+		<url-pattern>/AdminHomepage</url-pattern>
+		<url-pattern>/AdminCreatePage</url-pattern>
+		<url-pattern>/AdminInspectPage</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>Checker</filter-name>
+		<filter-class>it.polimi.db2.project.filters.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>Checker</filter-name>
+		<url-pattern>/Homepage</url-pattern>
+		<url-pattern>/LeaderBoard</url-pattern>
+		<url-pattern>/AdminHomepage</url-pattern>
+		<url-pattern>/AdminCreatePage</url-pattern>
+		<url-pattern>/AdminInspectPage</url-pattern>
+	</filter-mapping>
+	
 </web-app>
