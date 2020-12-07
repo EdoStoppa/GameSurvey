@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Homepage
  */
-@WebServlet("/Admin/Homepage")
+@WebServlet("/AdminHomepage")
 public class AdminHomepage extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -52,22 +52,22 @@ public class AdminHomepage extends HttpServlet {
 			}
 			
 		} catch (Exception e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing button action");
 			return;
 		}
 		
 		if (pressedButton.equals("Create")) {
-			String path = getServletContext().getContextPath() + "/Admin/Create";
+			String path = getServletContext().getContextPath() + "/AdminCreate";
 			response.sendRedirect(path);
 		}
 		
 		if (pressedButton.equals("Inspect")) {
-			String path = getServletContext().getContextPath() + "/Admin/Inspect";
+			String path = getServletContext().getContextPath() + "/AdminInspect";
 			response.sendRedirect(path);
 		}
 
 		if (pressedButton.equals("Delete")) {
-			String path = getServletContext().getContextPath() + "/Admin/Delete";
+			String path = getServletContext().getContextPath() + "/AdminDelete";
 			response.sendRedirect(path);
 		}
 		
@@ -80,7 +80,7 @@ public class AdminHomepage extends HttpServlet {
         out.println("<center><h1> Administration Page </h1></center>");
         out.println("<p> Please select an action </p>");
         out.println("</hr>");
-        out.println("<form action=\"AdminPage\" method=\"POST\">");
+        out.println("<form action=\"AdminHomepage\" method=\"POST\">");
         out.println("<input name=\"action\" type=\"submit\" value=\"Create\"/>");
         out.println("<input name=\"action\" type=\"submit\" value=\"Inspect\"/>");
         out.println("<input name=\"action\" type=\"submit\" value=\"Delete\"/>");

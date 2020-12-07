@@ -23,24 +23,31 @@ public class ProdOfDayService {
 
 	public ProdOfDayService() { }
 	
-	public ProdOfDay getCurrenProdOfDay() throws Exception{
-		List<ProdOfDay> prodList;
-		Date currentDate = Calendar.getInstance().getTime();
+	public ProdOfDay getCurrenProdOfDay() throws Exception {
 		
-		//currentDate
+		Date currentDate = Calendar.getInstance().getTime();
+		return getProductOfDayFor(currentDate);
+		
+	}
+
+	public ProdOfDay getProductOfDayFor(Date date) throws Exception {
+		
+		List<ProdOfDay> prodList;
+		
 		try {
-			prodList = em.createNamedQuery("ProdOfDay.getPOfDayByDate", ProdOfDay.class).setParameter(1, currentDate)
+			prodList = em.createNamedQuery("ProdOfDay.getPOfDayByDate", ProdOfDay.class).setParameter(1, date)
 					.getResultList();
 		} catch (PersistenceException e) {
-			throw new Exception("Could not get product of the day");
+			throw new Exception("Could not get product of the day for the specified date");
 		}
 		
 		if (prodList.isEmpty())
-			throw new Exception("No product found :(");
+			throw new Exception("No product found");
 		if (prodList.size() == 1)
 			return prodList.get(0);
 		
-		throw new NonUniqueResultException("More than one product for today :(");
+		throw new NonUniqueResultException("More than one product for the specified date");
+		
 	}
-
+	
 }

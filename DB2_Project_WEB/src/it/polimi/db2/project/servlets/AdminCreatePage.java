@@ -16,8 +16,9 @@ import it.polimi.db2.project.services.ProductService;
 /**
  * Servlet implementation class AdminCreatePage
  */
-@WebServlet("/AdminCreatePage")
+@WebServlet("/Create")
 public class AdminCreatePage extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	@EJB(name = "it.polimi.db2.project.services/ProdOfayService")
 	private ProdOfDayService pOfDayService;
@@ -100,6 +101,5 @@ public class AdminCreatePage extends HttpServlet {
         out.println("</body>");
         out.close();
     }
-
 
 }
