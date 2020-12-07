@@ -36,6 +36,8 @@ public class AnswerLog implements Serializable {
   private Date logTime;
 
   private Boolean confirmed;
+  
+  private int points;
 
   // Getters and Setters
   public int getId() { return this.logId; }
@@ -52,15 +54,18 @@ public class AnswerLog implements Serializable {
   public Boolean getConfirmed() { return this.confirmed; }
   public void setConfirmed(Boolean confirmed) { this.confirmed = confirmed; }
 
+  public int getPoints() { return this.points; }
+  public void setPoints(int points) { this.points = points; }
 
   // Inits
   public AnswerLog() { }
   
-  public AnswerLog(User user, ProdOfDay prodOfDay, Date logTime, Boolean confirmed) {
+  public AnswerLog(User user, ProdOfDay prodOfDay, Date logTime, Boolean confirmed, int points) {
     this.user = user;
     this.prodOfDay = prodOfDay;
     this.logTime = logTime;
     this.confirmed = confirmed;
+    this.points = points;
   }
 
 }
