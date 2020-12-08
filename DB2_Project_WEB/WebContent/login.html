@@ -7,10 +7,11 @@
 <body>
 	<h1>Welcome to GameSurvey</h1>
 
-	<form action="LoginPage" method="POST">
+	<form action="CheckLogin" method="POST">
 		Username: <input type="text" name="username" required> <br>
-		Password: <input type="password" name="pwd" required><br>
-		<input type="submit" value="login">
+		Password: <input type="password" name="password" required><br>
+		<input name="action" type="submit" value="Login">
+		<input name="action" type="submit" value="Register"/>
 		<p th:text=" ${errorMsg}"></p>
 	</form>
 
