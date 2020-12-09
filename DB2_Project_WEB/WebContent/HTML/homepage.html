@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Homepage</title>
+</head>
+<body>
+	<h1 th:if="${prod != null}">Product of the day: <span th:text="${prod.prodName}">PRODUCT</span></h1>
+	<h1 th:if="${prod == null}">No product for today :(</h1>
+
+	<p th:if="${prod != null}">
+		<img th:src="*{'data:image/png;base64,' + image}"></img>
+	</p>
+	
+	<form th:if="${prod != null}" action="GoToHomepage" method="POST">
+		If you're interested in completing the survey, please click here: <input name="action" type="submit" value="Survey"/><br>
+	</form>
+	
+	<form th:if="${prod != null}" action="GoToHomepage" method="POST">
+		If you're interested in today's leaderboard, please click here: <input name="action" type="submit" value="Leaderboard"/><br>
+	</form>
+
+</body>
+</html>

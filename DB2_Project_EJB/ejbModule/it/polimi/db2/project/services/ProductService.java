@@ -4,7 +4,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import it.polimi.db2.project.entities.Product;
-//import it.polimi.db2.album.exceptions.*;
+import it.polimi.db2.project.exceptions.*;
 
 
 @Stateless
@@ -21,7 +21,7 @@ public class ProductService {
 		if(prod != null)
 			return prod;
 		
-		throw new Exception("Product not found :(");
+		throw new NotFoundException("Product not found :(");
 	}
 
 }

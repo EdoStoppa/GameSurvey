@@ -118,7 +118,7 @@ public class CheckLogin extends HttpServlet {
 						landingPage = "/AdminHomepage";
 						request.getSession().setAttribute("admin", true);
 					} else {
-						landingPage = "/Homepage";
+						landingPage = "/GoToHomepage";
 						request.getSession().setAttribute("admin", false);
 					}
 				} catch (Exception e) {

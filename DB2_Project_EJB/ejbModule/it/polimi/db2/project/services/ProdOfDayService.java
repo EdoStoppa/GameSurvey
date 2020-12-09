@@ -6,13 +6,11 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 
 import it.polimi.db2.project.entities.ProdOfDay;
-//import it.polimi.db2.project.exceptions.*;
-import it.polimi.db2.project.entities.User;
+import it.polimi.db2.project.exceptions.*;
 
 
 @Stateless
@@ -35,18 +33,19 @@ public class ProdOfDayService {
 		List<ProdOfDay> prodList;
 		
 		try {
-			prodList = em.createNamedQuery("ProdOfDay.getPOfDayByDate", ProdOfDay.class).setParameter(1, date)
-					.getResultList();
+			prodList = em.createNamedQuery("ProdOfDay.getPOfDayByDate", ProdOfDay.class).setParameter(1, date).getResultList();
 		} catch (PersistenceException e) {
-			throw new Exception("Could not get product of the day for the specified date");
+			e.printStackTrace();
+			throw new DatabaseException("DB Error");
 		}
 		
+		
 		if (prodList.isEmpty())
-			throw new Exception("No product found");
+			return null;
 		if (prodList.size() == 1)
 			return prodList.get(0);
 		
-		throw new NonUniqueResultException("More than one product for the specified date");
+		throw new NotUniqueException("More than one product for the specified date");
 		
 	}
 	

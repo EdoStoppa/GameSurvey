@@ -24,7 +24,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>Checker</filter-name>
-		<url-pattern>/Homepage</url-pattern>
+		<url-pattern>/GoToHomepage</url-pattern>
 		<url-pattern>/LeaderBoard</url-pattern>
 		<url-pattern>/AdminHomepage</url-pattern>
 		<url-pattern>/AdminCreate</url-pattern>
