@@ -126,7 +126,7 @@ public class CheckLogin extends HttpServlet {
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
 					return;
 				}
-				
+
 				request.getSession().setAttribute("user", user);
 				path = getServletContext().getContextPath() + landingPage;
 				response.sendRedirect(path);	

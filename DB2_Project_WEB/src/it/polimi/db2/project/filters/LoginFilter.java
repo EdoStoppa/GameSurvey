@@ -37,7 +37,7 @@ public class LoginFilter implements Filter {
 		// java.lang.String loginpath = "/index.html";
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		String loginpath = req.getServletContext().getContextPath() + "/LoginPage";
+		String loginpath = req.getServletContext().getContextPath() + "/CheckLogin";
 
 		HttpSession s = req.getSession();
 		if (s.isNew() || s.getAttribute("user") == null) {

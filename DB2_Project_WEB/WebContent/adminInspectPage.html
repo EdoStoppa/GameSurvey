@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="ISO-8859-1">
+
+<title>Login page</title>
+</head>
+
+<body>
+
+	<h1> Inspection Page </h1>
+
+    <form action="AdminInspect" method="POST">
+    	<input type="date" name="date" value="01-01-1971"/>
+        <input name="action" type="submit" value="Select"/>
+	</form>
+
+	<!-- Inspection div -->
+	<div th:if="${ confirmedUsers != null ||  cancelledUsers != null }">
+		<table>
+			<thead>
+				<tr>
+					<th>Confirmed</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${ confirmedUsers }">
+					<td th:text="${ user.email }"></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table>
+			<thead>
+				<tr>
+					<th>Cancelled</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${ cancelledUsers }">
+					<td th:text="${ user.email }"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+
+</html>

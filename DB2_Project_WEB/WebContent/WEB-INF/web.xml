@@ -13,8 +13,9 @@
 	<filter-mapping>
 		<filter-name>AdminChecker</filter-name>
 		<url-pattern>/AdminHomepage</url-pattern>
-		<url-pattern>/AdminCreatePage</url-pattern>
-		<url-pattern>/AdminInspectPage</url-pattern>
+		<url-pattern>/AdminCreate</url-pattern>
+		<url-pattern>/AdminInspect</url-pattern>
+		<url-pattern>/AdminDelete</url-pattern>
 	</filter-mapping>
 
 	<filter>
@@ -26,8 +27,9 @@
 		<url-pattern>/Homepage</url-pattern>
 		<url-pattern>/LeaderBoard</url-pattern>
 		<url-pattern>/AdminHomepage</url-pattern>
-		<url-pattern>/AdminCreatePage</url-pattern>
-		<url-pattern>/AdminInspectPage</url-pattern>
+		<url-pattern>/AdminCreate</url-pattern>
+		<url-pattern>/AdminInspect</url-pattern>
+		<url-pattern>/AdminDelete</url-pattern>
 	</filter-mapping>
 	
 </web-app>
