@@ -3,11 +3,18 @@ package it.polimi.db2.project.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 /**
  * Servlet implementation class Homepage
@@ -16,29 +23,38 @@ import javax.servlet.http.HttpServletResponse;
 public class AdminHomepage extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+	private TemplateEngine templateEngine;
+
+	
     public AdminHomepage() {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+    public void init() throws ServletException {
+    	
+		ServletContext servletContext = getServletContext();
+		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+		
+		templateResolver.setTemplateMode(TemplateMode.HTML);
+		this.templateEngine = new TemplateEngine();
+		this.templateEngine.setTemplateResolver(templateResolver);
+		
+		templateResolver.setSuffix(".html");
+		
+	}
+    
+	// GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
         
-        printHtmlHeader(out);
-        printHtmlFooter(out);
+        ServletContext servletContext = getServletContext();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		String path = "/adminHomepage.html";
+		templateEngine.process(path, ctx, response.getWriter());
+		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	// POST
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String pressedButton = null;
@@ -56,42 +72,31 @@ public class AdminHomepage extends HttpServlet {
 			return;
 		}
 		
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpSession s = req.getSession();
+		
+		request.getSession().setAttribute("admin", true);
+		request.getSession().setAttribute("user", s.getAttribute("user"));
+		
+		System.out.println("1");
 		if (pressedButton.equals("Create")) {
+			System.out.println("2");
 			String path = getServletContext().getContextPath() + "/AdminCreate";
 			response.sendRedirect(path);
 		}
 		
 		if (pressedButton.equals("Inspect")) {
+			System.out.println("3");
 			String path = getServletContext().getContextPath() + "/AdminInspect";
 			response.sendRedirect(path);
 		}
 
 		if (pressedButton.equals("Delete")) {
+			System.out.println("4");
 			String path = getServletContext().getContextPath() + "/AdminDelete";
 			response.sendRedirect(path);
 		}
 		
 	}
-	
-	private void printHtmlHeader(PrintWriter out) throws IOException {
-        out.println("<body>");
-        out.println("<html>");
-        out.println("<head><title> Admin </title></head>");
-        out.println("<center><h1> Administration Page </h1></center>");
-        out.println("<p> Please select an action </p>");
-        out.println("</hr>");
-        out.println("<form action=\"AdminHomepage\" method=\"POST\">");
-        out.println("<input name=\"action\" type=\"submit\" value=\"Create\"/>");
-        out.println("<input name=\"action\" type=\"submit\" value=\"Inspect\"/>");
-        out.println("<input name=\"action\" type=\"submit\" value=\"Delete\"/>");
-        out.println("</form>");
-        out.println("<hr/>");
-    }
-	
-	private void printHtmlFooter(PrintWriter out) throws IOException {
-        out.println("</html>");
-        out.println("</body>");
-        out.close();
-    }
 
 }
