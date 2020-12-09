@@ -135,7 +135,7 @@ public class CheckLogin extends HttpServlet {
 			
 		} else if(pressedButton.equals("Register")) {
 			// Send the user to register page
-			String path = getServletContext().getContextPath() + "/RegisterPage";
+			String path = getServletContext().getContextPath() + "/GoToRegisterPage";
 			
 			response.sendRedirect(path);
 		}

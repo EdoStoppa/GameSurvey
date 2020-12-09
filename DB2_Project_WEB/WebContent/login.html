@@ -11,9 +11,15 @@
 		Username: <input type="text" name="username" required> <br>
 		Password: <input type="password" name="password" required><br>
 		<input name="action" type="submit" value="Login" />
-		<input name="action" type="submit" value="Register"/>
 		<p th:text = "${errorMsg}"></p>
 	</form>
+	
+
+	<form action="CheckLogin" method="POST">
+		If you are not registered, please click here <input name="action" type="submit" value="Register"/>
+	</form>
+
+	
 
 </body>
 </html>

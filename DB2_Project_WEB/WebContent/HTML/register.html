@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Register page</title>
+</head>
+<body>
+	<h1>Please, register here to use GameSurvey</h1>
+
+	<form action="RegisterUser" method="POST">
+		Email:    		 <input type="text" name="email" required> <br>
+		Username: 		 <input type="text" name="username" required> <br>
+		Password: 		 <input type="password" name="password" required><br>
+		Repeat Password: <input type="password" name="confirmedPassword" required><br>
+		<input name="action" type="submit" value="Register"/>
+		<p th:text = "${errorMsg}"></p>
+	</form>
+
+</body>
+</html>
