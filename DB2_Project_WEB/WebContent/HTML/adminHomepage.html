@@ -11,14 +11,19 @@
 
 	<h1> Administration Page </h1>
 
-	<form action="CheckLogin" method="POST">
 
-		<p> Please select an action </p>
-	
-		<input name="action" type="submit" value="Create"/>
-        <input name="action" type="submit" value="Inspect"/>
-        <input name="action" type="submit" value="Delete"/>
+	<p> Please select an action </p>
 		
+	<form action="GoToAdminCreatePage" method="POST">
+		<input name="action" type="submit" value="Create"/>
+	</form>
+	
+	<form action="GoToAdminInspectPage" method="POST">
+        <input name="action" type="submit" value="Inspect"/>
+	</form>
+	
+	<form action="GoToAdminDeletePage" method="POST">
+        <input name="action" type="submit" value="Delete"/>
 	</form>
 
 </body>

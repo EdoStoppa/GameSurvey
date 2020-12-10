@@ -115,7 +115,7 @@ public class CheckLogin extends HttpServlet {
 				String landingPage;
 				try {
 					if(admService.isAdmin(user.getId())) {
-						landingPage = "/AdminHomepage";
+						landingPage = "/GoToAdminHomepage";
 						request.getSession().setAttribute("admin", true);
 					} else {
 						landingPage = "/GoToHomepage";

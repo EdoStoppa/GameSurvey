@@ -19,15 +19,15 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 /**
  * Servlet implementation class Homepage
  */
-@WebServlet("/AdminHomepage")
-public class AdminHomepage extends HttpServlet {
+@WebServlet("/GoToAdminHomepage")
+public class GoToAdminHomepage extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
 	private TemplateEngine templateEngine;
 
 	
-    public AdminHomepage() {
+    public GoToAdminHomepage() {
         super();
     }
 
@@ -49,7 +49,7 @@ public class AdminHomepage extends HttpServlet {
         
         ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		String path = "/adminHomepage.html";
+		String path = "/HTML/adminHomepage.html";
 		templateEngine.process(path, ctx, response.getWriter());
 		
 	}
@@ -57,6 +57,8 @@ public class AdminHomepage extends HttpServlet {
 	// POST
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		doGet(request, response);
+		/*
 		String pressedButton = null;
 		
 		try {
@@ -96,7 +98,7 @@ public class AdminHomepage extends HttpServlet {
 			String path = getServletContext().getContextPath() + "/AdminDelete";
 			response.sendRedirect(path);
 		}
-		
+	*/	
 	}
 
 }
