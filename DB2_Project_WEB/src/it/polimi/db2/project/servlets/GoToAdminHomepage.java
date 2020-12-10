@@ -56,49 +56,7 @@ public class GoToAdminHomepage extends HttpServlet {
 
 	// POST
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		doGet(request, response);
-		/*
-		String pressedButton = null;
-		
-		try {
-
-			pressedButton = request.getParameter("action");
-			
-			if (pressedButton == null) {
-				throw new Exception("Missing parameter in request");
-			}
-			
-		} catch (Exception e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing button action");
-			return;
-		}
-		
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpSession s = req.getSession();
-		
-		request.getSession().setAttribute("admin", true);
-		request.getSession().setAttribute("user", s.getAttribute("user"));
-		
-		System.out.println("1");
-		if (pressedButton.equals("Create")) {
-			System.out.println("2");
-			String path = getServletContext().getContextPath() + "/AdminCreate";
-			response.sendRedirect(path);
-		}
-		
-		if (pressedButton.equals("Inspect")) {
-			System.out.println("3");
-			String path = getServletContext().getContextPath() + "/AdminInspect";
-			response.sendRedirect(path);
-		}
-
-		if (pressedButton.equals("Delete")) {
-			System.out.println("4");
-			String path = getServletContext().getContextPath() + "/AdminDelete";
-			response.sendRedirect(path);
-		}
-	*/	
 	}
 
 }

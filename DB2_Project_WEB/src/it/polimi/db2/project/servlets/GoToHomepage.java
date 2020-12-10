@@ -94,7 +94,7 @@ public class GoToHomepage extends HttpServlet {
 		doGet(request, response);
 	}
 	
-private void processPage(HttpServletRequest request, HttpServletResponse response, Product prod) throws IOException {
+	private void processPage(HttpServletRequest request, HttpServletResponse response, Product prod) throws IOException {
 		
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());

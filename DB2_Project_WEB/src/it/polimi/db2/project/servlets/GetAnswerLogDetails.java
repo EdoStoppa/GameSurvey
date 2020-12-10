@@ -63,36 +63,6 @@ public class GetAnswerLogDetails extends HttpServlet {
     // GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		/*response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
-
-		HttpSession session = req.getSession();
-		
-		//Date selectedDate = (Date) session.getAttribute("date");
-		
-		// Checks if a date has been selected or not
-		if (selectedDate == null) {
-			
-		    printHtmlHeader(out);
-			printHtmlDatePicker(out);
-		    printHtmlFooter(out);
-			
-		} else {
-			
-			printHtmlHeader(out);
-			printHtmlStatsSection(out, selectedDate);
-		    printHtmlFooter(out);
-		    
-		}*/
-		
-		//ServletContext servletContext = getServletContext();
-		//final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		//String path = "/HTML/adminInspectPage.html";
-		//templateEngine.process(path, ctx, response.getWriter());
-		
 		try {
 
 			// Extract the date and sets it into the session
