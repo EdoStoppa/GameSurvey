@@ -41,5 +41,14 @@ BEGIN
   END IF;
 END$$
 
+# This trigger is needed because using ON DELETE CASCADE on prodOfDayId doesn't execute all the triggers on AnswerLog
+CREATE TRIGGER DeleteAnswerOfSurvey 
+BEFORE DELETE ON ProdOfDay FOR EACH ROW  
+BEGIN
+	DELETE FROM AnswerLog
+    WHERE 
+		OLD.prodOfDayId = AnswerLog.prodOfDayId;
+END$$
+
 # Reset the Delimiter
 DELIMITER ;

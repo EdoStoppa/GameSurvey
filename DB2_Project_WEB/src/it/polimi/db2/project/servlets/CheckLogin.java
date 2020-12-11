@@ -114,6 +114,12 @@ public class CheckLogin extends HttpServlet {
 				// Query DB to know if user is an admin, and set corresponding landing page
 				String landingPage;
 				try {
+					
+					if(user.getBlocked()) {
+						response.sendRedirect(getServletContext().getContextPath() + "/GoToBlocked");
+						return;
+					}
+					
 					if(admService.isAdmin(user.getId())) {
 						landingPage = "/GoToAdminHomepage";
 						request.getSession().setAttribute("admin", true);
