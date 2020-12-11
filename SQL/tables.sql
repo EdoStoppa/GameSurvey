@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS Product;
 CREATE TABLE Product(
 prodId INT NOT NULL AUTO_INCREMENT, 
 prodName varchar(45) NOT NULL,
-prodPhoto BLOB NOT NULL,
+prodPhoto MEDIUMBLOB NOT NULL,
 PRIMARY KEY(prodId)
 );
 

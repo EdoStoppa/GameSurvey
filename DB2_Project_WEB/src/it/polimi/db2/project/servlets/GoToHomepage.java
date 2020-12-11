@@ -67,22 +67,19 @@ public class GoToHomepage extends HttpServlet {
 			return;
         }
         
-        
-        // Try to get all the product info
-        Product prod = null;
-        try {
-        	// if pOfDay is null it means that no product of the day is set
-        	if(pOfDay != null)
-        		prod = prodService.getProdById(pOfDay.getProduct().getId());
-        } catch (NotFoundException e) {
-        	response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Missing product info");
-            return;
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Error");
-            return;
+        // If a product of the day isn't present, pass null to render a "sorry" page
+        if(pOfDay == null) {
+        	processPage(request, response, null);
+    	   	return;
         }
-                
+        
+        Product prod = pOfDay.getProduct();
+        if(prod == null) {
+        	// For some unknown reason no product info is stored on DB, so send an error
+        	response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Product info missing");
+			return;
+        }
+        
         processPage(request, response, prod);
         
 	}
@@ -99,7 +96,7 @@ public class GoToHomepage extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("prod", prod);
-		ctx.setVariable("image", prod.getPhotoData());
+		ctx.setVariable("image", (prod != null ? prod.getPhotoData() : null));
 		String path = "/HTML/homepage.html";
 		templateEngine.process(path, ctx, response.getWriter());
 
