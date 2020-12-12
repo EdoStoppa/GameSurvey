@@ -2,6 +2,8 @@ package it.polimi.db2.project.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -12,7 +14,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "ProdOfDay", schema = "db2Project")
+
+@NamedQuery(name = "ProdOfDay.getAll", query = "SELECT r FROM ProdOfDay r")
 @NamedQuery(name = "ProdOfDay.getPOfDayByDate", query = "SELECT r FROM ProdOfDay r  WHERE r.chosenDate = ?1")
+@NamedQuery(name = "ProdOfDay.getPOfDayById", query = "SELECT r FROM ProdOfDay r  WHERE r.prodOfDayId = ?1")
 
 public class ProdOfDay implements Serializable {
 
@@ -27,20 +32,44 @@ public class ProdOfDay implements Serializable {
   @ManyToOne
   @JoinColumn(name = "prodId")
   private Product product;
-
+  
   @Temporal(TemporalType.DATE)
   private Date chosenDate;
 
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "prodOfDay", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<AnswerLog> answerLogs;
+  
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "prodOfDay", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Question> questions;
 
+  
   // Getters and Setters
   public int getId() { return this.prodOfDayId; }
 
   public Product getProduct() { return this.product; }
   public void setProduct(Product product) { this.product = product; }
 
-  public Date getChoosenDate() { return this.chosenDate; }
-  public void setChoosenDate(Date choosenDate) { this.chosenDate = choosenDate; }
+  public Date getChosenDate() { return this.chosenDate; }
+  public void setChosenDate(Date chosenDate) { this.chosenDate = chosenDate; }
 
+  public List<AnswerLog> getAnswerLogs() { return this.answerLogs; }
+  public void addAnswerLog(AnswerLog answerLog) {
+	  this.answerLogs.add(answerLog);
+	  answerLog.setProdOfDay(this);
+  }
+  public void removeAnswerLog(AnswerLog answerLog) {
+	  this.answerLogs.remove(answerLog);
+  }
+  
+  public List<Question> getQuestions() { return this.questions; }
+  public void addQuestion(Question question) {
+	  this.questions.add(question); 
+	  question.setProdOfDay(this);
+  }
+  public void removeQuestion(Question question) {
+	  this.questions.remove(question);
+  }
+  
 
   // Inits
   public ProdOfDay() { }

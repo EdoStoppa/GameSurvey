@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Script to set the maximum date for the datePicker -->
+<script type = "text/javascript">
+
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1; 
+	var yyyy = today.getFullYear();
+	 
+	if(dd < 10){ dd = '0' + dd; } 
+	if(mm < 10){ mm = '0' + mm; } 
+	
+	today = dd + '-' + mm + '-' + yyyy;
+	document.getElementById("datePicker").setAttribute("value", today);
+	document.getElementById("datePicker").setAttribute("max", today);
+
+</script>
+
+<head>
+<meta charset="ISO-8859-1">
+
+<title>Deletion page</title>
+</head>
+
+<body>
+
+	<h1> Deletion Page </h1>
+
+    <table>
+		<thead>
+			<tr>
+				<th> Product name </th>
+				<th> Date </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="productOfDay : ${ productsOfDay }">
+				<td th:text="${ productOfDay.product.prodName }"></td>
+				<td th:text="${ productOfDay.chosenDate }"></td>
+				<td> <a th:href="@{/DeleteQuestionnaires(productOfDayId=${productOfDay.Id})}"> Delete </a> </td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div th:if="${ error != null }">
+		<p th:text="${ error }"></p>
+	</div>
+
+</body>
+
+</html>

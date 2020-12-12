@@ -1,6 +1,8 @@
 package it.polimi.db2.project.entities;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -27,7 +29,7 @@ public class Question implements Serializable {
   private ProdOfDay prodOfDay;
 
   private String question;
-
+  
 
   // Getters and Setters
   public int getId() { return this.questId; }
@@ -36,8 +38,8 @@ public class Question implements Serializable {
   public void setProdOfDay(ProdOfDay prodOfDay) { this.prodOfDay = prodOfDay; }
 
   public String getQuestion() { return this.question; }
-	public void setQuestion(String question) { this.question = question; }
-
+  public void setQuestion(String question) { this.question = question; }
+	
 
   // Inits
   public Question() { }

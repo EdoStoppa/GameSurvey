@@ -49,4 +49,50 @@ public class ProdOfDayService {
 		
 	}
 	
+	public ProdOfDay getProductOfDayFor(Integer id) throws Exception {
+		
+		List<ProdOfDay> prodList;
+		
+		try {
+			prodList = em.createNamedQuery("ProdOfDay.getPOfDayById", ProdOfDay.class).setParameter(1, id).getResultList();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new DatabaseException("DB Error");
+		}
+		
+		
+		if (prodList.isEmpty())
+			return null;
+		if (prodList.size() == 1)
+			return prodList.get(0);
+		
+		throw new NotUniqueException("More than one product for the specified date");
+		
+	}
+	
+	public List<ProdOfDay> getAll() throws Exception {
+		
+		List<ProdOfDay> prodList;
+
+		try {
+			prodList = em.createNamedQuery("ProdOfDay.getAll", ProdOfDay.class).getResultList();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new DatabaseException("DB Error");
+		}
+
+		if (prodList.isEmpty())
+			return null;
+		
+		return prodList;
+		
+	}
+	
+	public void deleteFor(Integer id) throws Exception {
+		
+		ProdOfDay productOfDay = getProductOfDayFor(id);
+		em.remove(productOfDay);
+		
+	}
+	
 }
