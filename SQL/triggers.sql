@@ -21,16 +21,16 @@ CREATE TRIGGER IncreaseTotPoints
 AFTER INSERT ON AnswerLog FOR EACH ROW
 BEGIN
 	UPDATE UserTable
-		SET totPoints = totPoints + NEW.points
-		WHERE userId = NEW.userId;
+		SET UserTable.totPoints = UserTable.totPoints + NEW.points
+		WHERE UserTable.userId = NEW.userId;
 END $$
 
 CREATE TRIGGER DecreaseTotPoints
 BEFORE DELETE ON AnswerLog FOR EACH ROW
 BEGIN
 	UPDATE UserTable
-		SET totPoints = totPoints - OLD.points
-		WHERE userId = OLD.userId;
+		SET UserTable.totPoints = UserTable.totPoints - OLD.points
+		WHERE UserTable.userId = OLD.userId;
 END $$
     
 CREATE TRIGGER AddToLeaderBoard 
