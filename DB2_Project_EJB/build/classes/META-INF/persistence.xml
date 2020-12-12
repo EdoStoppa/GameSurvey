@@ -10,7 +10,6 @@
 		<class>it.polimi.db2.project.entities.Question</class>
 		<class>it.polimi.db2.project.entities.Stat</class>
 		<class>it.polimi.db2.project.entities.User</class>
-		<class>it.polimi.db2.project.entities.FullAnswerId</class>
 		<class>it.polimi.db2.project.entities.Leaderboard</class>
 	</persistence-unit>
 </persistence>

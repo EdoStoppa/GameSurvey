@@ -27,6 +27,7 @@ public class Stat implements Serializable {
   private int statId;
 
   @OneToOne
+  @JoinColumn(name = "logId")
   private AnswerLog answerLog;
 
   private String sex;
