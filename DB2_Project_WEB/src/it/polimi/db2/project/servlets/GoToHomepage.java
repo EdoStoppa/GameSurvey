@@ -80,6 +80,7 @@ public class GoToHomepage extends HttpServlet {
 			return;
         }
         
+        request.getSession().setAttribute("pOfDayId", pOfDay.getId());
         processPage(request, response, prod);
         
 	}
