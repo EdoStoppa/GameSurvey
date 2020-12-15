@@ -26,6 +26,7 @@
 		<filter-name>Checker</filter-name>
 		<url-pattern>/GoToHomepage</url-pattern>
 		<url-pattern>/GoToLeaderBoard</url-pattern>
+		<url-pattern>/GoToSurvey</url-pattern>
 		<url-pattern>/GoToAdminHomepage</url-pattern>
 		<url-pattern>/AdminCreate</url-pattern>
 		<url-pattern>/AdminInspect</url-pattern>

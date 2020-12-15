@@ -111,4 +111,17 @@ public class ProdOfDayService {
 		
 	}
 	
+	// Check if the prodOfDay (given by ID) is still current
+	public boolean isCurrent(int pOfDayId) throws Exception {
+			
+		ProdOfDay pOfDay = getCurrenProdOfDay();
+		
+		if(pOfDay != null) {
+			return (pOfDayId == pOfDay.getId());
+		}
+			
+		return false;
+		 
+	}
+	
 }

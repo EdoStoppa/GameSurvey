@@ -32,12 +32,8 @@ public class CheckLogin extends HttpServlet {
 	@EJB(name = "it.polimi.db2.project.services/AdminService")
 	private AdminService admService;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public CheckLogin() {
         super();
-        // TODO Auto-generated constructor stub
     }
     
     
@@ -50,9 +46,8 @@ public class CheckLogin extends HttpServlet {
 		templateResolver.setSuffix(".html");
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+    
+    // DO POST 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// Get which button was pressed
@@ -102,6 +97,7 @@ public class CheckLogin extends HttpServlet {
 			
 			String path;
 			if(user == null) {
+				
 				// Get back to login page displaying an error message
 				ServletContext servletContext = getServletContext();
 				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -111,6 +107,7 @@ public class CheckLogin extends HttpServlet {
 				return;
 				
 			} else {
+				
 				// Query DB to know if user is an admin, and set corresponding landing page
 				String landingPage;
 				try {
@@ -140,6 +137,7 @@ public class CheckLogin extends HttpServlet {
 			}
 			
 		} else if(pressedButton.equals("Register")) {
+			
 			// Send the user to register page
 			String path = getServletContext().getContextPath() + "/GoToRegisterPage";
 			

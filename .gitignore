@@ -1,3 +1,2 @@
-/DB2_Project_WEB/build/
-/DB2_Project_EJB/build/
-*.class
+DB2_Project_WEB/build/
+DB2_Project_EJB/build/

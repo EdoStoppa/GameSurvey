@@ -27,19 +27,20 @@ public class QuestionService {
 
 	public QuestionService() { }
 	
-	public List<Question> getQuestionList(int pOfDayId) {
-		
-		// First get the product of the day
+	// Retrieve from DB the correct prodOfDay and save the associated questions
+	public void setQuestList(int pOfDayId) throws Exception{ 
 		ProdOfDay pOfDay = em.find(ProdOfDay.class, pOfDayId);
+		
+		if(pOfDay == null)
+			throw new Exception();
+		
 		this.questList = new ArrayList<Question>(pOfDay.getQuestions());
-		
-		return this.questList;
-		
 	}
 	public List<Question> getQuestList() { return this.questList; }
 	
-	public List<String> getAnswerList() { return this.answerList; }
 	public void setAnswerList(List<String> answerList) { this.answerList = answerList; }
+	public List<String> getAnswerList() { return this.answerList; }
+	
 	
 	@Remove
 	public void remove() {}
