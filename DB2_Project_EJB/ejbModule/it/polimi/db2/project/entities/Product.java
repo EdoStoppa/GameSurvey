@@ -14,6 +14,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Product", schema = "db2Project")
 
+@NamedQuery(name = "Product.getAll", query = "SELECT r FROM Product r")
+
 public class Product implements Serializable {
 
   // Serializable

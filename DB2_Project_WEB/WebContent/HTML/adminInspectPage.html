@@ -19,29 +19,40 @@
 	<!-- Inspection div -->
 	<div th:if="${ confirmedUsers != null ||  cancelledUsers != null }">
 		<table>
-			<thead>
-				<tr>
-					<th>Confirmed</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="user : ${ confirmedUsers }">
-					<td th:text="${ user.email }"></td>
-				</tr>
-			</tbody>
-		</table>
-		
-		<table>
-			<thead>
-				<tr>
-					<th>Cancelled</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="user : ${ cancelledUsers }">
-					<td th:text="${ user.email }"></td>
-				</tr>
-			</tbody>
+			<tr> <td>
+			
+			<table>
+				<thead>
+					<tr>
+						<th>Confirmed</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${ confirmedUsers }">
+						<td th:text="${ user.email }"></td>
+						<!--  td> <a th:href="@{/action}"> Answers </a> </td-->
+					</tr>
+				</tbody>
+			</table>
+			
+			</td>
+			<td>
+			
+			<table>
+				<thead>
+					<tr>
+						<th>Cancelled</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${ cancelledUsers }">
+						<td th:text="${ user.email }"></td>
+						<!--  td> <a th:href="@{/action}"> Answers </a> </td-->
+					</tr>
+				</tbody>
+			</table>
+			
+			</td> </tr>
 		</table>
 	</div>
 

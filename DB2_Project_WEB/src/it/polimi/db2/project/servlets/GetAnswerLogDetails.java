@@ -66,8 +66,7 @@ public class GetAnswerLogDetails extends HttpServlet {
 		try {
 
 			// Extract the date and sets it into the session
-			String selectedDate = null;
-			selectedDate = request.getParameter("date");
+			String selectedDate = request.getParameter("date");
 			
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Date actualDate = (Date) dateFormat.parse(selectedDate);

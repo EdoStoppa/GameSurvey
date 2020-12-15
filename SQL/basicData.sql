@@ -23,7 +23,7 @@ INSERT INTO Product(prodName, prodPhoto) VALUES("Product Four", LOAD_FILE("/var/
 INSERT INTO Product(prodName, prodPhoto) VALUES("Product Five", LOAD_FILE("/var/lib/mysql-files/image.png"));
 
 # ProductOfDay Data
-INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (1, '19710101');
+INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (1, CURDATE());
 INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (2, '19710102');
 INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (3, '19710103');
 INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (4, '19710104');

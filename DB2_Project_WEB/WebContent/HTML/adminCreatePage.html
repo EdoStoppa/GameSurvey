@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="ISO-8859-1">
+
+<title>Creation page</title>
+</head>
+
+<body>
+
+	<h1> Creation Page </h1>
+
+	<div th:if="${ numberOfQuestions == null }">
+	
+	    <form action="GoToAdminCreatePage" method="POST">
+		
+			<!-- Products dropdown -->
+	        <p> Select the product: </p>
+			<select name="productId" id="productId">
+				<option th:each="p : ${ products }" th:value="${ p.Id }" th:text = "${ p.prodName }"> </option>
+			</select>
+			
+			<!-- Date -->
+	        <p> Select the date of the questionnaire: </p>
+	    	<input type="date" name="date" value="01-01-1971"/>
+	        
+	        <!-- Number of questions -->
+	        <p> Select the number of questions: </p>
+	        <input name="numberOfQuestions" type="number" value="4">
+	        
+	        <!-- Submit -->
+	        <input name="action" type="submit" value="Confirm"/>
+	        
+		</form>
+	
+	</div>
+
+	<form action="GoToAdminCreatePage" method="POST">
+		<div th:if="${ numberOfQuestions != null }">
+		
+			<table>
+			
+				<thead>
+					<tr>
+						<th> Insert the questions </th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="i : ${#numbers.sequence(1, numberOfQuestions)}">
+						<td> <input th:name="${i}" type="text"/> </td>
+					</tr>
+				</tbody>
+				
+			</table>
+			
+		    <!-- Submit -->
+		    <input name="action" type="submit" value="Register"/>
+		        
+		</div>
+
+	</form>
+</body>
+
+</html>

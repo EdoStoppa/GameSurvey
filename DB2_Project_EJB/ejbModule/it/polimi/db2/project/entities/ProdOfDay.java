@@ -1,6 +1,7 @@
 package it.polimi.db2.project.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -72,11 +73,15 @@ public class ProdOfDay implements Serializable {
   
 
   // Inits
-  public ProdOfDay() { }
+  public ProdOfDay() { 
+	this.questions = new ArrayList<Question>();
+  }
   
   public ProdOfDay(Product product, Date chosenDate) {
     this.product = product;
     this.chosenDate = chosenDate;
+    
+    this.questions = new ArrayList<Question>();
   }
 
 }
