@@ -29,6 +29,8 @@ public class GoToSurvey extends HttpServlet {
 	private TemplateEngine templateEngine;
 	@EJB(name = "it.polimi.db2.project.services/ProdOfayService")
 	private ProdOfDayService pOfDayService;
+	@EJB(name = "it.polimi.db2.project.services/QuestionService")
+	private QuestionService questService;
        
     public GoToSurvey() {
         super();
@@ -67,18 +69,6 @@ public class GoToSurvey extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Error");
-			return;
-		}
-		
-		     
-		// Create a new questionService, it will be used to store partial answers from the user until he/she complete the second part of the survey
-		QuestionService questService;
-		try {
-			InitialContext ic = new InitialContext();
-			questService = (QuestionService) ic.lookup("java:/openejb/local/QuestionServiceLocalBean");
-		} catch (Exception e) {
-			e.printStackTrace();
-        	response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Error");
 			return;
 		}
 		

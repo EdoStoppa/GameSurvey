@@ -5,8 +5,20 @@
 <title>Survey</title>
 </head>
 <body>
-	<h1> SURVEY</h1>
+	<h1> Survey (part 1) </h1>
 	
+	<p>Please note that every question is mandatory, so you can't proceed further if any of the questions haven't been answered</p>
+	
+	<form action="GoToHomepage" method="POST">
+	
+		<div th:each="quest : ${ questList }">
+			<span th:text="${quest.question}"> Question </span> <br>
+			<input type="text" name="${quest.questId}" required><br>
+		</div>
+		
+		<br><input name="action" type="submit" value="Next" />
+		
+	</form>
 
 </body>
 </html>
