@@ -28,6 +28,8 @@
 		<url-pattern>/GoToLeaderBoard</url-pattern>
 		<url-pattern>/GoToSurvey</url-pattern>
 		<url-pattern>/GoToAdminHomepage</url-pattern>
+		<url-pattern>/GoToStat</url-pattern>
+		<url-pattern>/RecordQuestAnswers</url-pattern>
 		<url-pattern>/AdminCreate</url-pattern>
 		<url-pattern>/AdminInspect</url-pattern>
 		<url-pattern>/AdminDelete</url-pattern>

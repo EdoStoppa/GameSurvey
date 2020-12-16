@@ -9,14 +9,16 @@
 	
 	<p>Please note that every question is mandatory, so you can't proceed further if any of the questions haven't been answered</p>
 	
-	<form action="GoToHomepage" method="POST">
+	<form action="RecordQuestAnswers" method="POST">
 	
-		<div th:each="quest : ${ questList }">
-			<span th:text="${quest.question}"> Question </span> <br>
-			<input type="text" name="${quest.questId}" required><br>
-		</div>
+		<div th:each="q : ${ questList }">
+			<span th:text="${q.question}"> Question </span> <br>
+			<input type="text" name="answList"><br>
+		</div> <br>
 		
-		<br><input name="action" type="submit" value="Next" />
+		<input name="action" type="submit" value="Next" /><br><br>
+		
+		<p th:text = "${errorMsg}"></p>
 		
 	</form>
 

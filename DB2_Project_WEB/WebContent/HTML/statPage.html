@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Survey</title>
+</head>
+<body>
+	<h1> Survey (part 2) </h1>
+	
+	<p>Please note this section isn't mandatory (but if completed, it will reward you with more points)</p>
+	
+	<form action="CompleteSurvey" method="POST">
+	
+		<br><br>
+		
+		<div>
+			<span> Please choose you sex: </span>			
+			<select name="usrSex">
+                         <option value=""> -- </option>
+                         <option value="Male">Male</option>
+                         <option value="Female">Female</option>
+                         <option value="Other">Other</option>
+        	</select>
+		</div> <br>
+		
+		
+		<div>
+			<span> Please, insert your age: </span>
+			<input type="number" name="age" min="1" max="100"> <br>
+		</div> <br>
+		
+		
+		<div>
+			<span> Please, insert your expertise level: </span>
+			<select name="expLvl">
+                         <option value=""> -- </option>
+                         <option value="Low">Low</option>
+                         <option value="Medium">Medium</option>
+                         <option value="High">High</option>
+        	</select>
+		</div> <br>
+		
+		<input name="action" type="submit" value="Confirm" />
+		<input name="action" type="submit" value="Cancel" />
+		
+		<br><br>
+		
+	</form>
+
+</body>
+</html>
