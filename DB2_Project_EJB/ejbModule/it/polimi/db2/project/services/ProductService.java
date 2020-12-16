@@ -20,7 +20,7 @@ public class ProductService {
 
 	public ProductService() { }
 	
-	public Product getProdById(int id) throws Exception {
+	public Product getProdById(int id) throws NotFoundException {
 		Product prod = em.find(Product.class, id);
 		
 		if(prod != null)
@@ -29,7 +29,7 @@ public class ProductService {
 		throw new NotFoundException("Product not found :(");
 	}
 
-	public List<Product> getAll() throws Exception {
+	public List<Product> getAll() throws DatabaseException {
 		
 		List<Product> prodList;
 
