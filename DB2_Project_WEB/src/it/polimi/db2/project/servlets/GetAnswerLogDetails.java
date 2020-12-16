@@ -2,6 +2,7 @@ package it.polimi.db2.project.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,9 +79,12 @@ public class GetAnswerLogDetails extends HttpServlet {
 			String path = "/HTML/adminInspectPage.html";
 			templateEngine.process(path, ctx, response.getWriter());
 			
-		} catch (Exception e) {
+		} catch (ParseException e) {			// Date parsing
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error in date parsing");
+			return;
+		} catch (Exception e) {					// Generic exception
 			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error in data parsing");
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error in data retrieving");
 			return;
 		}
 		
@@ -94,6 +98,19 @@ public class GetAnswerLogDetails extends HttpServlet {
 		try {
 			
 			prodOfDay = productOfDayService.getProductOfDayFor(date);
+			
+			// Checks if a product has been found for the specfied date
+			if (prodOfDay == null) {
+				
+				ServletContext servletContext = getServletContext();
+				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+				
+				ctx.setVariable("errorMessage", "No questionnaire found for the specified date");
+				
+				return ctx;
+				
+			}
+			
 			answersLog = answerLogService.getAnswersForProduct(prodOfDay.getId());
 			
 			List<User> confirmedUsers = new ArrayList<User>();
@@ -121,7 +138,6 @@ public class GetAnswerLogDetails extends HttpServlet {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.print(e.getMessage());
 			throw new IOException();
 		}
 		
