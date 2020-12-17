@@ -134,6 +134,8 @@ public class GetAnswerLogDetails extends HttpServlet {
 			ctx.setVariable("confirmedUsers", confirmedUsers);
 			ctx.setVariable("cancelledUsers", cancelledUsers);
 			
+			ctx.setVariable("productOfDayId", prodOfDay.getId());
+			
 			return ctx;
 			
 		} catch (Exception e) {
@@ -143,4 +145,7 @@ public class GetAnswerLogDetails extends HttpServlet {
 		
 	}
 
+	public void destroy() {
+	}
+	
 }

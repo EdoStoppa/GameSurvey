@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "FullAnswer", schema = "db2Project")
+@NamedQuery(name = "FullAnswer.getAnswersForLog", query = "SELECT r FROM FullAnswer r WHERE r.answerLog.logId = ?1")
 
 public class FullAnswer implements Serializable {
 

@@ -65,6 +65,7 @@ public class GoToAdminDeletePage extends HttpServlet {
 		doGet(request, response);
 	}
 	
+	// Set the products into the context
 	private WebContext setProducts(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		List<ProdOfDay> prodList = null;

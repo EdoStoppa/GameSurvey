@@ -43,6 +43,32 @@ public class AnswerLogService {
 		
 	}
 	
+	// Returns the answerLog for the specified productOfDay and user's id
+	public AnswerLog getAnswerForProductAndUser(int productOfDayId, int userId) throws Exception {
+		
+		List<AnswerLog> answersForProduct;
+
+		try {
+			
+			answersForProduct = em.createNamedQuery("AnswerLog.getAnswerLogByProductAndUserId", AnswerLog.class)
+					.setParameter(1, productOfDayId)
+					.setParameter(2, userId)
+					.getResultList();
+			
+		} catch (PersistenceException e) {
+			throw new Exception("Could not get list of answers log");
+		}
+		
+		if (answersForProduct.size() != 1) {
+			throw new Exception("Could not get a single answers");
+		} else if (answersForProduct.size() == 0) {		
+			return null;
+		} else {
+			return answersForProduct.get(0);
+		}
+		
+	}
+	
 	public AnswerLog logSubmission(User user, ProdOfDay prodOfDay, Date logTime, Boolean confirmed, int points) {
 		
 		// Create new log

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	
+	<title>User's answers</title>
+</head>
+
+<body>
+
+	<h1> User's answers </h1>
+
+	<!-- User's answers -->
+	<div th:if="${ fullAnswers != null }">
+		<table>
+			<thead>
+				<tr>
+					<th> Answer </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="fullAnswer : ${ fullAnswers }">
+					<td th:text="${ fullAnswer.answer }"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<!-- Error message div -->
+	<div th:if="${ fullAnswers == null }">
+		<p> No answers found </p>
+	</div>
+
+</body>
+
+</html>
