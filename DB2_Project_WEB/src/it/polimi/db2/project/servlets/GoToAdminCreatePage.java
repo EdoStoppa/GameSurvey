@@ -185,7 +185,6 @@ public class GoToAdminCreatePage extends HttpServlet {
 		
 	}
 	
-	
 	// Compose the questionnaire retrieving each question
 	private Boolean composeQuestionnaire(HttpServletRequest request) {
 		

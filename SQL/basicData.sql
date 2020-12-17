@@ -24,7 +24,7 @@ INSERT INTO Product(prodName, prodPhoto) VALUES("Product Five", LOAD_FILE("/var/
 
 # ProductOfDay Data
 INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (1, CURDATE());
-INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (2, '19710102');
+INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (2, '19710101');
 INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (3, '19710103');
 INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (4, '19710104');
 INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (5, '19710105');
@@ -37,3 +37,11 @@ INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (4, 1, '1
 INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (5, 1, '19710101', true);
 INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (1, 2, '19710102', true);
 INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (1, 3, '19710103', true);
+
+# FullAnswer Data
+INSERT INTO AnswerLog (answerId, logId, questId, answer) VALUES (1, 1, 1, "Ciao come va 1");
+INSERT INTO AnswerLog (answerId, logId, questId, answer) VALUES (2, 1, 1, "Ciao come va 2");
+INSERT INTO AnswerLog (answerId, logId, questId, answer) VALUES (3, 1, 1, "Ciao come va 3");
+INSERT INTO AnswerLog (answerId, logId, questId, answer) VALUES (4, 1, 1, "Ciao come va 4");
+INSERT INTO AnswerLog (answerId, logId, questId, answer) VALUES (5, 1, 1, "Ciao come va 5");
+INSERT INTO AnswerLog (answerId, logId, questId, answer) VALUES (6, 1, 1, "Ciao come va 6");

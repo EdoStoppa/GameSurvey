@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 
 import it.polimi.db2.project.entities.*;
 
@@ -33,6 +34,29 @@ public class FullAnswerService {
 			// Persist the answer
 			em.persist(fullAnsw);
 			
+		}
+		
+	}
+	
+	// Returns a list of answers for the specified answerLog
+	public List<FullAnswer> getAnswersForAnswerLog(int answerLogId) throws Exception {
+		
+		List<FullAnswer> answers;
+
+		try {
+			
+			answers = em.createNamedQuery("FullAnswer.getAnswersForLog", FullAnswer.class)
+					.setParameter(1, answerLogId)
+					.getResultList();
+			
+		} catch (PersistenceException e) {
+			throw new Exception("Could not get list of answers");
+		}
+		
+		if (answers.size() == 0) {		
+			return null;
+		} else {
+			return answers;
 		}
 		
 	}

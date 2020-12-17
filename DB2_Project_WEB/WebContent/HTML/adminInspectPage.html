@@ -21,16 +21,18 @@
 		<table>
 			<tr> <td>
 			
+			<h3> Confirmed questionnaires </h3>
 			<table>
 				<thead>
 					<tr>
-						<th>Confirmed</th>
+						<th> User </th>
+						<th> See Answers </th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="user : ${ confirmedUsers }">
 						<td th:text="${ user.email }"></td>
-						<!--  td> <a th:href="@{/action}"> Answers </a> </td-->
+						<td> <a th:href="@{/GoToUserAnswers(userId = ${user.Id}, productOfDayId = ${productOfDayId})}"> Answers </a> </td>
 					</tr>
 				</tbody>
 			</table>
@@ -38,16 +40,16 @@
 			</td>
 			<td>
 			
+			<h3> Cancelled questionnaires </h3>
 			<table>
 				<thead>
 					<tr>
-						<th>Cancelled</th>
+						<th> User </th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="user : ${ cancelledUsers }">
 						<td th:text="${ user.email }"></td>
-						<!--  td> <a th:href="@{/action}"> Answers </a> </td-->
 					</tr>
 				</tbody>
 			</table>
