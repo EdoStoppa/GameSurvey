@@ -40,6 +40,7 @@ public class AdminFilter implements Filter {
 
 		HttpSession s = req.getSession();
 		if (s.isNew() || s.getAttribute("admin") == null || (boolean)s.getAttribute("admin") == false) {
+			System.out.print("Check failed, redirect to HOMEPAGE ...\n");
 			res.sendRedirect(redirectPath);
 			return;
 		}

@@ -13,9 +13,9 @@
 	<filter-mapping>
 		<filter-name>AdminChecker</filter-name>
 		<url-pattern>/GoToAdminHomepage</url-pattern>
-		<url-pattern>/AdminCreate</url-pattern>
-		<url-pattern>/AdminInspect</url-pattern>
-		<url-pattern>/AdminDelete</url-pattern>
+		<url-pattern>/GoToAdminCreatePage</url-pattern>
+		<url-pattern>/GoToAdminInspectPage</url-pattern>
+		<url-pattern>/GoToAdminDeletePage</url-pattern>
 	</filter-mapping>
 
 	<filter>
@@ -29,10 +29,12 @@
 		<url-pattern>/GoToSurvey</url-pattern>
 		<url-pattern>/GoToAdminHomepage</url-pattern>
 		<url-pattern>/GoToStat</url-pattern>
-		<url-pattern>/RecordQuestAnswers</url-pattern>
-		<url-pattern>/AdminCreate</url-pattern>
-		<url-pattern>/AdminInspect</url-pattern>
-		<url-pattern>/AdminDelete</url-pattern>
+		<url-pattern>/GoToSurvey</url-pattern>
+		<url-pattern>/GoToEndSurvey</url-pattern>
+		<url-pattern>/GoToAdminCreatePage</url-pattern>
+		<url-pattern>/GoToAdminInspectPage</url-pattern>
+		<url-pattern>/GoToAdminDeletePage</url-pattern>
+		<url-pattern>/GoToAdminHomepage</url-pattern>
 	</filter-mapping>
 	
 </web-app>

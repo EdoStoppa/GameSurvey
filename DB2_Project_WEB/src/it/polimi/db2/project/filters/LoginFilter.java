@@ -32,7 +32,7 @@ public class LoginFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.print("Login checker filter executing ...\n");
+		System.out.print("Checking if User is logged in ...\n");
 
 		// java.lang.String loginpath = "/index.html";
 		HttpServletRequest req = (HttpServletRequest) request;
@@ -41,6 +41,7 @@ public class LoginFilter implements Filter {
 
 		HttpSession s = req.getSession();
 		if (s.isNew() || s.getAttribute("user") == null) {
+			System.out.print("Check failed, redirect to LOGIN ...\n");
 			res.sendRedirect(loginpath);
 			return;
 		}

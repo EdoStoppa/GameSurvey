@@ -31,7 +31,7 @@ public class Stat implements Serializable {
   private AnswerLog answerLog;
 
   private String sex;
-  private int age;
+  private Integer age;
   private String expertise;
 
 

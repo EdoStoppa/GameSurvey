@@ -45,7 +45,7 @@ public class GoToBlocked extends HttpServlet {
  	 */
  	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
  		
- 	// Extremely simple, but needed to maintain consistency within the project
+ 		// Extremely simple, but needed to maintain consistency within the project
  	 	ServletContext servletContext = getServletContext();
  	 	final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
  	 	String path = "/HTML/blocked.html";

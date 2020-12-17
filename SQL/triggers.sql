@@ -8,11 +8,10 @@ DELIMITER $$
 
 # This event will clean the leaderboard every day at midnight, starting from the day after it's executed
 CREATE EVENT deleteLeaderboardDaily
-ON SCHEDULE EVERY 1 DAY STARTS DATE_ADD(CURDATE(), INTERVAL '1 0' DAY_HOUR)
-DO
-	BEGIN
-		DELETE FROM Leaderboard;
-	END $$
+ON SCHEDULE EVERY 1 DAY STARTS DATE_ADD(CURDATE(), INTERVAL '1 0' DAY_HOUR) DO
+BEGIN
+	DELETE FROM Leaderboard;
+END $$
       
       
 # TRIGGERS

@@ -68,9 +68,9 @@ DROP TABLE IF EXISTS Stat;
 CREATE TABLE Stat(
 statId INT NOT NULL AUTO_INCREMENT,
 logId INT NOT NULL REFERENCES AnswerLog(logId) ON UPDATE CASCADE ON DELETE CASCADE, 
-sex ENUM('Male', 'Female', 'Other') DEFAULT NULL,
-age TINYINT UNSIGNED DEFAULT NULL,
-expertise ENUM('Low', 'Medium', 'High') DEFAULT NULL,
+sex ENUM('Male', 'Female', 'Other', ' -- ') DEFAULT ' -- ',
+age TINYINT UNSIGNED DEFAULT 0,
+expertise ENUM('Low', 'Medium', 'High', ' -- ') DEFAULT ' -- ',
 PRIMARY KEY(statId)
 );
 

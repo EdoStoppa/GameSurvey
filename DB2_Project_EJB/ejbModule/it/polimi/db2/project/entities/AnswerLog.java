@@ -32,7 +32,7 @@ public class AnswerLog implements Serializable {
   @JoinColumn(name = "prodOfDayID")
   private ProdOfDay prodOfDay;
 
-  @Temporal(TemporalType.DATE)
+  @Temporal(TemporalType.TIMESTAMP)
   private Date logTime;
 
   private Boolean confirmed;

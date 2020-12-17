@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Survey</title>
+</head>
+<body>
+	<h1> Survey Completed! </h1>
+	
+	<p th:if='${cnf == true}'> Thank you for answering all these questions, you'll be rewarded immediately some points! </p>
+	<p th:if="${cnf != true}"> Unfortunately you decided to cancel your submission, so you won't be rewarded any points! </p>
+	
+	<br><br><br>
+	
+	<div align="right">
+		<a th:href="@{/GoToHomepage}">Home</a>
+	</div>
+
+</body>
+</html>
