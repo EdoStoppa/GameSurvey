@@ -42,6 +42,11 @@ public class QuestionService {
 	public List<String> getAnswerList() { return this.answerList; }
 	
 	
+	public void reset() {
+		this.questList = null;
+		this.answerList = null;
+	}
+	
 	@Remove
 	public void remove() {}
 	

@@ -162,7 +162,7 @@ public class CompleteSurvey extends HttpServlet {
 		
 		// QeustService removal
 		request.getSession().setAttribute("questService", null);
-		questService.remove();
+		questService.reset();
 		
 		// Redirect to "Thanks page"
 		String path = getServletContext().getContextPath() + "/GoToEndSurvey";
