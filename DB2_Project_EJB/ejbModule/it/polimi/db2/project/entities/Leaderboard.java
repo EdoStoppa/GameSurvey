@@ -10,7 +10,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Leaderboard", schema = "db2Project")
-@NamedQuery(name = "Leaderboard.getLeaderboard", query = "SELECT r FROM Leaderboard r")
+@NamedQuery(name = "Leaderboard.getLeaderboard", query = "SELECT r FROM Leaderboard r ORDER BY r.user.totPoints DESC")
+@NamedQuery(name = "Leaderboard.getByUserID", query = "SELECT r FROM Leaderboard r  WHERE r.user.userId = ?1")
 
 public class Leaderboard implements Serializable{
 	

@@ -20,10 +20,10 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="user : ${ users }">
-				<td th:text="${ user.username }"></td>
-				<td th:text="${ user.email }"></td>
-				<td th:text="${ user.totPoints }"></td>
+			<tr th:each="leaderboardEntry : ${ leaderboardEntries }">
+				<td th:text="${ leaderboardEntry.user.username }"></td>
+				<td th:text="${ leaderboardEntry.user.email }"></td>
+				<td th:text="${ leaderboardEntry.user.totPoints }"></td>
 			</tr>
 		</tbody>
 	</table>

@@ -35,12 +35,8 @@ public class GoToLeaderBoard extends HttpServlet {
 	private TemplateEngine templateEngine;
 	
 	// Services
-	@EJB(name = "it.polimi.db2.project.services/UserService")
-	private UserService userService;
-	@EJB(name = "it.polimi.db2.project.services/AnswerLog")
-	private AnswerLogService answerLogService;
-	@EJB(name = "it.polimi.db2.project.services/ProdOfDayService")
-	private ProdOfDayService prodOfDayService;
+	@EJB(name = "it.polimi.db2.project.services/LeaderboardService")
+	private LeaderboardService leaderboardService;
 	
        
     public GoToLeaderBoard() {
@@ -61,38 +57,16 @@ public class GoToLeaderBoard extends HttpServlet {
 
 	// GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        ProdOfDay currentProductOfDay;
-        List<AnswerLog> todayAnswersLog;
-        List<User> todayActiveUsers;
+
+        List<Leaderboard> leaderboardEntries;
 
         ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
         try {
         	
-        	//currentProductOfDay = prodOfDayService.getCurrenProdOfDay();
-        	todayAnswersLog = answerLogService.getAnswersForProduct(1);
-    		
-        	// Gets all the users from the todayAnswerLog list
-        	todayActiveUsers = new ArrayList<User>();
-        	for (AnswerLog answerLog : todayAnswersLog) {
-        		todayActiveUsers.add(answerLog.getUser());
-        	}
-        	
-        	// Sorts the user by their totalPoints field
-        	Collections.sort(todayActiveUsers, new Comparator<User>() {
-        		
-        		@Override
-        	    public int compare(User lhs, User rhs) {
-        	        if (lhs.getTotPoints() < rhs.getTotPoints()) { return 1; }
-        	        if (lhs.getTotPoints() > rhs.getTotPoints()) { return -1; }
-        	        return 0;
-        	    }
-        		
-        	});
-        	
-    		ctx.setVariable("users", todayActiveUsers);
+        	leaderboardEntries = leaderboardService.getLeaderboard();
+    		ctx.setVariable("leaderboardEntries", leaderboardEntries);
         	
         } catch (Exception e) {
             e.printStackTrace();

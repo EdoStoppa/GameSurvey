@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import it.polimi.db2.project.entities.*;
+import it.polimi.db2.project.exceptions.NotUniqueException;
 
 //import it.polimi.db2.album.exceptions.*;
 import java.util.List;
@@ -19,16 +20,33 @@ public class LeaderboardService {
 	
 	// Registers a new user
 	public List<Leaderboard> getLeaderboard() throws Exception {
+		
 		List<Leaderboard> leadList = null;
 		try {
-			leadList = em.createNamedQuery("Admin.isAdmin", Leaderboard.class)
+			leadList = em.createNamedQuery("Leaderboard.getLeaderboard", Leaderboard.class)
 					.getResultList();
 		} catch (PersistenceException e) {
 			throw new Exception("Could not reach DB");
 		}
 		
-		// If aList is empty, then he isn't an admin, otherwise he is
 		return leadList;
+		
+	}
+	
+	// Return true if the passed user is present, false otherwhise
+	public Boolean isUserPresed(int userId) throws Exception, NotUniqueException {
+		
+		List<Leaderboard> leadList = null;
+		try {
+			leadList = em.createNamedQuery("Leaderboard.getByUserId", Leaderboard.class)
+					.setParameter(1, userId)
+					.getResultList();
+		} catch (PersistenceException e) {
+			throw new Exception("Could not reach DB");
+		}
+		
+		if (leadList.size() > 1) { throw new NotUniqueException("Multiple users registered with the same Id"); }
+		else { return leadList.size() == 1; }
 		
 	}
 
