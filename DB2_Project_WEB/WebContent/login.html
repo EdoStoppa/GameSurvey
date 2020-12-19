@@ -1,23 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
+<style>
+
+input[type=text], input[type=password] {
+  width: 200px;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  text-align:center;
+}
+
+input[type=submit] {
+  background-color: #C8C8C8;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100px;
+  opacity: 0.9;
+}
+
+</style>
+
 <head>
 <meta charset="ISO-8859-1">
 <title>Login page</title>
 </head>
+
 <body>
-	<h1>Welcome to GameSurvey</h1>
-
-	<form action="CheckLogin" method="POST">
-		Username: <input type="text" name="username" required> <br>
-		Password: <input type="password" name="password" required><br>
-		<input name="action" type="submit" value="Login" />
-		<p th:text = "${errorMsg}"></p>
-	</form>
+	<h1 align="center">Welcome to GameSurvey</h1>
 	
-
-	<form action="CheckLogin" method="POST">
-		If you are not registered, please click here <input name="action" type="submit" value="Register"/>
-	</form>
+	<div style="padding: 20px 0px" align="center">
+		<form action="CheckLogin" method="POST">
+	
+			<div style="padding: 2px 0px">
+				<label for="usr"><b>Username</b></label><br>
+				<input type="text" name="username" required>
+			</div>
+	
+			<div style="padding: 2px 0px">
+				<label for="psw"><b>Password</b></label><br>
+				<input type="password" name="password" required>
+			</div>
+	
+			<input name="action" type="submit" value="Login" />
+		
+			<p style="color: red;" th:text = "${errorMsg}"></p>
+			
+		</form>
+		
+	</div>
+	
+	
+	<div style="padding: 20px 0px" align="center">
+	
+		<form action="CheckLogin" method="POST">
+			If you are not registered, please click here <br>
+			<input name="action" type="submit" value="Register"/>
+		</form>
+		
+	</div>
 
 	
 

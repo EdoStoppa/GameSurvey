@@ -34,11 +34,11 @@ public class LeaderboardService {
 	}
 	
 	// Return true if the passed user is present, false otherwhise
-	public Boolean isUserPresed(int userId) throws Exception, NotUniqueException {
+	public Boolean isUserInLeaderboard(int userId) throws Exception, NotUniqueException {
 		
 		List<Leaderboard> leadList = null;
 		try {
-			leadList = em.createNamedQuery("Leaderboard.getByUserId", Leaderboard.class)
+			leadList = em.createNamedQuery("Leaderboard.getByUserID", Leaderboard.class)
 					.setParameter(1, userId)
 					.getResultList();
 		} catch (PersistenceException e) {

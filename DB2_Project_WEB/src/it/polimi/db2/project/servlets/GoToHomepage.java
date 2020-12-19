@@ -15,10 +15,8 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.project.entities.ProdOfDay;
-import it.polimi.db2.project.entities.Product;
-import it.polimi.db2.project.services.ProdOfDayService;
-import it.polimi.db2.project.services.ProductService;
+import it.polimi.db2.project.entities.*;
+import it.polimi.db2.project.services.*;
 import it.polimi.db2.project.exceptions.*;
 
 /**
@@ -32,6 +30,8 @@ public class GoToHomepage extends HttpServlet {
 	private ProdOfDayService pOfDayService;
 	@EJB(name = "it.polimi.db2.project.services/ProductService")
 	private ProductService prodService;
+	@EJB(name = "it.polimi.db2.project.services/LeaderboardService")
+	private LeaderboardService leaderboardService;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -73,7 +73,7 @@ public class GoToHomepage extends HttpServlet {
         
         // If a product of the day isn't present, pass null to render a "sorry" page
         if(pOfDay == null) {
-        	processPage(request, response, null);
+        	processPage(request, response, null, false);
     	   	return;
         }
         
@@ -84,8 +84,27 @@ public class GoToHomepage extends HttpServlet {
 			return;
         }
         
+        // Get if the user already answered to the survey today, if anything goes wrong redirect to login
+        boolean alreadyAnsw = false;
+        try {
+        	
+        	// Retrieve the user
+        	User usr = (User) request.getSession().getAttribute("user");
+        	if(usr == null) { throw new Exception("No User found"); }
+        	
+        	alreadyAnsw = leaderboardService.isUserInLeaderboard(usr.getId());
+        	
+        } catch (Exception e) {
+        	
+        	e.printStackTrace();
+        	request.getSession().invalidate();	
+    		String path = getServletContext().getContextPath() + "/login.html";
+			response.sendRedirect(path);
+			
+        }
+        
         request.getSession().setAttribute("pOfDayId", pOfDay.getId());
-        processPage(request, response, prod);
+        processPage(request, response, prod, alreadyAnsw);
         
 	}
 
@@ -96,12 +115,13 @@ public class GoToHomepage extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	private void processPage(HttpServletRequest request, HttpServletResponse response, Product prod) throws IOException {
+	private void processPage(HttpServletRequest request, HttpServletResponse response, Product prod, boolean alreadyAnsw) throws IOException {
 		
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("prod", prod);
 		ctx.setVariable("image", (prod != null ? prod.getPhotoData() : null));
+		ctx.setVariable("alreadyAnsw", alreadyAnsw);
 		String path = "/HTML/homepage.html";
 		templateEngine.process(path, ctx, response.getWriter());
 

@@ -1,20 +1,69 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
+<style>
+
+input[type=text], input[type=password] {
+  width: 200px;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  text-align:center;
+}
+
+input[type=submit] {
+  background-color: #C8C8C8;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100px;
+  opacity: 0.9;
+}
+
+</style>
+
 <head>
 <meta charset="ISO-8859-1">
 <title>Register page</title>
 </head>
-<body>
-	<h1>Please, register here to use GameSurvey</h1>
 
-	<form action="RegisterUser" method="POST">
-		Email:    		 <input type="text" name="email" required> <br>
-		Username: 		 <input type="text" name="username" required> <br>
-		Password: 		 <input type="password" name="password" required><br>
-		Repeat Password: <input type="password" name="confirmedPassword" required><br>
-		<input name="action" type="submit" value="Register"/>
-		<p th:text = "${errorMsg}"></p>
-	</form>
+<body>
+	<h1 align="center">Please, register here to use GameSurvey</h1>
+	
+	<div style="padding: 20px 0px" align="center" >
+	
+		<form action="RegisterUser" method="POST">
+			
+			<div style="padding: 2px 0px">
+				<label for="mail"><b>Email</b></label><br>
+				<input type="text" name="email" required>
+			</div>
+		
+			<div style="padding: 2px 0px">
+				<label for="usr"><b>Username</b></label><br>
+				<input type="text" name="username" required>
+			</div>
+		
+			<div style="padding: 2px 0px">
+				<label for="psw"><b>Password</b></label><br>
+				<input type="password" name="password" required>
+			</div>
+		
+			<div style="padding: 2px 0px">
+				<label for="psw-repeat"><b>Repeat Password</b></label><br>
+				<input type="password" name="confirmedPassword" required>
+			</div>
+		
+			<input name="action" type="submit" value="Register"/>
+		
+			<p style="color: red;" th:text = "${errorMsg}"></p>
+			
+		</form>
+		
+	</div>
 
 </body>
 </html>
