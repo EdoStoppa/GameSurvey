@@ -22,16 +22,16 @@
 		</thead>
 		<tbody>
 			<tr th:each="leaderboardEntry : ${ leaderboardEntries }">
-				<td th:text="${ leaderboardEntry.user.username }"></td>
-				<td th:text="${ leaderboardEntry.user.email }"></td>
-				<td th:text="${ leaderboardEntry.user.totPoints }"></td>
+				<td align="center" th:text="${ leaderboardEntry.user.username }"></td>
+				<td align="center" th:text="${ leaderboardEntry.user.email }"></td>
+				<td align="center" th:text="${ leaderboardEntry.user.totPoints }"></td>
 			</tr>
 		</tbody>
 	</table>
 	
-	<form action="GoToHomepage" method="GET">
-        <input name="action" type="submit" value="Go to Homepage"/>
-	</form>
+	<div align="right" style="padding: 10px 0px 0px 0px">
+		<a th:href="@{/GoToHomepage}">Home</a>
+	</div>
 
 </body>
 

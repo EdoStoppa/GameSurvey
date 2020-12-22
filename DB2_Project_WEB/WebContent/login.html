@@ -3,7 +3,7 @@
 
 <style>
 
-input[type=text], input[type=password] {
+.inputUsr {
   width: 200px;
   padding: 15px;
   margin: 5px 0 22px 0;
@@ -13,7 +13,7 @@ input[type=text], input[type=password] {
   text-align:center;
 }
 
-input[type=submit] {
+.submit {
   background-color: #C8C8C8;
   padding: 14px 20px;
   margin: 8px 0;
@@ -26,8 +26,8 @@ input[type=submit] {
 </style>
 
 <head>
-<meta charset="ISO-8859-1">
-<title>Login page</title>
+	<meta charset="ISO-8859-1">
+	<title>Login page</title>
 </head>
 
 <body>
@@ -38,15 +38,15 @@ input[type=submit] {
 	
 			<div style="padding: 2px 0px">
 				<label for="usr"><b>Username</b></label><br>
-				<input type="text" name="username" required>
+				<input class="inputUsr" type="text" name="username" required>
 			</div>
 	
 			<div style="padding: 2px 0px">
 				<label for="psw"><b>Password</b></label><br>
-				<input type="password" name="password" required>
+				<input class="inputUsr" type="password" name="password" required>
 			</div>
 	
-			<input name="action" type="submit" value="Login" />
+			<input class="submit" name="action" type="submit" value="Login" />
 		
 			<p style="color: red;" th:text = "${errorMsg}"></p>
 			
@@ -59,7 +59,7 @@ input[type=submit] {
 	
 		<form action="CheckLogin" method="POST">
 			If you are not registered, please click here <br>
-			<input name="action" type="submit" value="Register"/>
+			<input class="submit" name="action" type="submit" value="Register"/>
 		</form>
 		
 	</div>

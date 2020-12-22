@@ -8,6 +8,7 @@
 </head>
 
 <body>
+
 	<h1 align="center">Please, register here to use GameSurvey</h1>
 	
 	<div style="padding: 20px 0px" align="center" >
@@ -16,29 +17,33 @@
 			
 			<div style="padding: 2px 0px">
 				<label for="mail"><b>Email</b></label><br>
-				<input type="text" name="email" required>
+				<input class="inputUsr" type="text" name="email" required>
 			</div>
 		
 			<div style="padding: 2px 0px">
 				<label for="usr"><b>Username</b></label><br>
-				<input type="text" name="username" required>
+				<input class="inputUsr" type="text" name="username" required>
 			</div>
 		
 			<div style="padding: 2px 0px">
 				<label for="psw"><b>Password</b></label><br>
-				<input type="password" name="password" required>
+				<input class="inputUsr" type="password" name="password" required>
 			</div>
 		
 			<div style="padding: 2px 0px">
 				<label for="psw-repeat"><b>Repeat Password</b></label><br>
-				<input type="password" name="confirmedPassword" required>
+				<input class="inputUsr" type="password" name="confirmedPassword" required>
 			</div>
-		
-			<input name="action" type="submit" value="Register"/>
-		
-			<p style="color: red;" th:text = "${errorMsg}"></p>
+			
+			<div style="padding: 10px 0px">
+				<input class="submit" name="action" type="submit" value="Register"/>
+			</div>
 			
 		</form>
+		
+		<div style="padding: 15px 0px">
+			<p style="color: red;" th:text = "${errorMsg}"></p>
+		</div>
 		
 	</div>
 

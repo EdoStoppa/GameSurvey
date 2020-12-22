@@ -7,22 +7,26 @@
 </head>
 
 <body>
-	<h1> Survey (part 1) </h1>
+	<h1 align="center"> Survey (part 1) </h1>
 	
-	<p>Please note that every question is mandatory, so you can't proceed further if any of the questions haven't been answered</p>
+	<p align="center">Please note that every question is mandatory, so you can't proceed further if any of the questions haven't been answered</p>
 	
-	<form action="RecordQuestAnswers" method="POST">
+	<div align="center" style="padding: 10px 0px">
 	
-		<div th:each="q : ${ questList }">
-			<span th:text="${q.question}"> Question </span> <br>
-			<input type="text" name="answList"><br>
-		</div> <br>
+		<form action="RecordQuestAnswers" method="POST">
+	
+			<div style="padding: 2px 0px" th:each="q : ${ questList }">
+				<span th:text="${q.question}"> Question </span> <br>
+				<input class="quest" type="text" name="answList"><br>
+			</div> <br>
 		
-		<input name="action" type="submit" value="Next" /><br><br>
+			<input class="submit" name="action" type="submit" value="Next" /><br><br>
 		
-		<p th:text = "${errorMsg}"></p>
+			<p style="color: red;" th:text = "${errorMsg}"></p>
 		
-	</form>
-
+		</form>
+		
+	</div>
+	
 </body>
 </html>

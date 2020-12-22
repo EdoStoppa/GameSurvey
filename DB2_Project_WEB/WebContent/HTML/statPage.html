@@ -8,47 +8,60 @@
 </head>
 
 <body>
-	<h1> Survey (part 2) </h1>
+	<h1 align="center"> Survey (part 2) </h1>
 	
-	<p>Please note this section isn't mandatory (but if completed, it will reward you with more points)</p>
+	<p align="center">Please note this section isn't mandatory (but if completed, it will reward you with more points)</p>
 	
-	<form action="CompleteSurvey" method="POST">
+	<div align="center" style="padding: 10px 0px">
 	
-		<br><br>
+		<form action="CompleteSurvey" method="POST">
+	
+			<br><br>
 		
-		<div>
-			<span> Please choose you sex: </span>			
-			<select name="usrSex">
+			<div style="padding: 10px 0px">
+			
+				<span> Please choose you sex: </span> <br>
+				
+				<select style="text-align:center;" name="usrSex">
                          <option value=" -- "> -- </option>
                          <option value="Male">Male</option>
                          <option value="Female">Female</option>
                          <option value="Other">Other</option>
-        	</select>
-		</div> <br>
+        		</select>
+        		
+			</div>
 		
 		
-		<div>
-			<span> Please, insert your age: </span>
-			<input type="number" name="usrAge" min="1" max="100"> <br>
-		</div> <br>
+			<div style="padding: 10px 0px">
+			
+				<span> Please, insert your age: </span> <br>
+				
+				<input class="num" type="number" name="usrAge" min="1" max="100">
+				
+			</div>
 		
 		
-		<div>
-			<span> Please, insert your expertise level: </span>
-			<select name="usrExp">
+			<div style="padding: 10px 0px">
+			
+				<span> Please, insert your expertise level: </span> <br>
+				
+				<select style="text-align:center;" name="usrExp">
                          <option value=" -- "> -- </option>
                          <option value="Low">Low</option>
                          <option value="Medium">Medium</option>
                          <option value="High">High</option>
-        	</select>
-		</div> <br>
+        		</select>
+        		
+			</div>
 		
-		<input name="action" type="submit" value="Confirm" />
-		<input name="action" type="submit" value="Cancel" />
+			<input class="submit" style="padding: 10px 10px" name="action" type="submit" value="Confirm" />
+			<input class="submit" style="padding: 10px 10px" name="action" type="submit" value="Cancel" />
 		
-		<br><br>
+			<br><br>
 		
-	</form>
+		</form>
+	
+	</div>
 
 </body>
 </html>

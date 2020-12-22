@@ -7,22 +7,31 @@
 </head>
 
 <body>
-	<h1 align="center" th:if="${prod != null}">Product of the day: <span th:text="${prod.prodName}">PRODUCT</span></h1>
-	<h1 align="center" th:if="${prod == null}">No product for today :(</h1>
 
-	<p align="center" th:if="${prod != null}">
-		<img th:src="*{'data:image/png;base64,' + image}"></img>
-	</p>
-	
 	<div align="center">
+		<h1 th:if="${prod != null}">Product of the day: <span th:text="${prod.prodName}">PRODUCT</span></h1>
+		<h1 th:if="${prod == null}">No product for today :(</h1>
+	</div>
+	
+	<div align="center" style="padding: 5px 0px">
+		<p th:if="${prod != null}">
+			<img th:src="*{'data:image/png;base64,' + image}"></img>
+		</p>
+	</div>
+		
+	<div align="center" style="padding: 10px 0px"> </div>
+	
+	<div align="center" style="padding: 5px 0px">
 		<form th:if="${prod != null && alreadyAnsw == false}" action="GoToSurvey" method="GET">
-			If you're interested in completing the survey, please click here: <input name="action" type="submit" value="Survey"/><br>
+			If you're interested in completing the survey, please click here <br>
+			<input class="submit" name="action" type="submit" value="Survey"/>
 		</form>
 	</div>
 	
-	<div align="center">
+	<div align="center" style="padding: 5px 0px">
 		<form th:if="${prod != null}" action="GoToLeaderBoard" method="GET">
-			If you're interested in today's leaderboard, please click here: <input name="action" type="submit" value="Leaderboard"/><br>
+			If you're interested in today's leaderboard, please click here <br>
+			<input class="submitXL" name="action" type="submit" value="Leaderboard"/><br>
 		</form>
 	</div>
 
