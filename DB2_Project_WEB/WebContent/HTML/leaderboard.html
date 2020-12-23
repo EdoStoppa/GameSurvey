@@ -10,26 +10,31 @@
 
 <body>
 
-	<h1> Leaderboard </h1>
+	<h1 align="center"> Leaderboard </h1>
 	
-	<table>
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Email</th>
-				<th>Points</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="leaderboardEntry : ${ leaderboardEntries }">
-				<td align="center" th:text="${ leaderboardEntry.user.username }"></td>
-				<td align="center" th:text="${ leaderboardEntry.user.email }"></td>
-				<td align="center" th:text="${ leaderboardEntry.user.totPoints }"></td>
-			</tr>
-		</tbody>
-	</table>
+	<div align="center" style="padding: 10px 0px">
+		<table>
+		
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Points</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="leaderboardEntry : ${ leaderboardEntries }">
+					<td align="center" th:text="${ leaderboardEntry.user.username }"></td>
+					<td align="center" th:text="${ leaderboardEntry.user.email }"></td>
+					<td align="center" th:text="${ leaderboardEntry.user.totPoints }"></td>
+				</tr>
+			</tbody>
+			
+		</table>
+	</div>
 	
-	<div align="right" style="padding: 10px 0px 0px 0px">
+	<div align="right" style="padding: 10px 10px 0px 0px">
 		<a th:href="@{/GoToHomepage}">Home</a>
 	</div>
 

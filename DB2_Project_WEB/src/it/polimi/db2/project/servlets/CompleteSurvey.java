@@ -99,7 +99,13 @@ public class CompleteSurvey extends HttpServlet {
 			return;
 		}
 		
-		
+		if(pressedButton.equals("Previous")) {
+			// Go back at the start of the Survey
+			String path = getServletContext().getContextPath() + "/GoToSurvey";
+			path = path + "?ID=reDo";
+			response.sendRedirect(path);
+			return;
+		}
 		
 		
 		// COMPLETE SURVEY:
@@ -162,12 +168,12 @@ public class CompleteSurvey extends HttpServlet {
 		
 		// QeustService removal
 		request.getSession().setAttribute("questService", null);
-		questService.reset();
+		questService.remove();
 		
 		// Redirect to "Thanks page"
 		String path = getServletContext().getContextPath() + "/GoToEndSurvey";
 		path = path + "?chk=" + pressedButton;
-		response.sendRedirect(path);	
+		response.sendRedirect(path);
 		
 	}
 	

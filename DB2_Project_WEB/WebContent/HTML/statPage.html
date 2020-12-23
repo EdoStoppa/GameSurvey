@@ -22,21 +22,25 @@
 			
 				<span> Please choose you sex: </span> <br>
 				
-				<select style="text-align:center;" name="usrSex">
+				<div style="margin: 10px 0 0 0">
+					<select style="text-align:center;" name="usrSex">
                          <option value=" -- "> -- </option>
                          <option value="Male">Male</option>
                          <option value="Female">Female</option>
                          <option value="Other">Other</option>
-        		</select>
-        		
+        			</select>
+				</div>
+				
 			</div>
 		
 		
 			<div style="padding: 10px 0px">
 			
 				<span> Please, insert your age: </span> <br>
+				<div style="margin: 10px 0 0 0">
+					<input class="num" type="number" name="usrAge" min="1" max="100">
+				</div>
 				
-				<input class="num" type="number" name="usrAge" min="1" max="100">
 				
 			</div>
 		
@@ -45,15 +49,18 @@
 			
 				<span> Please, insert your expertise level: </span> <br>
 				
-				<select style="text-align:center;" name="usrExp">
+				<div style="margin: 10px 0 0 0">
+					<select style="text-align:center;" name="usrExp">
                          <option value=" -- "> -- </option>
                          <option value="Low">Low</option>
                          <option value="Medium">Medium</option>
                          <option value="High">High</option>
-        		</select>
+        			</select>
+				</div>
         		
 			</div>
-		
+			
+			<input class="submit" style="padding: 10px 10px" name="action" type="submit" value="Previous" />
 			<input class="submit" style="padding: 10px 10px" name="action" type="submit" value="Confirm" />
 			<input class="submit" style="padding: 10px 10px" name="action" type="submit" value="Cancel" />
 		
