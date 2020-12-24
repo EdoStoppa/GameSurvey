@@ -167,12 +167,11 @@ public class CompleteSurvey extends HttpServlet {
 		// Almost done, need to destroy the questService and redirect to correct page
 		
 		// QeustService removal
-		request.getSession().setAttribute("questService", null);
 		questService.remove();
+		request.getSession().setAttribute("questService", null);
 		
-		// Redirect to "Thanks page"
-		String path = getServletContext().getContextPath() + "/GoToEndSurvey";
-		path = path + "?chk=" + pressedButton;
+		// Redirect to correct page
+		String path = getServletContext().getContextPath() + (pressedButton.equals("Confirm") ? "/GoToEndSurvey" : "/GoToHomepage");
 		response.sendRedirect(path);
 		
 	}

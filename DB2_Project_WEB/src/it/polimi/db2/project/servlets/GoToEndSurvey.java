@@ -42,29 +42,12 @@ public class GoToEndSurvey extends HttpServlet {
 
     // DO GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String chk = null;
-		boolean cnf = false;
-		try {
-			
-			// Get the parameter's content
-			chk = (String) request.getParameter("chk");
-			// If parameter is present, check the submission
-			if(chk != null)
-				cnf = chk.equals("Confirm");
-			
-		} catch (Exception e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Parameters");
-			return;
-		}
 
 		// Show "thanks" page
  	 	ServletContext servletContext = getServletContext();
  	 	final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
- 	 	ctx.setVariable("cnf", cnf);
  	 	String path = "/HTML/surveyCompleted.html";
  	 	templateEngine.process(path, ctx, response.getWriter());
- 	 	
 		
 	}
 

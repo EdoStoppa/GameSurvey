@@ -29,6 +29,11 @@ public class LeaderboardService {
 			throw new Exception("Could not reach DB");
 		}
 		
+		// Do a refresh on User (it's possible that their points are changed for what's stored in the persistence context)
+		for(Leaderboard l : leadList) {
+			em.refresh(l.getUser());
+		}
+		
 		return leadList;
 		
 	}

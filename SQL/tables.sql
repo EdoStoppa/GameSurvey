@@ -1,5 +1,8 @@
 # This code will generate every standard table in the database
 
+# No idexes other than PRIMARY should be present in any table
+# So, to remove these indexes use the command: DROP INDEX "index name" ON "table name";
+
 DROP TABLE IF EXISTS UserTable;
 CREATE TABLE UserTable(
 userId INT NOT NULL AUTO_INCREMENT, 
@@ -50,7 +53,6 @@ prodOfDayId INT NOT NULL REFERENCES ProdOfDay(prodOfDayId) ON UPDATE CASCADE ON 
 logTime TIMESTAMP NOT NULL,
 confirmed BOOLEAN NOT NULL,
 points INT NOT NULL DEFAULT 0,
-UNIQUE(userId, prodOfDayId),
 PRIMARY KEY(logId)
 );
 
