@@ -1,6 +1,7 @@
 package it.polimi.db2.project.servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -24,7 +25,9 @@ import it.polimi.db2.project.exceptions.*;
  */
 @WebServlet("/GoToHomepage")
 public class GoToHomepage extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
+	
 	private TemplateEngine templateEngine;
 	@EJB(name = "it.polimi.db2.project.services/ProdOfayService")
 	private ProdOfDayService pOfDayService;
@@ -32,10 +35,10 @@ public class GoToHomepage extends HttpServlet {
 	private ProductService prodService;
 	@EJB(name = "it.polimi.db2.project.services/LeaderboardService")
 	private LeaderboardService leaderboardService;
+	@EJB(name = "it.polimi.db2.project.services/ReviewService")
+	private ReviewService reviewService;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public GoToHomepage() {
         super();
     }
@@ -53,9 +56,7 @@ public class GoToHomepage extends HttpServlet {
 		
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	// GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// Retrieving the product of the day
@@ -73,7 +74,7 @@ public class GoToHomepage extends HttpServlet {
         
         // If a product of the day isn't present, pass null to render a "sorry" page
         if(pOfDay == null) {
-        	processPage(request, response, null, false);
+        	processPage(request, response, null, false, null);
     	   	return;
         }
         
@@ -103,25 +104,38 @@ public class GoToHomepage extends HttpServlet {
 			
         }
         
+        // Get the reviews for the product of the day
+        List<Review> reviews;
+        try {
+        	
+        	reviews = reviewService.getReviewsForProduct(pOfDay.getId());
+        	
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Error");
+			return;
+        }
+
         request.getSession().setAttribute("pOfDayId", pOfDay.getId());
-        processPage(request, response, prod, alreadyAnsw);
+        processPage(request, response, prod, alreadyAnsw, reviews);
         
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	// POST
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 	
-	private void processPage(HttpServletRequest request, HttpServletResponse response, Product prod, boolean alreadyAnsw) throws IOException {
+	private void processPage(HttpServletRequest request, HttpServletResponse response, Product prod, boolean alreadyAnsw, List<Review> reviews) throws IOException {
 		
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		
 		ctx.setVariable("prod", prod);
 		ctx.setVariable("image", (prod != null ? prod.getPhotoData() : null));
 		ctx.setVariable("alreadyAnsw", alreadyAnsw);
+		ctx.setVariable("reviews", reviews);
+		
 		String path = "/HTML/homepage.html";
 		templateEngine.process(path, ctx, response.getWriter());
 

@@ -11,5 +11,6 @@
 		<class>it.polimi.db2.project.entities.Stat</class>
 		<class>it.polimi.db2.project.entities.User</class>
 		<class>it.polimi.db2.project.entities.Leaderboard</class>
+		<class>it.polimi.db2.project.entities.Review</class>
 	</persistence-unit>
 </persistence>
