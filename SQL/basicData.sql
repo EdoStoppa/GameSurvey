@@ -55,6 +55,16 @@ INSERT INTO FullAnswer (logId, questId, answer) VALUES (1, 5, "Ciao come va 5");
 INSERT INTO FullAnswer (logId, questId, answer) VALUES (1, 6, "Ciao come va 6");
 
 # Leaderboard
-INSERT INTO Leaderboard (userId) VALUE (2);
 INSERT INTO Leaderboard (userId) VALUE (3);
 INSERT INTO Leaderboard (userId) VALUE (5);
+
+# Review
+INSERT INTO Review (userId, prodOfDayId, reviewText) VALUES (1, 1, "Wow");
+INSERT INTO Review (userId, prodOfDayId, reviewText) VALUES (2, 1, "Super");
+INSERT INTO Review (userId, prodOfDayId, reviewText) VALUES (3, 1, "Magnificient");
+INSERT INTO Review (userId, prodOfDayId, reviewText) VALUES (4, 1, "Awful");
+
+# Offensive words
+INSERT INTO OffensiveWord(word) VALUES ("very");
+INSERT INTO OffensiveWord(word) VALUES ("offensive");
+INSERT INTO OffensiveWord(word) VALUES ("word");
