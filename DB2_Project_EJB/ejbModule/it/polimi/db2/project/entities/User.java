@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Table(name = "UserTable", schema = "db2Project")
 @NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.username = ?1 and r.passw= ?2")
 @NamedQuery(name = "User.checkUserTaken", query = "SELECT r FROM User r  WHERE r.username = ?1 OR r.email = ?2")
+@NamedQuery(name = "User.getUserById", query = "SELECT r FROM User r  WHERE r.userId = ?1")
 
 public class User implements Serializable {
 

@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
@@ -26,9 +28,15 @@ import it.polimi.db2.project.entities.*;
  */
 @WebServlet("/RecordQuestAnswers")
 public class RecordQuestAnswers extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-	private TemplateEngine templateEngine;
-       
+	private TemplateEngine templateEngine;   
+
+	@EJB(name = "it.polimi.db2.project.services/OffensiveWordService")
+	private OffensiveWordService offensiveWordService;
+	@EJB(name = "it.polimi.db2.project.services/UserService")
+	private UserService userService;
+	
     
     public RecordQuestAnswers() {
         super();
@@ -58,6 +66,16 @@ public class RecordQuestAnswers extends HttpServlet {
 			return;
 		}
 		
+		// Second, get a list of all the offensive words
+		List<OffensiveWord> offensiveWords = null;
+        try {
+        	offensiveWords = offensiveWordService.getAll();
+        } catch (Exception e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+			return;
+		}
+		
 		// Now extract all the answers from user
 		List<String> answList = new ArrayList<String>();
 		String answ;
@@ -76,6 +94,7 @@ public class RecordQuestAnswers extends HttpServlet {
 			}
 			
 			// For every answer, sanitize and insert it in the corresponding position
+			// Also checks for offensive words, if found an error is displayed and the user banned
 			for(int i=0; i<answArray.length; i++) {
 				
 				// Get the correct answer
@@ -85,6 +104,23 @@ public class RecordQuestAnswers extends HttpServlet {
 				if (answ == null || answ.isEmpty()) {
 					setError(request, response, questService.getQuestList());
 					return;
+				}
+				
+				// If the answ contains an offensive word the user is banned
+				for (OffensiveWord offensiveWord : offensiveWords) {
+					
+					if (answ.contains(offensiveWord.getWord())) {
+						
+						// Get the current user
+						HttpServletRequest req = (HttpServletRequest) request;
+						HttpSession s = req.getSession();
+						User user = (User) s.getAttribute("user");
+						
+						// Bans the user
+						userService.banUser(user.getId());
+						
+					}
+					
 				}
 				
 				// Add the retrieved answer at the index corresponding to its question

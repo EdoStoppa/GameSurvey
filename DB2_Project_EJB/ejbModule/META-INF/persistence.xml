@@ -12,5 +12,6 @@
 		<class>it.polimi.db2.project.entities.User</class>
 		<class>it.polimi.db2.project.entities.Leaderboard</class>
 		<class>it.polimi.db2.project.entities.Review</class>
+		<class>it.polimi.db2.project.entities.OffensiveWord</class>
 	</persistence-unit>
 </persistence>

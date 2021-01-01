@@ -59,5 +59,28 @@ public class UserService {
 		
 	}
 
+	// Bans the specified user
+	public void banUser(Integer userId) throws Exception {
+		
+		List<User> usersList = null;
+		try {
+			usersList = em.createNamedQuery("User.getUserById", User.class).setParameter(1, userId)
+					.getResultList();
+		} catch (PersistenceException e) {
+			throw new Exception("Could not retrieve selected user");
+		}
+	
+		if (usersList == null || usersList.size() != 1) {
+			throw new Exception("Could not retrieve selected user");
+		}
+		
+		// Get the actual user
+		User user = usersList.get(0);
+		user.blockUser();
+		
+		em.persist(user);
+		
+	}
+	
 }
 
