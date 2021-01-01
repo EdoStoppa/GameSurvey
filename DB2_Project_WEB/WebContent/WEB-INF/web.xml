@@ -37,4 +37,19 @@
 		<url-pattern>/GoToAdminHomepage</url-pattern>
 	</filter-mapping>
 	
+	<filter>
+		<filter-name>BlockChecker</filter-name>
+		<filter-class>it.polimi.db2.project.filters.BlockedUserFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>BlockChecker</filter-name>
+		<url-pattern>/GoToHomepage</url-pattern>
+		<url-pattern>/GoToLeaderBoard</url-pattern>
+		<url-pattern>/GoToSurvey</url-pattern>
+		<url-pattern>/GoToAdminHomepage</url-pattern>
+		<url-pattern>/GoToStat</url-pattern>
+		<url-pattern>/GoToSurvey</url-pattern>
+		<url-pattern>/GoToEndSurvey</url-pattern>
+	</filter-mapping>
+	
 </web-app>

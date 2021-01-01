@@ -12,49 +12,65 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import it.polimi.db2.project.entities.User;
+
 /**
- * Servlet Filter implementation class LoggedIn
+ * Servlet Filter implementation class BlockedUserFilter
  */
-@WebFilter("/LoginFilter")
-public class LoginFilter implements Filter {
+@WebFilter("/BlockedUserFilter")
+public class BlockedUserFilter implements Filter {
 
     /**
      * Default constructor. 
      */
-    public LoginFilter() { }
+    public BlockedUserFilter() {
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see Filter#destroy()
 	 */
-	public void destroy() { }
+	public void destroy() {
+		// TODO Auto-generated method stub
+	}
 
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
-		System.out.print("Checking if User is logged in ...\n");
+		System.out.println("Checking if User is blocked...");
 
 		// java.lang.String loginpath = "/index.html";
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		String loginpath = req.getServletContext().getContextPath() + "/login.html";
+		String blockedPath = req.getServletContext().getContextPath() + "/GoToBlocked";
 
 		HttpSession s = req.getSession();
-		if (s.isNew() || s.getAttribute("user") == null) {
-			System.out.print("Check failed, redirect to LOGIN ...\n");
-			res.sendRedirect(loginpath);
-			return;
+		
+		User user = (User) s.getAttribute("user");
+		if (s.isNew() || s.getAttribute("user") != null) {
+			
+			if (user.getBlocked()) {
+				System.out.println("Check failed, redirect to BLOCKED...");
+				res.sendRedirect(blockedPath);
+				return;
+			} else {
+				System.out.println("Check succeded");
+			}
+			
 		} 
 		
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
-
+		
 	}
 
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
-	public void init(FilterConfig fConfig) throws ServletException { }
+	public void init(FilterConfig fConfig) throws ServletException {
+		// TODO Auto-generated method stub
+	}
 
 }

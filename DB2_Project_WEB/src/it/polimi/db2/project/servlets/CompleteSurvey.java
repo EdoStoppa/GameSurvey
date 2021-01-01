@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
@@ -111,7 +112,7 @@ public class CompleteSurvey extends HttpServlet {
 		// COMPLETE SURVEY:
 		// Prep Work is finished, so proceed with retrieving all the input data from user
 		
-		// Retrive Statistics from user
+		// Retrive Statistics from user 
 		String usrSex = null;
 		String usrAge = null;
 		String usrExp = null;
@@ -120,7 +121,7 @@ public class CompleteSurvey extends HttpServlet {
 			usrSex = StringEscapeUtils.escapeJava(request.getParameter("usrSex"));
 			usrAge = StringEscapeUtils.escapeJava(request.getParameter("usrAge"));
 			usrExp = StringEscapeUtils.escapeJava(request.getParameter("usrExp"));
-
+				
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error parsing Statistics");

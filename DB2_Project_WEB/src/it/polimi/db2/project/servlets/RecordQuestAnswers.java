@@ -119,6 +119,9 @@ public class RecordQuestAnswers extends HttpServlet {
 						// Bans the user
 						userService.banUser(user.getId());
 						
+						user.blockUser();
+						request.getSession().setAttribute("user", user);
+								
 					}
 					
 				}

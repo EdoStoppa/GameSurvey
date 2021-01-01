@@ -112,11 +112,6 @@ public class CheckLogin extends HttpServlet {
 				String landingPage;
 				try {
 					
-					if(user.getBlocked()) {
-						response.sendRedirect(getServletContext().getContextPath() + "/GoToBlocked");
-						return;
-					}
-					
 					if(admService.isAdmin(user.getId())) {
 						landingPage = "/GoToAdminHomepage";
 						request.getSession().setAttribute("admin", true);
@@ -124,6 +119,7 @@ public class CheckLogin extends HttpServlet {
 						landingPage = "/GoToHomepage";
 						request.getSession().setAttribute("admin", false);
 					}
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
