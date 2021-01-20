@@ -27,31 +27,37 @@
 
 <body>
 
-	<h1> Deletion Page </h1>
-
-    <table>
-		<thead>
-			<tr>
-				<th> Product name </th>
-				<th> Date </th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="productOfDay : ${ productsOfDay }">
-				<td th:text="${ productOfDay.product.prodName }"></td>
-				<td th:text="${ productOfDay.chosenDate }"></td>
-				<td> <a th:href="@{/DeleteQuestionnaires(productOfDayId=${productOfDay.Id})}"> Delete </a> </td>
-			</tr>
-		</tbody>
-	</table>
+	<h1 align="center"> Deletion Page </h1>
 	
-	<div th:if="${ error != null }">
-		<p th:text="${ error }"></p>
+	<div align="center" style="padding: 10px 0px">
+		<table>
+		
+			<thead>
+				<tr>
+					<th> Product name </th>
+					<th> Date </th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="productOfDay : ${ productsOfDay }">
+					<td th:text="${ productOfDay.product.prodName }"></td>
+					<td th:text="${ productOfDay.chosenDate }"></td>
+					<td> <a th:href="@{/DeleteQuestionnaires(productOfDayId=${productOfDay.Id})}"> Delete </a> </td>
+				</tr>
+			</tbody>
+			
+		</table>
 	</div>
-
-	<form action="GoToAdminHomepage" method="GET">
-        <input name="action" type="submit" value="Go to Admin Homepage"/>
-	</form>
+    
+	
+	<div align="center" style="padding: 10px 0px" th:if="${ error != null }">
+		<p style="color: red;" th:text="${ error }"></p>
+	</div>
+	
+	<div align="right" style="padding: 10px 10px 0px 0px">
+		<a th:href="@{/GoToAdminHomepage}">Home</a>
+	</div>
 	
 </body>
 

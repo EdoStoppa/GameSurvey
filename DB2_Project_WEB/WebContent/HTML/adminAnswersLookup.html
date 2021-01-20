@@ -10,10 +10,10 @@
 
 <body>
 
-	<h1> User's answers </h1>
+	<h1 align="center"> User's answers </h1>
 
 	<!-- User's answers -->
-	<div th:if="${ fullAnswers != null }">
+	<div align="center" style="padding: 10px 0px" th:if="${ fullAnswers != null }">
 		<table>
 			<thead>
 				<tr>
@@ -29,8 +29,8 @@
 	</div>
 	
 	<!-- Error message div -->
-	<div th:if="${ fullAnswers == null }">
-		<p> No answers found </p>
+	<div align="center" style="padding: 10px 0px" th:if="${ fullAnswers == null }">
+		<p style="color: red;"> No answers found </p>
 	</div>
 
 </body>

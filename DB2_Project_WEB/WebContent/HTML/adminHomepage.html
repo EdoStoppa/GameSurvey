@@ -10,22 +10,28 @@
 
 <body>
 
-	<h1> Administration Page </h1>
+	<h1 align="center"> Admin Homepage </h1>
 
 
-	<p> Please select an action </p>
-		
-	<form action="GoToAdminCreatePage" method="POST">
-		<input name="action" type="submit" value="Create"/>
-	</form>
+	<p align="center" style="padding: 10px 0px 0px 0px"> Please select an action </p>
 	
-	<form action="GoToAdminInspectPage" method="POST">
-        <input name="action" type="submit" value="Inspect"/>
-	</form>
+	<div align="center" style="padding: 10px 0px">
+		<form action="GoToAdminCreatePage" method="POST">
+			<input class="submit" name="action" type="submit" value="Create"/>
+		</form>
+	</div>
 	
-	<form action="GoToAdminDeletePage" method="POST">
-        <input name="action" type="submit" value="Delete"/>
-	</form>
+	<div align="center" style="padding: 10px 0px">
+		<form action="GoToAdminInspectPage" method="POST">
+        	<input class="submit" name="action" type="submit" value="Inspect"/>
+		</form>
+	</div>
+	
+	<div align="center" style="padding: 10px 0px">
+		<form action="GoToAdminDeletePage" method="POST">
+        	<input class="submit" name="action" type="submit" value="Delete"/>
+		</form>
+	</div>
 
 </body>
 
