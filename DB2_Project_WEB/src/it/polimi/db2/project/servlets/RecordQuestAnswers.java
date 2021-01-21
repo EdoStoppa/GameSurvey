@@ -114,9 +114,10 @@ public class RecordQuestAnswers extends HttpServlet {
 					}
 					
 					// If the answ contains an offensive word the user is banned
+					String answLow = answ.toLowerCase();
 					for (OffensiveWord offensiveWord : offensiveWords) {
 						
-						if (answ.contains(offensiveWord.getWord())) {							
+						if (answLow.contains(offensiveWord.getWord())) {							
 							
 							// Bans the user
 							userService.banUser(user.getId());
