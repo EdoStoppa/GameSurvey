@@ -2,6 +2,7 @@ package it.polimi.db2.project.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -72,12 +73,31 @@ public class GoToAdminDeletePage extends HttpServlet {
 		
 		try {
 			
+			// Products list
 			prodList = productOfDayService.getAll();
 
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			
-			ctx.setVariable("productsOfDay", prodList);
+			// Date dividing
+			Date currentDate = Calendar.getInstance().getTime();
+			
+			List<ProdOfDay> deletableProducts = new ArrayList<ProdOfDay>();
+			List<ProdOfDay> nonDeletableProducts = new ArrayList<ProdOfDay>();
+			
+			// Divides products by their date
+			for (ProdOfDay product: prodList) {
+				
+				if (product.getChosenDate().after(currentDate) || product.getChosenDate().equals(currentDate)) {
+					nonDeletableProducts.add(product);
+				} else {
+					deletableProducts.add(product);
+				}
+				
+			}
+			
+			ctx.setVariable("deletableProducts", deletableProducts);
+			ctx.setVariable("nonDeletableProducts", nonDeletableProducts);
 			
 			return ctx;
 			

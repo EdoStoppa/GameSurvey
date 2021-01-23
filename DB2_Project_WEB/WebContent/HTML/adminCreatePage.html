@@ -24,7 +24,7 @@
 			
 			<!-- Date -->
 	        <p> Select the date of the questionnaire: </p>
-	    	<input type="date" name="date" value="01-01-1971"/>
+	    	<input type="date" name="date" th:value="${ currentDate }" th:min="${ currentDate }"/>
 	        
 	        <!-- Number of questions -->
 	        <p> Select the number of questions: </p>

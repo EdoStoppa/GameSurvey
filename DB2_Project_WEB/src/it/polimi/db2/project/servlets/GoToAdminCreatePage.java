@@ -3,6 +3,7 @@ package it.polimi.db2.project.servlets;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -90,6 +91,10 @@ public class GoToAdminCreatePage extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error in data request to the DB");
 			return;
 		}
+		
+		// Sets the current date to use as minimum date in time picker
+		Date currentDate = Calendar.getInstance().getTime();
+		ctx.setVariable("currentDate", currentDate);
 		
 		// Get the number of questions, the date and the productId. The former is set in the context
 		// to display the correct number of text-inputs, while the latters are used to create a

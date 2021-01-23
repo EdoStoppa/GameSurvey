@@ -1,23 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<!-- Script to set the maximum date for the datePicker -->
-<script type = "text/javascript">
-
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth() + 1; 
-	var yyyy = today.getFullYear();
-	 
-	if(dd < 10){ dd = '0' + dd; } 
-	if(mm < 10){ mm = '0' + mm; } 
-	
-	today = dd + '-' + mm + '-' + yyyy;
-	document.getElementById("datePicker").setAttribute("value", today);
-	document.getElementById("datePicker").setAttribute("max", today);
-
-</script>
-
 <head>
 	<meta charset="ISO-8859-1">
 	<link rel="stylesheet" type="text/css" media="all" href="../css/styleSheet.css" th:href="@{/css/styleSheet.css}" />
@@ -40,10 +23,16 @@
 			</thead>
 			
 			<tbody>
-				<tr th:each="productOfDay : ${ productsOfDay }">
+				<tr th:each="productOfDay : ${ deletableProducts }">
 					<td th:text="${ productOfDay.product.prodName }"></td>
 					<td th:text="${ productOfDay.chosenDate }"></td>
 					<td> <a th:href="@{/DeleteQuestionnaires(productOfDayId=${productOfDay.Id})}"> Delete </a> </td>
+				</tr>
+				
+				<tr th:each="productOfDay : ${ nonDeletableProducts }">
+					<td th:text="${ productOfDay.product.prodName }"></td>
+					<td th:text="${ productOfDay.chosenDate }"></td>
+					<td> Non deletable </td>
 				</tr>
 			</tbody>
 			
