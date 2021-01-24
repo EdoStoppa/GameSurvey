@@ -37,7 +37,7 @@ public class ProdOfDay implements Serializable {
   @Temporal(TemporalType.DATE)
   private Date chosenDate;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "prodOfDay", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "prodOfDay", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<AnswerLog> answerLogs;
   
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "prodOfDay", cascade = CascadeType.ALL, orphanRemoval = true)

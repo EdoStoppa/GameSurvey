@@ -78,7 +78,7 @@ public class UserService {
 		User user = usersList.get(0);
 		user.blockUser();
 		
-		em.persist(user);
+		em.merge(user);
 		
 	}
 	
