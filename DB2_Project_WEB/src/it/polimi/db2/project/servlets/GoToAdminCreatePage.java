@@ -3,6 +3,7 @@ package it.polimi.db2.project.servlets;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -77,6 +78,8 @@ public class GoToAdminCreatePage extends HttpServlet {
 		Date date = null;
 		Integer numberOfQuestions = null;
 		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
 		
@@ -92,9 +95,11 @@ public class GoToAdminCreatePage extends HttpServlet {
 			return;
 		}
 		
-		// Sets the current date to use as minimum date in time picker
 		Date currentDate = Calendar.getInstance().getTime();
-		ctx.setVariable("currentDate", currentDate);
+		
+		String currentDateAsString = dateFormat.format(currentDate);
+		System.out.println(currentDate);
+		ctx.setVariable("currentDate", currentDateAsString);
 		
 		// Get the number of questions, the date and the productId. The former is set in the context
 		// to display the correct number of text-inputs, while the latters are used to create a
@@ -103,24 +108,29 @@ public class GoToAdminCreatePage extends HttpServlet {
 
 			String numberOfQuestionsParam = (String) session.getAttribute("numberOfQuestions");
 			String productIdParam = (String) session.getAttribute("productId");
-			String dataParam = (String) session.getAttribute("date");
+			String dateParam = (String) session.getAttribute("date");
 			
 			// Checks if this is a new session
-			if (numberOfQuestionsParam != null && productIdParam != null && dataParam != null) {
-			
+			if (numberOfQuestionsParam != null && productIdParam != null && dateParam != null) {
+
+				// Parse the data
 				numberOfQuestions = Integer.parseInt(numberOfQuestionsParam);
-				ctx.setVariable("numberOfQuestions", numberOfQuestions);
-				
 				Integer productId = Integer.parseInt(productIdParam);
-				product = productService.getProdById(productId);
+				date = (Date) dateFormat.parse(dateParam);
 				
-				SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-				date = (Date) dateFormat.parse(dataParam);
+				// Checks if the date is not prior to the current one
+				if (dateParam.compareTo(currentDateAsString) >= 0) {
 				
-				// Initial setup of the product of the day
-				productOfDay = new ProdOfDay();
-				productOfDay.setProduct(product);
-				productOfDay.setChosenDate(date);
+					ctx.setVariable("numberOfQuestions", numberOfQuestions);
+					
+					product = productService.getProdById(productId);
+					
+					// Initial setup of the product of the day
+					productOfDay = new ProdOfDay();
+					productOfDay.setProduct(product);
+					productOfDay.setChosenDate(date);
+					
+				}
 				
 			}
 			
