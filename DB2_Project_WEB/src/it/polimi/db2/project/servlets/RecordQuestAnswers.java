@@ -30,12 +30,7 @@ import it.polimi.db2.project.entities.*;
 public class RecordQuestAnswers extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private TemplateEngine templateEngine;   
-
-	@EJB(name = "it.polimi.db2.project.services/OffensiveWordService")
-	private OffensiveWordService offensiveWordService;
-	@EJB(name = "it.polimi.db2.project.services/UserService")
-	private UserService userService;
+	private TemplateEngine templateEngine;
 	
     
     public RecordQuestAnswers() {
@@ -66,16 +61,6 @@ public class RecordQuestAnswers extends HttpServlet {
 			return;
 		}
 		
-		// Second, get a list of all the offensive words
-		List<OffensiveWord> offensiveWords = null;
-        try {
-        	offensiveWords = offensiveWordService.getAll();
-        } catch (Exception e) {
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
-			return;
-		}
-		
 		// Now extract all the answers from user
 		List<String> answList = new ArrayList<String>();
 		String answ;
@@ -99,46 +84,19 @@ public class RecordQuestAnswers extends HttpServlet {
 			User user = (User) s.getAttribute("user");
 			
 			// For every answer, sanitize and insert it in the corresponding position
-			// Also checks for offensive words, if found an error is displayed and the user banned
 			for(int i=0; i<answArray.length; i++) {
-				
-				if(!user.getBlocked()) {
 					
-					// Get the correct answer
-					answ = StringEscapeUtils.escapeJava(answArray[i]);
+				// Get the correct answer
+				answ = StringEscapeUtils.escapeJava(answArray[i]);
 					
-					// (if it doesn't exists or is empty reload page)
-					if (answ == null || answ.isEmpty()) {
-						setError(request, response, questService.getQuestList());
-						return;
-					}
+				// (if it doesn't exists or is empty reload page)
+				if (answ == null || answ.isEmpty()) {
+					setError(request, response, questService.getQuestList());
+					return;
+				}					
 					
-					// If the answ contains an offensive word the user is banned
-					String answLow = answ.toLowerCase();
-					for (OffensiveWord offensiveWord : offensiveWords) {
-						
-						if (answLow.contains(offensiveWord.getWord())) {							
-							
-							// Bans the user
-							userService.banUser(user.getId());
-							user.blockUser();
-							
-							request.getSession().setAttribute("user", user);
-							break;
-							
-						}
-						
-					}
-					
-					// Add the retrieved answer at the index corresponding to its question
-					answList.add(i, answ);
-					
-				} else {
-					
-					// The user is blocked, so it's useless to continue to check for offensive words
-					break;
-					
-				}
+				// Add the retrieved answer at the index corresponding to its question
+				answList.add(i, answ);
 				
 			}
 			

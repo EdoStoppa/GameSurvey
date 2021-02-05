@@ -3,6 +3,7 @@ package it.polimi.db2.project.servlets;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -28,6 +29,7 @@ import it.polimi.db2.project.services.*;
 public class CompleteSurvey extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
+	
 	@EJB(name = "it.polimi.db2.project.services/ProdOfayService")
 	private ProdOfDayService pOfDayService;
 	@EJB(name = "it.polimi.db2.project.services/AnswerLogService")
@@ -36,6 +38,10 @@ public class CompleteSurvey extends HttpServlet {
 	private FullAnswerService fullAnswService;
 	@EJB(name = "it.polimi.db2.project.services/StatService")
 	private StatService statService;
+	@EJB(name = "it.polimi.db2.project.services/OffensiveWordService")
+	private OffensiveWordService offensiveWordService;
+	@EJB(name = "it.polimi.db2.project.services/UserService")
+	private UserService userService;
 	
 	private final String noString = " -- ";
 
@@ -87,6 +93,16 @@ public class CompleteSurvey extends HttpServlet {
 			return;
 		}
 		
+		// Get a list of all the offensive words
+		List<OffensiveWord> offensiveWords = null;
+		try {
+			offensiveWords = offensiveWordService.getAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+			return;
+		}
+		
 		// Get which button was pressed
 		String pressedButton = null;
 		try {
@@ -108,11 +124,65 @@ public class CompleteSurvey extends HttpServlet {
 			return;
 		}
 		
+		// Retrieve user
+		User usr = (User) request.getSession().getAttribute("user");
+		
+		// If user confirmed, check if any offensive-word was used, if that's the case, ban the user
+		if(pressedButton.equals("Confirm")) {
+			
+			boolean blocked = false;
+			try {
+				
+				// Check every answer given
+				for(String answ : questService.getAnswerList()) {
+					
+					if(!blocked) {
+						
+						// First transform the entire answer to loer case
+						String answLow = answ.toLowerCase();
+						// check if each offensive-word is in the answer
+						for (OffensiveWord offensiveWord : offensiveWords) {
+							if (answLow.contains(offensiveWord.getWord())) {								
+								// Bans the user
+								userService.banUser(usr.getId());
+								usr.blockUser();
+								
+								request.getSession().setAttribute("user", usr);
+								blocked=true;
+								break;
+							}
+						}
+						
+					} else {
+						// The user used an offensive-word => BAN
+						break;
+					}
+				}
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error banning user");
+				return;
+			}
+			
+			// If blocked redirect to any page
+			if(blocked) {
+				
+				questService.remove();
+				response.sendRedirect(getServletContext().getContextPath()+"/GoToHomepage");
+				return;
+				
+			}
+			
+		}
+
+		
+		// ---------------------------------------------------------------------------------------------------------------------
 		
 		// COMPLETE SURVEY:
-		// Prep Work is finished, so proceed with retrieving all the input data from user
+		// Prep Work is finished, so proceed with retrieving all the input data
 		
-		// Retrive Statistics from user 
+		// Retrive Statistics
 		String usrSex = null;
 		String usrAge = null;
 		String usrExp = null;
@@ -128,15 +198,13 @@ public class CompleteSurvey extends HttpServlet {
 			return;
 		}
 		
-		// Get all data necessary to log the answers
-		User usr = null;
+		// Get all remaining data necessary to log the answers
 		ProdOfDay pOfDay = null;
 		Date logTime = null;
 		boolean confirmed = false;
 		int totPoints = 0;
 		try {
 			
-			usr = (User) request.getSession().getAttribute("user");
 			pOfDay = pOfDayService.getProductOfDayFor((int) request.getSession().getAttribute("pOfDayId"));
 			logTime = Calendar.getInstance().getTime();
 			if(pressedButton.equals("Confirm")) { 
@@ -145,7 +213,11 @@ public class CompleteSurvey extends HttpServlet {
 			}
 			
 			
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error while logging the answer");
+			return;
+		}
 		
 		// Log the submission (even if it isn't confirmed)
 		AnswerLog log = answLogService.logSubmission(usr, pOfDay, logTime, confirmed, totPoints);
@@ -162,6 +234,7 @@ public class CompleteSurvey extends HttpServlet {
 		}
 		
 		
+		// ---------------------------------------------------------------------------------------------------------------------
 		
 		
 		// WRAP UP:
