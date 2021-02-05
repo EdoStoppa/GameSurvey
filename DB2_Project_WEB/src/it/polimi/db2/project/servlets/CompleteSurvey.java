@@ -167,7 +167,7 @@ public class CompleteSurvey extends HttpServlet {
 			
 			// If blocked redirect to any page
 			if(blocked) {
-				
+				request.getSession().setAttribute("questService", null);
 				questService.remove();
 				response.sendRedirect(getServletContext().getContextPath()+"/GoToHomepage");
 				return;

@@ -36,7 +36,7 @@ public class AdminFilter implements Filter {
 
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		String redirectPath = req.getServletContext().getContextPath() + "/Homepage";
+		String redirectPath = req.getServletContext().getContextPath() + "/GoToHomepage";
 
 		HttpSession s = req.getSession();
 		if (s.isNew() || s.getAttribute("admin") == null || (boolean)s.getAttribute("admin") == false) {
