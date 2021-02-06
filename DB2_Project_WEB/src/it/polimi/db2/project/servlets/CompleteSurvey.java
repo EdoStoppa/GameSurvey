@@ -93,16 +93,6 @@ public class CompleteSurvey extends HttpServlet {
 			return;
 		}
 		
-		// Get a list of all the offensive words
-		List<OffensiveWord> offensiveWords = null;
-		try {
-			offensiveWords = offensiveWordService.getAll();
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
-			return;
-		}
-		
 		// Get which button was pressed
 		String pressedButton = null;
 		try {
@@ -127,51 +117,32 @@ public class CompleteSurvey extends HttpServlet {
 		// Retrieve user
 		User usr = (User) request.getSession().getAttribute("user");
 		
-		// If user confirmed, check if any offensive-word was used, if that's the case, ban the user
+		// If confirmed, check if any offensive-word was used, and if that's the case, ban the user
 		if(pressedButton.equals("Confirm")) {
 			
-			boolean blocked = false;
 			try {
 				
-				// Check every answer given
-				for(String answ : questService.getAnswerList()) {
+				if(offensiveWordService.isUsedOffensiveWord(questService.getAnswerList())) {
 					
-					if(!blocked) {
-						
-						// First transform the entire answer to loer case
-						String answLow = answ.toLowerCase();
-						// check if each offensive-word is in the answer
-						for (OffensiveWord offensiveWord : offensiveWords) {
-							if (answLow.contains(offensiveWord.getWord())) {								
-								// Bans the user
-								userService.banUser(usr.getId());
-								usr.blockUser();
-								
-								request.getSession().setAttribute("user", usr);
-								blocked=true;
-								break;
-							}
-						}
-						
-					} else {
-						// The user used an offensive-word => BAN
-						break;
-					}
+					// Ban the user
+					userService.banUser(usr.getId());
+					usr.blockUser();
+					request.getSession().setAttribute("user", usr);
+					
+					// Remove the questService of the user
+					request.getSession().setAttribute("questService", null);
+					questService.remove();
+					
+					//  Redirect to Homepage (filter on homepage will complete the ban)
+					response.sendRedirect(getServletContext().getContextPath()+"/GoToHomepage");
+					return;
+
 				}
 				
 			} catch(Exception e) {
 				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error banning user");
 				return;
-			}
-			
-			// If blocked redirect to any page
-			if(blocked) {
-				request.getSession().setAttribute("questService", null);
-				questService.remove();
-				response.sendRedirect(getServletContext().getContextPath()+"/GoToHomepage");
-				return;
-				
 			}
 			
 		}

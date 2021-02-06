@@ -41,4 +41,36 @@ public class OffensiveWordService {
 		
 	}
 	
+	public boolean isUsedOffensiveWord(List<String> answList) throws Exception {
+		
+		// First, retrieve all the offensive words
+		List<OffensiveWord> offensiveWords = getAll();
+		
+		// Then, for every answer, check if any of these words is present
+		boolean blocked=false;
+		for(String answ : answList) {
+			
+			if(!blocked) {
+				
+				// First transform the entire answer to lower case
+				String answLow = answ.toLowerCase();
+				// check if each offensive-word is in the answer
+				for (OffensiveWord offensiveWord : offensiveWords) {
+					if (answLow.contains(offensiveWord.getWord())) {
+						// Simply block the search because one offensive word is found
+						blocked=true;
+						break;
+					}
+				}
+				
+			} else {
+				// End the search
+				break;
+			}
+			
+		}
+		
+		return blocked;
+	}
+	
 }
