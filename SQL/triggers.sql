@@ -47,9 +47,9 @@ CREATE TRIGGER AddToLeaderBoard
 AFTER INSERT ON db2Project.AnswerLog FOR EACH ROW  
 BEGIN
   IF(NEW.confirmed = TRUE) THEN
-    INSERT INTO db2Project.Leaderboard(userId) VALUE (NEW.userId);
+	INSERT INTO db2Project.Leaderboard(userId) VALUE (NEW.userId);
   END IF;
-END$$
+END $$
 
 # This trigger is needed because using ON DELETE CASCADE on prodOfDayId doesn't execute all the triggers on AnswerLog
 CREATE TRIGGER DeleteAnswerOfSurvey 
