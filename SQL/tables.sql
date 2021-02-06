@@ -96,5 +96,5 @@ DROP TABLE IF EXISTS OffensiveWord;
 CREATE TABLE OffensiveWord(
 offensiveWordId INT NOT NULL AUTO_INCREMENT,
 word varchar(255) NOT NULL,
-PRIMARY KEY(reviewId)
+PRIMARY KEY(offensiveWordId)
 );

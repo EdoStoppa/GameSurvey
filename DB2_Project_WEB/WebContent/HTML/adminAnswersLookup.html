@@ -11,17 +11,20 @@
 <body>
 
 	<h1 align="center"> User's answers </h1>
+	<h3 align="center" th:text="${ 'UserId: ' + userId }"></h3>
 
 	<!-- User's answers -->
 	<div align="center" style="padding: 10px 0px" th:if="${ fullAnswers != null }">
 		<table>
 			<thead>
 				<tr>
+					<th> Question </th>
 					<th> Answer </th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="fullAnswer : ${ fullAnswers }">
+					<td th:text="${ fullAnswer.question.question }"></td>
 					<td th:text="${ fullAnswer.answer }"></td>
 				</tr>
 			</tbody>

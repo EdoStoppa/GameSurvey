@@ -40,7 +40,7 @@ public class FullAnswer implements Serializable {
   public AnswerLog getAnswerLog() { return this.answerLog; }
   public void setAnswerLog(AnswerLog answerLog) { this.answerLog = answerLog; }
   
-  public Question getQustion() { return this.question; }
+  public Question getQuestion() { return this.question; }
   public void setQuestion(Question question) { this.question = question; }
 
   public String getAnswer() { return this.answer; }

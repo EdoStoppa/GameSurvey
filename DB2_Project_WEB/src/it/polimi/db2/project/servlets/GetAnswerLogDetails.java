@@ -75,6 +75,7 @@ public class GetAnswerLogDetails extends HttpServlet {
 			request.getSession().setAttribute("date", actualDate);
 			
 			final WebContext ctx = setStats(request, response, actualDate);
+			ctx.setVariable("date", selectedDate);
 			
 			String path = "/HTML/adminInspectPage.html";
 			templateEngine.process(path, ctx, response.getWriter());

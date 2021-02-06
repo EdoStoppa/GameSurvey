@@ -74,6 +74,7 @@ public class GoToUserAnswers extends HttpServlet {
 			answerLog = answerLogService.getAnswerForProductAndUser(productOfDayId, userId);
 			fullAnswers = fullAnswerService.getAnswersForAnswerLog(answerLog.getId());
 			
+			ctx.setVariable("userId", userId);
 			ctx.setVariable("fullAnswers", fullAnswers);
 			
 		} catch (Exception e) {

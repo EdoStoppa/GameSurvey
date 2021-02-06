@@ -14,15 +14,23 @@
 
 	<div align="center" style="padding: 10px 0px">
 	    <form action="GetAnswerLogDetails" method="GET">
-	    	<input type="date" name="date" value="01-01-1971"/>
+	    
+	    	<div th:if="${ date == null }">
+	    		<input type="date" name="date" value="01-01-1971"/>
+	    	</div>
 	    	
-	    	</br>
+	    	<div th:if="${ date != null }">
+	    		<input type="date" name="date" th:value="${date}"/>
+	    	</div>
+	    	
+	    	<br>
 	        <input class="submit" name="action" type="submit" value="Select"/>
 		</form>
 	</div>
 
 	<!-- Inspection div -->
 	<div align="center" th:if="${ (confirmedUsers != null ||  cancelledUsers != null) && errorMessage == null }">
+	
 		<table>
 			<tr> <td>
 			
@@ -64,7 +72,7 @@
 	</div>
 	
 	<!-- Error message div -->
-	<div th:if="${ errorMessage != null }">
+	<div align="center" th:if="${ errorMessage != null }">
 		<p th:text = "${ errorMessage }"></p>
 	</div>
 

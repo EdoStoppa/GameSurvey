@@ -64,6 +64,10 @@ public class GoToAdminCreatePage extends HttpServlet {
 		
     }
 
+    // Helper function: returns true if the dates are in the same day (ignoring the hour and minutes)
+    private boolean sameDay(Date leftDate, Date rightDate) {
+    	return (leftDate.getDay() == rightDate.getDay()) && (leftDate.getMonth() == rightDate.getMonth()) && (leftDate.getYear() == rightDate.getYear());
+    }
     
 	// GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -119,8 +123,8 @@ public class GoToAdminCreatePage extends HttpServlet {
 				date = (Date) dateFormat.parse(dateParam);
 				
 				// Checks if the date is not prior to the current one
-				if (dateParam.compareTo(currentDateAsString) >= 0) {
-				
+				if (date.after(currentDate) || sameDay(date, currentDate)) {
+			
 					ctx.setVariable("numberOfQuestions", numberOfQuestions);
 					
 					product = productService.getProdById(productId);

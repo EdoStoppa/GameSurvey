@@ -65,6 +65,11 @@ public class GoToAdminDeletePage extends HttpServlet {
 		doGet(request, response);
 	}
 	
+	// Helper function: returns true if the dates are in the same day (ignoring the hour and minutes)
+    private boolean sameDay(Date leftDate, Date rightDate) {
+    	return (leftDate.getDay() == rightDate.getDay()) && (leftDate.getMonth() == rightDate.getMonth()) && (leftDate.getYear() == rightDate.getYear());
+    }
+	
 	// Set the products into the context
 	private WebContext setProducts(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
@@ -79,9 +84,7 @@ public class GoToAdminDeletePage extends HttpServlet {
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			
 			// Date dividing
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
 			Date currentDate = Calendar.getInstance().getTime();
-			String currentDateAsString = dateFormat.format(currentDate);
 			
 			List<ProdOfDay> deletableProducts = new ArrayList<ProdOfDay>();
 			List<ProdOfDay> nonDeletableProducts = new ArrayList<ProdOfDay>();
@@ -89,11 +92,9 @@ public class GoToAdminDeletePage extends HttpServlet {
 			// Divides products by their date
 			for (ProdOfDay product: prodList) {
 				
-				String productDateAsString = dateFormat.format(product.getChosenDate());
-				
-				if (productDateAsString.compareTo(currentDateAsString) >= 0) {		// Current or future date
+				if (product.getChosenDate().after(currentDate) || sameDay(product.getChosenDate(), currentDate)) {		// Current or future date
 					nonDeletableProducts.add(product);
-				} else {															// Past date
+				} else {	// Past date
 					deletableProducts.add(product);
 				}
 				
