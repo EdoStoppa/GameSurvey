@@ -31,7 +31,8 @@
 	        <input name="numberOfQuestions" type="number" value="4">
 	        
 	        <!-- Submit -->
-	        <input name="action" type="submit" value="Confirm"/>
+	        </br>
+	        <input class = "submit" name="action" type="submit" value="Confirm"/>
 	        
 		</form>
 	
@@ -58,11 +59,19 @@
 				</table>
 			
 		    	<!-- Submit -->
-		    	<input name="action" type="submit" value="Register"/>
+		    	</br>
+		    	<input class = "submit" name="action" type="submit" value="Register"/>
 		        
 			</div>
 
 		</form>
+	</div>
+	
+	<!-- Error message -->
+	<div align="center" style="padding: 10px 0px">
+		<div th:if="${ errorMessage != null }">
+			<p style="color: red;" th:text = "${errorMessage}"></p>
+		</div>
 	</div>
 	
 	<div align="right" style="padding: 10px 10px 0px 0px">

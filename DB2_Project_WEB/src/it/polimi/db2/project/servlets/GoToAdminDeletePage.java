@@ -1,6 +1,7 @@
 package it.polimi.db2.project.servlets;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,9 +20,7 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.project.entities.AnswerLog;
 import it.polimi.db2.project.entities.ProdOfDay;
-import it.polimi.db2.project.entities.User;
 import it.polimi.db2.project.services.ProdOfDayService;
 
 
@@ -80,7 +79,9 @@ public class GoToAdminDeletePage extends HttpServlet {
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			
 			// Date dividing
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
 			Date currentDate = Calendar.getInstance().getTime();
+			String currentDateAsString = dateFormat.format(currentDate);
 			
 			List<ProdOfDay> deletableProducts = new ArrayList<ProdOfDay>();
 			List<ProdOfDay> nonDeletableProducts = new ArrayList<ProdOfDay>();
@@ -88,9 +89,11 @@ public class GoToAdminDeletePage extends HttpServlet {
 			// Divides products by their date
 			for (ProdOfDay product: prodList) {
 				
-				if (product.getChosenDate().after(currentDate) || product.getChosenDate().equals(currentDate)) {
+				String productDateAsString = dateFormat.format(product.getChosenDate());
+				
+				if (productDateAsString.compareTo(currentDateAsString) >= 0) {		// Current or future date
 					nonDeletableProducts.add(product);
-				} else {
+				} else {															// Past date
 					deletableProducts.add(product);
 				}
 				

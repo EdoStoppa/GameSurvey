@@ -130,6 +130,8 @@ public class GoToAdminCreatePage extends HttpServlet {
 					productOfDay.setProduct(product);
 					productOfDay.setChosenDate(date);
 					
+				} else {  // The inserted date is not valid, show an error message
+					ctx.setVariable("errorMessage", "Please select an appropriate date");
 				}
 				
 			}

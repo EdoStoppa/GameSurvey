@@ -10,15 +10,19 @@
 
 <body>
 
-	<h1> Inspection Page </h1>
+	<h1 align="center"> Inspection Page </h1>
 
-    <form action="GetAnswerLogDetails" method="GET">
-    	<input type="date" name="date" value="01-01-1971"/>
-        <input name="action" type="submit" value="Select"/>
-	</form>
+	<div align="center" style="padding: 10px 0px">
+	    <form action="GetAnswerLogDetails" method="GET">
+	    	<input type="date" name="date" value="01-01-1971"/>
+	    	
+	    	</br>
+	        <input class="submit" name="action" type="submit" value="Select"/>
+		</form>
+	</div>
 
 	<!-- Inspection div -->
-	<div th:if="${ (confirmedUsers != null ||  cancelledUsers != null) && errorMessage == null }">
+	<div align="center" th:if="${ (confirmedUsers != null ||  cancelledUsers != null) && errorMessage == null }">
 		<table>
 			<tr> <td>
 			
@@ -41,7 +45,7 @@
 			</td>
 			<td>
 			
-			<h3> Cancelled questionnaires </h3>
+			<h3> Deleted questionnaires </h3>
 			<table>
 				<thead>
 					<tr>
@@ -64,9 +68,9 @@
 		<p th:text = "${ errorMessage }"></p>
 	</div>
 
-	<form action="GoToAdminHomepage" method="GET">
-        <input name="action" type="submit" value="Go to Admin Homepage"/>
-	</form>
+	<div align="right" style="padding: 10px 10px 0px 0px">
+		<a th:href="@{/GoToAdminHomepage}">Home</a>
+	</div>
 
 </body>
 
