@@ -122,20 +122,28 @@ public class GoToAdminCreatePage extends HttpServlet {
 				Integer productId = Integer.parseInt(productIdParam);
 				date = (Date) dateFormat.parse(dateParam);
 				
-				// Checks if the date is not prior to the current one
-				if (date.after(currentDate) || sameDay(date, currentDate)) {
-			
-					ctx.setVariable("numberOfQuestions", numberOfQuestions);
+				ProdOfDay alreadyExistingProductOfDay = productOfDayService.getProductOfDayFor(date);
+				
+				if (alreadyExistingProductOfDay == null) {
+				
+					// Checks if the date is not prior to the current one
+					if (date.after(currentDate) || sameDay(date, currentDate)) {
+				
+						ctx.setVariable("numberOfQuestions", numberOfQuestions);
+						
+						product = productService.getProdById(productId);
+						
+						// Initial setup of the product of the day
+						productOfDay = new ProdOfDay();
+						productOfDay.setProduct(product);
+						productOfDay.setChosenDate(date);
+						
+					} else {  // The inserted date is not valid, show an error message
+						ctx.setVariable("errorMessage", "Please select an appropriate date");
+					}
 					
-					product = productService.getProdById(productId);
-					
-					// Initial setup of the product of the day
-					productOfDay = new ProdOfDay();
-					productOfDay.setProduct(product);
-					productOfDay.setChosenDate(date);
-					
-				} else {  // The inserted date is not valid, show an error message
-					ctx.setVariable("errorMessage", "Please select an appropriate date");
+				} else {	// There already is a product of the day with the selected date
+					ctx.setVariable("errorMessage", "There already is a product of the day with the selected date");
 				}
 				
 			}
@@ -149,6 +157,8 @@ public class GoToAdminCreatePage extends HttpServlet {
 		} catch (NotFoundException e) {			// ProductOfDay retrieving
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error in retrieving the specified product of the day from the DB");
 			return;
+		} catch (Exception e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error");
 		}
 		
 		templateEngine.process(path, ctx, response.getWriter());

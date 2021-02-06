@@ -52,7 +52,7 @@
 				
 					<tbody>
 						<tr th:each="i : ${#numbers.sequence(1, numberOfQuestions)}">
-							<td> <input th:name="${i}" type="text"/> </td>
+							<td> <input th:name="${i}" type="text" required/> </td>
 						</tr>
 					</tbody>
 				

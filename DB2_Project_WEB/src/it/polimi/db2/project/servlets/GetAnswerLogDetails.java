@@ -106,36 +106,44 @@ public class GetAnswerLogDetails extends HttpServlet {
 				ServletContext servletContext = getServletContext();
 				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 				
-				ctx.setVariable("errorMessage", "No questionnaire found for the specified date");
+				ctx.setVariable("errorMessage", "No product of the day found for the specified date");
 				
 				return ctx;
 				
 			}
 			
 			answersLog = answerLogService.getAnswersForProduct(prodOfDay.getId());
-			
-			List<User> confirmedUsers = new ArrayList<User>();
-			List<User> cancelledUsers = new ArrayList<User>();
-			
-			// Filters the answers between confirmed and not, populating the lists of
-			// users previously defined
-			for (AnswerLog answerLog : answersLog) {
-				
-				if (answerLog.getConfirmed()) {
-					confirmedUsers.add(answerLog.getUser());
-				} else {
-					cancelledUsers.add(answerLog.getUser());
-				}
-				
-			}
 
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			
-			ctx.setVariable("confirmedUsers", confirmedUsers);
-			ctx.setVariable("cancelledUsers", cancelledUsers);
+			if (answersLog != null && answersLog.size() > 0) {		// There are some questionnaires
 			
-			ctx.setVariable("productOfDayId", prodOfDay.getId());
+				List<User> confirmedUsers = new ArrayList<User>();
+				List<User> cancelledUsers = new ArrayList<User>();
+				
+				// Filters the answers between confirmed and not, populating the lists of
+				// users previously defined
+				for (AnswerLog answerLog : answersLog) {
+					
+					if (answerLog.getConfirmed()) {
+						confirmedUsers.add(answerLog.getUser());
+					} else {
+						cancelledUsers.add(answerLog.getUser());
+					}
+					
+				}
+				
+				ctx.setVariable("confirmedUsers", confirmedUsers);
+				ctx.setVariable("cancelledUsers", cancelledUsers);
+				
+				ctx.setVariable("productOfDayId", prodOfDay.getId());
+			
+			} else {												// There is no questionnaire
+
+				ctx.setVariable("errorMessage", "No questionnaire found for the specified date");
+				
+			}
 			
 			return ctx;
 			
