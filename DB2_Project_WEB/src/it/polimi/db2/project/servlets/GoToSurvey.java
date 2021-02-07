@@ -32,10 +32,10 @@ public class GoToSurvey extends HttpServlet {
 	
 	@EJB(name = "it.polimi.db2.project.services/ProdOfayService")
 	private ProdOfDayService pOfDayService;
-	@EJB(name = "it.polimi.db2.project.services/QuestionService")
-	private QuestionService questService;
 	@EJB(name = "it.polimi.db2.project.services/LeaderboardService")
 	private LeaderboardService leaderboardService;
+	@EJB(name = "it.polimi.db2.project.services/QuestionService")
+	private QuestionService questService;
        
     public GoToSurvey() {
         super();
@@ -54,7 +54,7 @@ public class GoToSurvey extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// Get if the user already answered to the survey today, if anything goes wrong redirect to loginpage
-		// If the user already took the surver, the homepage is loaded
+		// If the user already took the survey, the homepage is loaded
         boolean alreadyAnsw = false;
         try {
         	
@@ -70,17 +70,26 @@ public class GoToSurvey extends HttpServlet {
         	request.getSession().invalidate();	
     		String path = getServletContext().getContextPath() + "/login.html";
 			response.sendRedirect(path);
-			
+			return;
         }
 		
-        if (alreadyAnsw) {		// User already took the survey
+        // If User already took the survey, reload the homepage (user should not be here)
+        if (alreadyAnsw) {		
         	String path = getServletContext().getContextPath() + "/GoToHomepage";
 			response.sendRedirect(path);
+			return;
         }
 
-		// Inject a fresh QuestionService
-		try { initQuestionService(); } 
-		catch (NamingException e) { e.printStackTrace(); }
+		// Inject the QuestionService
+		try { 
+			
+			initQuestionService(request); 
+			
+		} catch (Exception e) { 
+			e.printStackTrace(); 
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Error (no session variable found)");
+			return;
+		}
 		
 		// Check if the product of the day obtained is still current
 		Object pOfDayId;
@@ -109,20 +118,6 @@ public class GoToSurvey extends HttpServlet {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Error");
 			return;
-		}
-		
-		// Get the ID that's present only if user clicked on "previous" from Stat page
-		String ID = request.getParameter("ID");
-		if(ID != null) {
-			
-			try {
-				// Needed to inject the already in use questService
-				substituteService(request, response);
-			} catch (IOException e) {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Error (no session variable found)");
-				return;
-			}
-			
 		}
 		
 		
@@ -154,11 +149,33 @@ public class GoToSurvey extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	// Using JNDI lookup inject a new QuestionsService
-	private void initQuestionService() throws NamingException {
+	
+	// Method used to obtain the QuestService (or create it if not present)
+	private void initQuestionService(HttpServletRequest request) throws Exception {
 		
-		InitialContext ic = new InitialContext();
-		this.questService = (QuestionService) ic.lookup("java:comp/env/it.polimi.db2.project.services/QuestionService");
+		// Get the ID that's present only if user clicked on "Previous" from Stat page
+		String ID = request.getParameter("ID");
+		// If ID is present, inject the used QuestService
+		if(ID != null) {
+			
+			// Retrieve the questService
+			QuestionService questService = (QuestionService) request.getSession().getAttribute("questService");
+			
+			if(questService == null) {
+					throw new IOException();
+			} else {
+				
+				this.questService = questService;
+				
+			}
+					
+		} else {
+			
+			// Using JNDI lookup inject a new QuestionsService
+			InitialContext ic = new InitialContext();
+			this.questService = (QuestionService) ic.lookup("java:comp/env/it.polimi.db2.project.services/QuestionService");
+			
+		}
 		
 	}
 	
@@ -186,19 +203,6 @@ public class GoToSurvey extends HttpServlet {
 		request.getSession().setAttribute("pOfDayId", null);
 		String path = getServletContext().getContextPath() + "/GoToHomepage";
 		response.sendRedirect(path);
-	}
-	
-	// Used when user went back to this page using "previous" button in Stat page
-	private void substituteService(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		
-		// Retrieve the questService
-		QuestionService questService = (QuestionService) request.getSession().getAttribute("questService");
-		if(questService == null) {
-				throw new IOException();
-		} else {
-			this.questService = questService;
-		}
-		
 	}
 
 }

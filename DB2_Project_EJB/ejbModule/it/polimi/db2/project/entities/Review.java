@@ -19,7 +19,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Review", schema = "db2Project")
-@NamedQuery(name = "Review.getReviewsByProductId", query = "SELECT r FROM Review r WHERE r.prodOfDay.prodOfDayId = ?1")
+@NamedQuery(name = "Review.getReviewsByProductId", query = "SELECT r FROM Review r WHERE r.product.prodId = ?1")
 
 public class Review implements Serializable {
 
@@ -36,8 +36,8 @@ public class Review implements Serializable {
   private User user;
   
   @ManyToOne
-  @JoinColumn(name = "prodOfDayID")
-  private ProdOfDay prodOfDay;
+  @JoinColumn(name = "prodID")
+  private Product product;
 
   private String reviewText;
   
@@ -48,8 +48,8 @@ public class Review implements Serializable {
   public User getUser() { return this.user; }
   public void setUser(User user) { this.user = user; }
 
-  public ProdOfDay getProdOfDay() { return this.prodOfDay; }
-  public void setProdOfDay(ProdOfDay prodOfDay) { this.prodOfDay = prodOfDay; }
+  public Product getProduct() { return this.product; }
+  public void setProduct(Product product) { this.product = product; }
 
   public String getReviewText() { return this.reviewText; }
   public void setReviewText(String reviewText) { this.reviewText = reviewText; }
@@ -58,9 +58,9 @@ public class Review implements Serializable {
   // Inits
   public Review() { }
   
-  public Review(User user, ProdOfDay prodOfDay, String reviewText) {
+  public Review(User user, Product product, String reviewText) {
 	this.user = user;
-    this.prodOfDay = prodOfDay;
+    this.product = product;
     this.reviewText = reviewText;
   }
 

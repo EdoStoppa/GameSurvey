@@ -1,7 +1,4 @@
-# Basic User data insertion
-
-# This bit of code is added to "clean" the needed tables
-# DELETE FROM UserTable;
+# Synthetic data used to test the system
 
 # UserTable Data
 INSERT INTO UserTable (username, passw, email, totPoints) VALUES ("a", "a", "a@gmail.com", 0);
@@ -41,39 +38,45 @@ INSERT INTO Question (prodOfDayId, question) VALUES (4, "Question 2");
 INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (1, 1, '20200101', false);
 INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (1, 1, '20200101', true, 8);
 INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (2, 1, '20200101', false);
-INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (3, 1, '20200101', true);
+INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (3, 1, '20200101', true, 8);
 
 INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (1, 2, '20200103', false);
-INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (1, 2, '20200103', true, 8);
-INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (2, 2, '20200103', true, 6);
-INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (3, 2, '20200103', true, 5);
+INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (1, 2, '20200103', false);
+INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (1, 2, '20200103', true, 2);
+INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (2, 2, '20200103', true, 2);
+INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (3, 2, '20200103', true, 2);
 
 # Stat Data
 INSERT INTO Stat (logId, sex, age, expertise) VALUES (2, "Female", 18, "Low");
 INSERT INTO Stat (logId, sex, age, expertise) VALUES (4, "Male", 18, "Low");
 
 # FullAnswer Data
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (2, 1, "Answer 1a");
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (2, 2, "Answer 2a");
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (4, 1, "Answer 1b");
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (4, 2, "Answer 2b");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (2, 1, "Answer 1 a");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (2, 2, "Answer 2 a");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (4, 1, "Answer 1 b");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (4, 2, "Answer 2 b");
 
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (6, 3, "Answer 1c");
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (6, 4, "Answer 2c");
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (7, 3, "Answer 1d");
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (7, 4, "Answer 2d");
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (8, 3, "Answer 1e");
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (8, 4, "Answer 2e");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (6, 3, "Answer 1 c");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (6, 4, "Answer 2 c");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (7, 3, "Answer 1 d");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (7, 4, "Answer 2 d");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (8, 3, "Answer 1 e");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (8, 4, "Answer 2 e");
 
 # Review
-INSERT INTO Review (userId, prodOfDayId, reviewText) VALUES (1, 1, "Wow");
-INSERT INTO Review (userId, prodOfDayId, reviewText) VALUES (2, 1, "Super");
-INSERT INTO Review (userId, prodOfDayId, reviewText) VALUES (3, 1, "Magnificient");
-INSERT INTO Review (userId, prodOfDayId, reviewText) VALUES (4, 1, "Awful");
+INSERT INTO Review (userId, prodId, reviewText) VALUES (1, 1, "Wow!");
+INSERT INTO Review (userId, prodId, reviewText) VALUES (2, 1, "This is super!!!");
+INSERT INTO Review (userId, prodId, reviewText) VALUES (3, 1, "Magnificient!");
+INSERT INTO Review (userId, prodId, reviewText) VALUES (4, 1, "Awful experience");
+
+INSERT INTO Review (userId, prodId, reviewText) VALUES (1, 2, "That was ok");
+INSERT INTO Review (userId, prodId, reviewText) VALUES (2, 2, "Very good!");
+INSERT INTO Review (userId, prodId, reviewText) VALUES (3, 2, "Too expensive!");
 
 # Offensive words
 INSERT INTO OffensiveWord(word) VALUES ("very");
 INSERT INTO OffensiveWord(word) VALUES ("offensive");
 INSERT INTO OffensiveWord(word) VALUES ("word");
 
+# If all data is inserted from here, the Leaderboard table must be cleaned
 DELETE FROM Leaderboard;

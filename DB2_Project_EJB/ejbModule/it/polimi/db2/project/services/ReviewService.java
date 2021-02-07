@@ -21,14 +21,14 @@ public class ReviewService {
 	// Methods
 	
 	// Returns a list of all the reviews for the provided productOfDayId
-	public List<Review> getReviewsForProduct(int productOfDayId) throws Exception {
+	public List<Review> getReviewsForProduct(int prodId) throws Exception {
 		
 		List<Review> reviewsForProduct;
 
 		try {
 			
 			reviewsForProduct = em.createNamedQuery("Review.getReviewsByProductId", Review.class)
-					.setParameter(1, productOfDayId)
+					.setParameter(1, prodId)
 					.getResultList();
 			
 		} catch (PersistenceException e) {

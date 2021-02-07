@@ -108,7 +108,7 @@ public class GoToHomepage extends HttpServlet {
         List<Review> reviews;
         try {
         	
-        	reviews = reviewService.getReviewsForProduct(pOfDay.getId());
+        	reviews = reviewService.getReviewsForProduct(pOfDay.getProduct().getId());
         	
         } catch (Exception e) {
         	e.printStackTrace();
