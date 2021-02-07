@@ -42,7 +42,7 @@
 			</thead>
 			<tbody>
 				<tr th:each="user : ${ confirmedUsers }">
-					<td align="center" th:text="${ user.userId }"></td>
+					<td align="center" th:text="${ user.id }"></td>
 					<td align="center" th:text="${ user.username }"></td>
 					<td align="center"> <a th:href="@{/GoToUserAnswers(userId = ${user.Id}, productOfDayId = ${productOfDayId})}"> Answers </a> </td>
 				</tr>
@@ -59,7 +59,7 @@
 			</thead>
 			<tbody>
 				<tr th:each="user : ${ cancelledUsers }">
-					<td align="center" th:text="${ user.userId }"></td>
+					<td align="center" th:text="${ user.id }"></td>
 					<td align="center" th:text="${ user.username }"></td>
 				</tr>
 			</tbody>

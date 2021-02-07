@@ -99,10 +99,10 @@ public class GoToAdminCreatePage extends HttpServlet {
 			return;
 		}
 		
+		// Set current date into the session
 		Date currentDate = Calendar.getInstance().getTime();
 		
 		String currentDateAsString = dateFormat.format(currentDate);
-		System.out.println(currentDate);
 		ctx.setVariable("currentDate", currentDateAsString);
 		
 		// Get the number of questions, the date and the productId. The former is set in the context
@@ -114,34 +114,28 @@ public class GoToAdminCreatePage extends HttpServlet {
 			String productIdParam = (String) session.getAttribute("productId");
 			String dateParam = (String) session.getAttribute("date");
 			
+			String errorParam = (String) session.getAttribute("errorMessage");
+			
 			// Checks if this is a new session
-			if (numberOfQuestionsParam != null && productIdParam != null && dateParam != null) {
+			if (numberOfQuestionsParam != null && productIdParam != null && dateParam != null) {	// Not a new session 
 
 				// Parse the data
 				numberOfQuestions = Integer.parseInt(numberOfQuestionsParam);
 				Integer productId = Integer.parseInt(productIdParam);
 				date = (Date) dateFormat.parse(dateParam);
 			
-				ProdOfDay alreadyExistingProductOfDay = productOfDayService.getProductOfDayFor(date);
+				ctx.setVariable("numberOfQuestions", numberOfQuestions);
 				
-				if (alreadyExistingProductOfDay != null) {									// There already is a product of the day with the selected date
-					ctx.setVariable("errorMessage", "There already is a product of the day with the selected date");
-				} else if (numberOfQuestions < 1) {											// Low number of questions selected
-					ctx.setVariable("errorMessage", "Please select a valid number of questions");
-				} else if (!(date.after(currentDate) || sameDay(date, currentDate))) {		// Invalid date selected
-					ctx.setVariable("errorMessage", "Please select an appropriate date");
-				} else {																	// All good
+				product = productService.getProdById(productId);
 				
-					ctx.setVariable("numberOfQuestions", numberOfQuestions);
-					
-					product = productService.getProdById(productId);
-					
-					// Initial setup of the product of the day
-					productOfDay = new ProdOfDay();
-					productOfDay.setProduct(product);
-					productOfDay.setChosenDate(date);
-						
-				}
+				// Initial setup of the product of the day
+				productOfDay = new ProdOfDay();
+				productOfDay.setProduct(product);
+				productOfDay.setChosenDate(date);
+				
+			} else if (errorParam != null) {			// There is an error to display
+				
+				ctx.setVariable("errorMessage", errorParam);
 				
 			}
 			
@@ -186,7 +180,7 @@ public class GoToAdminCreatePage extends HttpServlet {
 		// Try to retrieve the questions
 		Boolean questionsFound = composeQuestionnaire(request);
 		
-		// If any question has been found the object is persisted
+		// If any question has been found the object is persisted (this is the 2nd step)
 		if (questionsFound) {
 			
 			try {
@@ -199,16 +193,46 @@ public class GoToAdminCreatePage extends HttpServlet {
 			String path = getServletContext().getContextPath() + "/GoToAdminHomepage";
 			response.sendRedirect(path);
 			
-		} else {
-		// Otherwise we continue with the inserting process
+		} else if (productId != null && selectedDate != null && numberOfQuestions != null) {
+		// Otherwise, if all the parameters above are set, we are in 
+		// the 1st step: we have to check the inserted date to find if it is
+		// consistent and, if so, insert it into the session
+			try {
+				
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+				
+				Integer numberOfQuestionsAsInt = Integer.parseInt(numberOfQuestions);
+				Date currentDate = Calendar.getInstance().getTime();
+				Date dateObject = (Date) dateFormat.parse(selectedDate);
 			
-			request.getSession().setAttribute("productId", productId);
-			request.getSession().setAttribute("date", selectedDate);
-			request.getSession().setAttribute("numberOfQuestions", numberOfQuestions);
+				ProdOfDay alreadyExistingProductOfDay = productOfDayService.getProductOfDayFor(dateObject);
+				
+				if (alreadyExistingProductOfDay != null) {												// There already is a product of the day with the selected date
+					request.getSession().setAttribute("errorMessage", "There already is a product of the day with the selected date");
+				} else if (numberOfQuestionsAsInt < 1) {												// Low number of questions selected
+					request.getSession().setAttribute("errorMessage", "Please select a valid number of questions");
+				} else if (!(dateObject.after(currentDate) || sameDay(dateObject, currentDate))) {		// Invalid date selected
+					request.getSession().setAttribute("errorMessage", "Please select an appropriate date");
+				} else {
+				
+					request.getSession().setAttribute("productId", productId);
+					request.getSession().setAttribute("date", selectedDate);
+					request.getSession().setAttribute("numberOfQuestions", numberOfQuestions);
+					
+				}
+			
+				String path = getServletContext().getContextPath() + "/GoToAdminCreatePage";
+				response.sendRedirect(path);
 		
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error");
+			}
+			
+		} else {
+		// This is the step 0, when we first load the page
 			String path = getServletContext().getContextPath() + "/GoToAdminCreatePage";
 			response.sendRedirect(path);
-		
 		}
 		
 	}
