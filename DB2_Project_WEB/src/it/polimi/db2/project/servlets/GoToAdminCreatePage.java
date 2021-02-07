@@ -124,26 +124,23 @@ public class GoToAdminCreatePage extends HttpServlet {
 				
 				ProdOfDay alreadyExistingProductOfDay = productOfDayService.getProductOfDayFor(date);
 				
-				if (alreadyExistingProductOfDay == null) {
-				
-					// Checks if the date is not prior to the current one
-					if (date.after(currentDate) || sameDay(date, currentDate)) {
-				
-						ctx.setVariable("numberOfQuestions", numberOfQuestions);
-						
-						product = productService.getProdById(productId);
-						
-						// Initial setup of the product of the day
-						productOfDay = new ProdOfDay();
-						productOfDay.setProduct(product);
-						productOfDay.setChosenDate(date);
-						
-					} else {  // The inserted date is not valid, show an error message
-						ctx.setVariable("errorMessage", "Please select an appropriate date");
-					}
-					
-				} else {	// There already is a product of the day with the selected date
+				if (alreadyExistingProductOfDay != null) {									// There already is a product of the day with the selected date
 					ctx.setVariable("errorMessage", "There already is a product of the day with the selected date");
+				} else if (numberOfQuestions < 1) {											// Low number of questions selected
+					ctx.setVariable("errorMessage", "Please select a valid number of questions");
+				} else if (!(date.after(currentDate) || sameDay(date, currentDate))) {		// Invalid date selected
+					ctx.setVariable("errorMessage", "Please select an appropriate date");
+				} else {																	// All good
+				
+					ctx.setVariable("numberOfQuestions", numberOfQuestions);
+					
+					product = productService.getProdById(productId);
+					
+					// Initial setup of the product of the day
+					productOfDay = new ProdOfDay();
+					productOfDay.setProduct(product);
+					productOfDay.setChosenDate(date);
+						
 				}
 				
 			}

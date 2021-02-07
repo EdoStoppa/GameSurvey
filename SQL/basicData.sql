@@ -31,7 +31,7 @@ INSERT INTO Question (prodOfDayId, question) VALUES (1, "Domanda 5");
 INSERT INTO Question (prodOfDayId, question) VALUES (1, "Domanda 6");
 
 # ProductOfDay Data
-INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (2, curdate());
+INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (1, curdate());
 INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (2, '19710101');
 INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (3, '19710103');
 INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (4, '19710104');
@@ -41,12 +41,10 @@ INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (5, '20230202');
 
 # AnswerLog Data
 INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (1, 1, '19710101', true);
-INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (2, 1, '19710101', false);
-INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (3, 1, '19710101', true);
+INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (2, 2, '19710101', false);
+INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (3, 3, '19710101', true);
 INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (4, 1, '19710101', false);
 INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (5, 1, '19710101', true);
-INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (1, 2, '19710102', true);
-INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (1, 3, '19710103', true);
 
 # FullAnswer Data
 INSERT INTO FullAnswer (logId, questId, answer) VALUES (1, 1, "Ciao come va 1");

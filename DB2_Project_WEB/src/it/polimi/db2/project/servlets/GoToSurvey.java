@@ -34,6 +34,8 @@ public class GoToSurvey extends HttpServlet {
 	private ProdOfDayService pOfDayService;
 	@EJB(name = "it.polimi.db2.project.services/QuestionService")
 	private QuestionService questService;
+	@EJB(name = "it.polimi.db2.project.services/LeaderboardService")
+	private LeaderboardService leaderboardService;
        
     public GoToSurvey() {
         super();
@@ -51,6 +53,31 @@ public class GoToSurvey extends HttpServlet {
     // DO GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// Get if the user already answered to the survey today, if anything goes wrong redirect to loginpage
+		// If the user already took the surver, the homepage is loaded
+        boolean alreadyAnsw = false;
+        try {
+        	
+        	// Retrieve the user
+        	User usr = (User) request.getSession().getAttribute("user");
+        	if(usr == null) { throw new Exception("No User found"); }
+        	
+			alreadyAnsw = leaderboardService.isUserInLeaderboard(usr.getId());
+        	
+        } catch (Exception e) {
+        	
+        	e.printStackTrace();
+        	request.getSession().invalidate();	
+    		String path = getServletContext().getContextPath() + "/login.html";
+			response.sendRedirect(path);
+			
+        }
+		
+        if (alreadyAnsw) {		// User already took the survey
+        	String path = getServletContext().getContextPath() + "/GoToHomepage";
+			response.sendRedirect(path);
+        }
+
 		// Inject a fresh QuestionService
 		try { initQuestionService(); } 
 		catch (NamingException e) { e.printStackTrace(); }
