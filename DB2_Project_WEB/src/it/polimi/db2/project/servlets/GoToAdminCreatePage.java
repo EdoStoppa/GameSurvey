@@ -121,7 +121,7 @@ public class GoToAdminCreatePage extends HttpServlet {
 				numberOfQuestions = Integer.parseInt(numberOfQuestionsParam);
 				Integer productId = Integer.parseInt(productIdParam);
 				date = (Date) dateFormat.parse(dateParam);
-				
+			
 				ProdOfDay alreadyExistingProductOfDay = productOfDayService.getProductOfDayFor(date);
 				
 				if (alreadyExistingProductOfDay != null) {									// There already is a product of the day with the selected date

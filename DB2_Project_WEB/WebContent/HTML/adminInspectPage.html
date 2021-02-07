@@ -35,14 +35,16 @@
 		<table>
 			<thead>
 				<tr>
-					<th> User </th>
+					<th> Id </th>
+					<th> Username </th>
 					<th> See Answers </th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="user : ${ confirmedUsers }">
-					<td th:text="${ user.email }"></td>
-					<td> <a th:href="@{/GoToUserAnswers(userId = ${user.Id}, productOfDayId = ${productOfDayId})}"> Answers </a> </td>
+					<td align="center" th:text="${ user.userId }"></td>
+					<td align="center" th:text="${ user.username }"></td>
+					<td align="center"> <a th:href="@{/GoToUserAnswers(userId = ${user.Id}, productOfDayId = ${productOfDayId})}"> Answers </a> </td>
 				</tr>
 			</tbody>
 		</table>
@@ -51,12 +53,14 @@
 		<table>
 			<thead>
 				<tr>
-					<th> User </th>
+					<th> Id </th>
+					<th> Username </th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="user : ${ cancelledUsers }">
-					<td th:text="${ user.email }"></td>
+					<td align="center" th:text="${ user.userId }"></td>
+					<td align="center" th:text="${ user.username }"></td>
 				</tr>
 			</tbody>
 		</table>
