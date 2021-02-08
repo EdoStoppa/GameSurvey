@@ -197,8 +197,6 @@ public class GoToAdminCreatePage extends HttpServlet {
 			}
 			
 			// Delete parameters
-			
-			
 			session.setAttribute("productIdCreation", null);
 			session.setAttribute("dateCreation", null);
 			session.setAttribute("numberOfQuestionsCreation", null);
@@ -213,8 +211,8 @@ public class GoToAdminCreatePage extends HttpServlet {
 			// the 1st step: we have to check the inserted date to find if it is
 			// consistent and, if so, insert it into the session
 			try {
-
-				if (selectedDate.length() != 10) { throw new ParseException(selectedDate, 0); } 
+				
+				if (selectedDate.length() != 10) { throw new ParseException(selectedDate, 0); }
 				
 				SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 				
