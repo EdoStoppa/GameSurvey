@@ -14,10 +14,6 @@ import javax.persistence.*;
 
 public class Stat implements Serializable {
 
-  /*// Enums
-  public enum Sex { MALE, FEMALE, OTHER }
-  public enum Expertise { LOW, MEDIUM, HIGH }*/
-
   // Serializable
   private static final long serialVersionUID = 1L;
 

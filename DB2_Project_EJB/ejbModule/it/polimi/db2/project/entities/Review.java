@@ -36,7 +36,7 @@ public class Review implements Serializable {
   private User user;
   
   @ManyToOne
-  @JoinColumn(name = "prodID")
+  @JoinColumn(name = "prodId")
   private Product product;
 
   private String reviewText;
