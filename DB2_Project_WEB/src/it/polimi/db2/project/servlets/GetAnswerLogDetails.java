@@ -68,6 +68,7 @@ public class GetAnswerLogDetails extends HttpServlet {
 
 			// Extract the date and sets it into the session
 			String selectedDate = request.getParameter("date");
+			if (selectedDate.length() != 10) { throw new ParseException(selectedDate, 0); }
 			
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Date actualDate = (Date) dateFormat.parse(selectedDate);
@@ -81,13 +82,27 @@ public class GetAnswerLogDetails extends HttpServlet {
 			templateEngine.process(path, ctx, response.getWriter());
 			
 		} catch (ParseException e) {			// Date parsing
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error in date parsing");
+			
+			setError(request, response, "Date format is not correct, please insert something like dd-mm-yyyy");
 			return;
+			
 		} catch (Exception e) {					// Generic exception
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error in data retrieving");
 			return;
 		}
+		
+	}
+	
+	private void setError(HttpServletRequest request, HttpServletResponse response, String errorMessage) throws IOException {
+		
+		ServletContext servletContext = getServletContext();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		
+		ctx.setVariable("errorMessage", errorMessage);
+		
+		String path = "/HTML/adminInspectPage.html";
+		templateEngine.process(path, ctx, response.getWriter());
 		
 	}
 	

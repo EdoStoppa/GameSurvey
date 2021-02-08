@@ -198,6 +198,8 @@ public class GoToAdminCreatePage extends HttpServlet {
 		// the 1st step: we have to check the inserted date to find if it is
 		// consistent and, if so, insert it into the session
 			try {
+
+				if (selectedDate.length() != 10) { throw new ParseException(selectedDate, 0); } 
 				
 				SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 				
@@ -224,6 +226,12 @@ public class GoToAdminCreatePage extends HttpServlet {
 				String path = getServletContext().getContextPath() + "/GoToAdminCreatePage";
 				response.sendRedirect(path);
 		
+			} catch (ParseException e) { 
+			
+				request.getSession().setAttribute("errorMessage", "Please select an appropriate date format (dd-mm-yyyy)");
+				String path = getServletContext().getContextPath() + "/GoToAdminCreatePage";
+				response.sendRedirect(path);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error");
