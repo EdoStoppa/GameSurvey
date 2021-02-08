@@ -70,14 +70,15 @@ public class GoToUserAnswers extends HttpServlet {
 			
 			userId = Integer.parseInt(request.getParameter("userId"));
 			productOfDayId = Integer.parseInt(request.getParameter("productOfDayId"));
-			
-			answerLog = answerLogService.getAnswerForProductAndUser(productOfDayId, userId);
+						
+			answerLog = answerLogService.getConfirmedAnswerForProductAndUser(productOfDayId, userId);
 			fullAnswers = fullAnswerService.getAnswersForAnswerLog(answerLog.getId());
 			
 			ctx.setVariable("userId", userId);
 			ctx.setVariable("fullAnswers", fullAnswers);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect param values");
 			return;
 		}

@@ -22,7 +22,7 @@ INSERT INTO Product(prodName, prodPhoto) VALUES("Product Five", LOAD_FILE("/var/
 
 # ProductOfDay Data
 INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (1, '20200101');
-INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (2, '20200103');
+INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (2, '20210101');
 INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (3, '20220202');
 INSERT INTO ProdOfDay(prodID, chosenDate) VALUES (4, '20230202');
 
@@ -40,11 +40,11 @@ INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (
 INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (2, 1, '20200101', false);
 INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (3, 1, '20200101', true, 8);
 
-INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (1, 2, '20200103', false);
-INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (1, 2, '20200103', false);
-INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (1, 2, '20200103', true, 2);
-INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (2, 2, '20200103', true, 2);
-INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (3, 2, '20200103', true, 2);
+INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (1, 2, '20210101', false);
+INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed) VALUES (3, 2, '20210101', false);
+INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (1, 2, '20210101', true, 2);
+INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (2, 2, '20210101', true, 2);
+INSERT INTO AnswerLog (userId, prodOfDayID, logTime, confirmed, points) VALUES (3, 2, '20210101', true, 2);
 
 # Stat Data
 INSERT INTO Stat (logId, sex, age, expertise) VALUES (2, "Female", 18, "Low");
@@ -56,12 +56,12 @@ INSERT INTO FullAnswer (logId, questId, answer) VALUES (2, 2, "Answer 2 a");
 INSERT INTO FullAnswer (logId, questId, answer) VALUES (4, 1, "Answer 1 b");
 INSERT INTO FullAnswer (logId, questId, answer) VALUES (4, 2, "Answer 2 b");
 
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (6, 3, "Answer 1 c");
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (6, 4, "Answer 2 c");
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (7, 3, "Answer 1 d");
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (7, 4, "Answer 2 d");
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (8, 3, "Answer 1 e");
-INSERT INTO FullAnswer (logId, questId, answer) VALUES (8, 4, "Answer 2 e");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (7, 3, "Answer 1 c");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (7, 4, "Answer 2 c");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (8, 3, "Answer 1 d");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (8, 4, "Answer 2 d");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (9, 3, "Answer 1 e");
+INSERT INTO FullAnswer (logId, questId, answer) VALUES (9, 4, "Answer 2 e");
 
 # Review
 INSERT INTO Review (userId, prodId, reviewText) VALUES (1, 1, "Wow!");

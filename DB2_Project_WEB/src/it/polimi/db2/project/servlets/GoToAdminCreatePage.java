@@ -95,6 +95,7 @@ public class GoToAdminCreatePage extends HttpServlet {
 			ctx.setVariable("products", products);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error in data request to the DB");
 			return;
 		}
@@ -110,11 +111,13 @@ public class GoToAdminCreatePage extends HttpServlet {
 		// productOfDay object
 		try {
 
-			String numberOfQuestionsParam = (String) session.getAttribute("numberOfQuestions");
-			String productIdParam = (String) session.getAttribute("productId");
-			String dateParam = (String) session.getAttribute("date");
+			String numberOfQuestionsParam = (String) session.getAttribute("numberOfQuestionsCreation");
+			String productIdParam = (String) session.getAttribute("productIdCreation");
+			String dateParam = (String) session.getAttribute("dateCreation");
 			
 			String errorParam = (String) session.getAttribute("errorMessage");
+			
+			System.out.println(numberOfQuestionsParam + " " + productIdParam + " " + dateParam);
 			
 			// Checks if this is a new session
 			if (numberOfQuestionsParam != null && productIdParam != null && dateParam != null) {	// Not a new session 
@@ -140,15 +143,19 @@ public class GoToAdminCreatePage extends HttpServlet {
 			}
 			
 		} catch (ParseException e) {			// Date parsing
+			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error in date parsing");
 			return;
 		} catch (NumberFormatException e) {		// Integer parsing
+			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error in number of questions parsing");
 			return;
 		} catch (NotFoundException e) {			// ProductOfDay retrieving
+			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error in retrieving the specified product of the day from the DB");
 			return;
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error");
 		}
 		
@@ -158,6 +165,9 @@ public class GoToAdminCreatePage extends HttpServlet {
 
 	// POST
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpSession session = req.getSession();
 
 		String productId = null;
 		String selectedDate = null;
@@ -167,9 +177,9 @@ public class GoToAdminCreatePage extends HttpServlet {
 		// and sets it into the session
 		try {
 			
-			productId = request.getParameter("productId");
-			selectedDate = request.getParameter("date");
-			numberOfQuestions = request.getParameter("numberOfQuestions");
+			productId = request.getParameter("productIdCreation");
+			selectedDate = request.getParameter("dateCreation");
+			numberOfQuestions = request.getParameter("numberOfQuestionsCreation");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -190,13 +200,22 @@ public class GoToAdminCreatePage extends HttpServlet {
 				return;
 			}
 			
-			String path = getServletContext().getContextPath() + "/GoToAdminHomepage";
+			// Delete parameters
+			
+			
+			session.setAttribute("productIdCreation", null);
+			session.setAttribute("dateCreation", null);
+			session.setAttribute("numberOfQuestionsCreation", null);
+			session.setAttribute("errorMessage", null);
+			
+			// Redirect
+			String path = getServletContext().getContextPath() + "/GoToAdminCreatePage";
 			response.sendRedirect(path);
 			
 		} else if (productId != null && selectedDate != null && numberOfQuestions != null) {
-		// Otherwise, if all the parameters above are set, we are in 
-		// the 1st step: we have to check the inserted date to find if it is
-		// consistent and, if so, insert it into the session
+			// Otherwise, if all the parameters above are set, we are in 
+			// the 1st step: we have to check the inserted date to find if it is
+			// consistent and, if so, insert it into the session
 			try {
 				
 				SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -215,9 +234,9 @@ public class GoToAdminCreatePage extends HttpServlet {
 					request.getSession().setAttribute("errorMessage", "Please select an appropriate date");
 				} else {
 				
-					request.getSession().setAttribute("productId", productId);
-					request.getSession().setAttribute("date", selectedDate);
-					request.getSession().setAttribute("numberOfQuestions", numberOfQuestions);
+					session.setAttribute("productIdCreation", productId);
+					session.setAttribute("dateCreation", selectedDate);
+					session.setAttribute("numberOfQuestionsCreation", numberOfQuestions);
 					
 				}
 			
@@ -230,7 +249,7 @@ public class GoToAdminCreatePage extends HttpServlet {
 			}
 			
 		} else {
-		// This is the step 0, when we first load the page
+			// Otherwise reload the page
 			String path = getServletContext().getContextPath() + "/GoToAdminCreatePage";
 			response.sendRedirect(path);
 		}

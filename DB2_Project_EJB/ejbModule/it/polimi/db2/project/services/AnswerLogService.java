@@ -44,7 +44,7 @@ public class AnswerLogService {
 	}
 	
 	// Returns the answerLog for the specified productOfDay and user's id
-	public AnswerLog getAnswerForProductAndUser(int productOfDayId, int userId) throws Exception {
+	public AnswerLog getConfirmedAnswerForProductAndUser(int productOfDayId, int userId) throws Exception {
 		
 		List<AnswerLog> answersForProduct;
 
@@ -56,15 +56,27 @@ public class AnswerLogService {
 					.getResultList();
 			
 		} catch (PersistenceException e) {
-			throw new Exception("Could not get list of answers log");
+			throw new Exception("Could not get list of answer logs");
 		}
 		
-		if (answersForProduct.size() != 1) {
-			throw new Exception("Could not get a single answers");
-		} else if (answersForProduct.size() == 0) {		
-			return null;
+		if (answersForProduct.size() == 0) {
+			throw new Exception("Could not get any answers");
 		} else {
-			return answersForProduct.get(0);
+			
+			AnswerLog log = null;
+			for(AnswerLog l: answersForProduct) {
+				if(l.getConfirmed()) {
+					log = l;
+					break;
+				}
+					
+			}
+			
+			if(log == null)
+				throw new Exception("Could not get any confirmed answer");
+			
+			return log;
+			
 		}
 		
 	}
@@ -74,7 +86,7 @@ public class AnswerLogService {
 		// Create new log
 		AnswerLog log = new AnswerLog(user, prodOfDay, logTime, confirmed, points);
 		
-		// Persist it and flush immediately to DB
+		// Persist and flush immediately to DB
 		em.persist(log);
 		em.flush();
 		
