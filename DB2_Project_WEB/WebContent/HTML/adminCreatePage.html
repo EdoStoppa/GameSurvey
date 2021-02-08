@@ -18,17 +18,17 @@
 		
 			<!-- Products dropdown -->
 	        <p> Select the product: </p>
-			<select name="productId" id="productId">
+			<select name="productIdCreation" id="productIdCreation">
 				<option th:each="p : ${ products }" th:value="${ p.Id }" th:text = "${ p.prodName }"> </option>
 			</select>
 			
 			<!-- Date -->
 	        <p> Select the date of the questionnaire: </p>
-	    	<input type="date" name="date" th:value="${ currentDate }" th:min="${ currentDate }"/>
+	    	<input type="date" name="dateCreation" th:value="${ currentDate }" th:min="${ currentDate }"/>
 	        
 	        <!-- Number of questions -->
 	        <p> Select the number of questions: </p>
-	        <input name="numberOfQuestions" type="number" value="4">
+	        <input name="numberOfQuestionsCreation" type="number" value="4">
 	        
 	        <!-- Submit -->
 	        <br>
@@ -60,7 +60,7 @@
 			
 		    	<!-- Submit -->
 		    	</br>
-		    	<input class = "submit" name="action" type="submit" value="Register"/>
+		    	<input class = "submit" name="action" type="submit" value="Confirm"/>
 		        
 			</div>
 
