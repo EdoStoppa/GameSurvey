@@ -44,7 +44,7 @@
 		
 				<table>
 			
-					<thead>
+					<thead style="padding: 10px 0px">
 						<tr>
 							<th> Insert the questions </th>
 						</tr>
@@ -52,7 +52,7 @@
 				
 					<tbody>
 						<tr th:each="i : ${#numbers.sequence(1, numberOfQuestions)}">
-							<td> <input th:name="${i}" type="text" required/> </td>
+							<td> <input class="quest" th:name="${i}" type="text" required/> </td>
 						</tr>
 					</tbody>
 				
@@ -74,7 +74,7 @@
 		</div>
 	</div>
 	
-	<div align="right" style="padding: 10px 10px 0px 0px">
+	<div th:if="${ numberOfQuestions == null }" align="right" style="padding: 10px 10px 0px 0px">
 		<a th:href="@{/GoToAdminHomepage}">Home</a>
 	</div>
 	
