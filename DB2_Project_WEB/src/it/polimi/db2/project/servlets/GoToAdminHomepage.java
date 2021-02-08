@@ -46,7 +46,7 @@ public class GoToAdminHomepage extends HttpServlet {
     
 	// GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+		
         ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		String path = "/HTML/adminHomepage.html";

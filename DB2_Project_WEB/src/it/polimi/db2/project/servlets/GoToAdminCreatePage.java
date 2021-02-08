@@ -117,8 +117,6 @@ public class GoToAdminCreatePage extends HttpServlet {
 			
 			String errorParam = (String) session.getAttribute("errorMessage");
 			
-			System.out.println(numberOfQuestionsParam + " " + productIdParam + " " + dateParam);
-			
 			// Checks if this is a new session
 			if (numberOfQuestionsParam != null && productIdParam != null && dateParam != null) {	// Not a new session 
 
@@ -143,9 +141,7 @@ public class GoToAdminCreatePage extends HttpServlet {
 			}
 			
 		} catch (ParseException e) {			// Date parsing
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error in date parsing");
-			return;
+			ctx.setVariable("errorMessage", "Please use a correct date format (dd-mm-yyyy)");
 		} catch (NumberFormatException e) {		// Integer parsing
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error in number of questions parsing");
