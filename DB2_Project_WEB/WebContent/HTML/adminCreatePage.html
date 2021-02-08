@@ -24,15 +24,15 @@
 			
 			<!-- Date -->
 	        <p> Select the date of the questionnaire: </p>
-	    	<input type="date" name="dateCreation" th:value="${ currentDate }" th:min="${ currentDate }"/>
+	    	<input type="date" style="text-align:center;" name="dateCreation" th:value="${ currentDate }" th:min="${ currentDate }"/>
 	        
 	        <!-- Number of questions -->
 	        <p> Select the number of questions: </p>
-	        <input name="numberOfQuestionsCreation" type="number" value="4">
+	        <input class="num" name="numberOfQuestionsCreation" type="number" value="4" min="1">
 	        
 	        <!-- Submit -->
 	        <br>
-	        <input class = "submit" name="action" type="submit" value="Confirm"/>
+	        <input style="padding: 20px 0px" class = "submit" name="action" type="submit" value="Confirm"/>
 	        
 		</form>
 	
