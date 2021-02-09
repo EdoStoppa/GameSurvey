@@ -13,7 +13,7 @@
 	
 	<div align="center" style="padding: 10px 0px">
 	
-		<form action="RecordQuestAnswers" method="POST">
+		<form style="padding: 20px 0px" action="RecordQuestAnswers" method="POST">
 		
 			<div th:if="${answList != null}" style="padding: 2px 0px" th:each="i : ${ intList }">
 				<span th:text="${questList.get(i).question}"> Question </span> <br>
