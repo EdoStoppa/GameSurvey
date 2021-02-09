@@ -49,7 +49,7 @@ public class GoToAdminCreatePage extends HttpServlet {
 	// Inits
     public GoToAdminCreatePage() {
     	super();
-	  }
+	}
 	    
     public void init() throws ServletException {
     	
@@ -202,8 +202,8 @@ public class GoToAdminCreatePage extends HttpServlet {
 			session.setAttribute("numberOfQuestionsCreation", null);
 			session.setAttribute("errorMessage", null);
 			
-			// Redirect
-			String path = getServletContext().getContextPath() + "/GoToAdminCreatePage";
+			// Redirect to admin's homepage
+			String path = getServletContext().getContextPath() + "/GoToAdminHomepage";
 			response.sendRedirect(path);
 			
 		} else if (productId != null && selectedDate != null && numberOfQuestions != null) {
@@ -239,26 +239,27 @@ public class GoToAdminCreatePage extends HttpServlet {
 				String path = getServletContext().getContextPath() + "/GoToAdminCreatePage";
 				response.sendRedirect(path);
 		
-			} catch (ParseException e) { 
+			} catch (ParseException e) { 	// Parse exception: date cannot be parsed -> Show an error message
 			
 				request.getSession().setAttribute("errorMessage", "Please select an appropriate date format (dd-mm-yyyy)");
 				String path = getServletContext().getContextPath() + "/GoToAdminCreatePage";
 				response.sendRedirect(path);
 				
-			} catch (Exception e) {
+			} catch (Exception e) {			// Generic exception: internal error -> Redirect to error page
 				e.printStackTrace();
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error");
 			}
 			
 		} else {
-			// Otherwise reload the page
+			// Otherwise just reload the page
 			String path = getServletContext().getContextPath() + "/GoToAdminCreatePage";
 			response.sendRedirect(path);
 		}
 		
 	}
 	
-	// Compose the questionnaire retrieving each question
+	// Compose the questionnaire retrieving each question and adding it to the product
+	// of the day object
 	private Boolean composeQuestionnaire(HttpServletRequest request) {
 		
 		Boolean questionsFound = false;

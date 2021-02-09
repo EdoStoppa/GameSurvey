@@ -38,31 +38,28 @@
 	
 	</div>
 
-	<div align="center" style="padding: 10px 0px">
+	<div align="center" style="padding: 10px 0px" th:if="${ numberOfQuestions != null }">
 		<form action="GoToAdminCreatePage" method="POST">
-			<div th:if="${ numberOfQuestions != null }">
 		
-				<table>
+			<table>
+		
+				<thead style="padding: 10px 0px">
+					<tr>
+						<th> Insert the questions </th>
+					</tr>
+				</thead>
 			
-					<thead style="padding: 10px 0px">
-						<tr>
-							<th> Insert the questions </th>
-						</tr>
-					</thead>
-				
-					<tbody>
-						<tr th:each="i : ${#numbers.sequence(1, numberOfQuestions)}">
-							<td> <input class="quest" th:name="${i}" type="text" required/> </td>
-						</tr>
-					</tbody>
-				
-				</table>
+				<tbody>
+					<tr th:each="i : ${#numbers.sequence(1, numberOfQuestions)}">
+						<td> <input class="quest" th:name="${i}" type="text" required/> </td>
+					</tr>
+				</tbody>
 			
-		    	<!-- Submit -->
-		    	</br>
-		    	<input class = "submit" name="action" type="submit" value="Confirm"/>
-		        
-			</div>
+			</table>
+		
+	    	<!-- Submit -->
+	    	<br>
+	    	<input class = "submit" name="action" type="submit" value="Confirm"/>
 
 		</form>
 	</div>
